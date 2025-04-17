@@ -1,0 +1,13 @@
+APIKEY ef4953e2968355e8316e4b8ac9eb97d0c3ea053d4ab44ac71db6958b4c70be49
+PROJECT shawntest
+KEYWORDS testingretigowithdata
+FIRSTNAME shawn
+LASTNAME henderson
+ORG epa_r
+EMAIL henderson.shawn@epa.gov
+PHONE 913-551-7508
+REASON testing_retigo.
+QUALITY medium
+INSTRUMENT emerging
+DATATYPE pm25,pm10,ultrafine,pmbc,co,co2,no2
+ORIGFILE ramses_18.csv

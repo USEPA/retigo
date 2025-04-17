@@ -1,0 +1,13 @@
+APIKEY 4ea7f5b9a28ec4e77f9bdbab035f9b9d4c7488b6133a52d475baa7c9f523c873
+PROJECT gmap
+KEYWORDS none
+FIRSTNAME none
+LASTNAME none
+ORG epa
+EMAIL hagler.gayle@epa.gov
+PHONE none
+REASON making_data_available_for_demo_purposes.
+QUALITY high
+INSTRUMENT advanced
+DATATYPE pm25,pm10,ultrafine,pmbc,co,co2,no2,other
+ORIGFILE ramses_12.csv

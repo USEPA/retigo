@@ -1,0 +1,13 @@
+APIKEY b62b7650515ccd213e9b4a2f76438e26631683ffb52f666cd580ae8bf3300e6f
+PROJECT none
+KEYWORDS none
+FIRSTNAME matt
+LASTNAME freeman
+ORG lockheed
+EMAIL freeman.matt@epa.gov
+PHONE 919-541-4293
+REASON testing_retigo
+QUALITY high
+INSTRUMENT advanced
+DATATYPE pm25,o3
+ORIGFILE retigo_stationary_example.txt

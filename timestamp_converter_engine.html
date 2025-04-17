@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html style="direction: ltr;" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" height="100%">
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Expires" CONTENT="-1">
+<!-- <META http-equiv="refresh" content="10"> -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+
+<script type="text/javascript" src="external/jquery-1.8.2.js"></script>
+<!--link type="text/css" href="external/jquery-ui-1/css/ui-lightness/jquery-ui-1.8.24.custom.css" rel="stylesheet" /-->
+<!--script type="text/javascript" src="external/jquery-ui-1/js/jquery-1.8.2.min.js"></script-->
+<script type="text/javascript" src="external/jquery-ui-1/js/jquery-ui-1.8.24.custom.min.js"></script>
+
+<script language="JavaScript" src="external/htmlDatePicker004/htmlDatePicker.js" type="text/javascript"></script>
+<link type="text/css" href="external/htmlDatePicker004/htmlDatePicker.css" rel="stylesheet" />
+
+<script type="text/javascript" src="isNumber.js"></script>
+<script type="text/javascript" src="timezones.js"></script>
+
+
+<script type="text/javascript">
+
+
+ var color_LightBlue = "#EBF2F7";
+ var color_DarkBlue  = "#E4E9ED";
+ var selected_timezone;		  
+ var selected_format;		  
+ var orig_gmt_houroffset;        
+ var orig_gmt_houroffset_string; 
+ var output_gmt_houroffset;        
+ var output_gmt_houroffset_string; 
+ 
+ var processing_message = 'Some timestamps could not be processed. Check the formatting and try again.';
+
+ var lastTimeZoneDisambiguation = "";
+
+ function initialize() {
+   //clear_input();
+   clear_output();
+   clear_debug();
+   getTimestampFormat();
+   getTimezone('orig_timezoneList');
+   getTimezone('output_timezoneList');
+   document.getElementById('controls').style.backgroundColor = color_DarkBlue;
+ }
+ 
+ function clear_input() {
+   $("#input_timestamps").val('');
+ }
+ 
+ function clear_output() {
+   $("#converted_timestamps").val('');
+ }
+ 
+ function clear_debug() {
+   $("#error_textarea").val('');
+ }
+ 
+ function check_date(MM, DD, YYYY) {
+   var return_val = false; // default
+   
+   // first check that arguments are numbers
+   if (isNumber(MM) && isNumber(DD) && isNumber(YYYY)) {
+     // now check ranges (note: month is zero based)
+     if ((MM >= 0) && (MM <= 11)        &&
+       (DD >= 1) && (DD <= 31)        &&
+       (YYYY >= 0) && (YYYY <=2100) ) {
+         return_val = true;
+     }
+   }
+   return return_val;
+ }
+ 
+ function check_time(hh, mm, ss, ms) {
+   var return_val = false; // default
+   
+   //debug(hh + ', ' + mm + ', ' + ss + ', ' + ms);
+   
+   // first check that arguments are numbers
+   if (isNumber(hh) && isNumber(mm) && isNumber(ss) && isNumber(ms)) {
+     // now check ranges
+     if ((hh >= 0) && (hh <= 23) &&
+       (mm >= 0) && (mm <= 59) &&
+       (ss >= 0) && (ss <= 59) &&
+       (ms >= 0) && (ms <= 999)) {
+         return_val = true;
+     }
+   }
+   return return_val;
+ }
+ 
+ function generate_timestamp(thisDate){
+   // take a Date object and generate a UTC/ISO 8601 timestamp
+   var year         = thisDate.getUTCFullYear();
+   var month        = thisDate.getUTCMonth() + 1;  // correct for zero-based month
+   var day          = thisDate.getUTCDate();       // day of month
+   var hour         = thisDate.getUTCHours();
+   var minutes      = thisDate.getUTCMinutes();
+   var seconds      = thisDate.getUTCSeconds();
+   var milliseconds = thisDate.getUTCMilliseconds();
+   
+   // we want to represent seconds to two decimal places, so we will drop the ones place
+   milliseconds = Math.floor(milliseconds/10.0); // use floor so that 999 becomes 99 instead of 100
+   
+   var YYYY = zeroPad(year, 4);
+   var MM   = zeroPad(month, 2);
+   var DD   = zeroPad(day, 2);
+   var hh   = zeroPad(hour, 2);
+   var mm   = zeroPad(minutes, 2);
+   var ss   = zeroPad(seconds, 2);
+   var ms   = zeroPad(milliseconds, 2);
+   
+   var this_utc8601_timestamp = YYYY + '-' + MM + '-' + DD + 'T' + hh + ':' + mm + ':' + ss + '.' + ms + output_gmt_hourOffset_string;
+   return this_utc8601_timestamp; 
+ }
+ 
+ function convert_unix() {
+   var thisDate = new Date();
+   var this_milliseconds;
+   var this_converted_timestamp;		  
+   var converted_timestamp_array = new Array();
+   
+   var lines = $('#input_timestamps').val().split('\n');
+   for(var i = 0;i < lines.length;i++){
+     //code here using lines[i] which will give you each line
+     if (isNumber(lines[i])) {
+       
+       this_milliseconds = (parseFloat(lines[i]) + ( output_gmt_hourOffset * 3600. )) * 1000.;
+       thisDate.setTime(this_milliseconds); // set time in milliseconds since 01/01/1970
+       
+       this_converted_timestamp = generate_timestamp(thisDate);
+       //append_converted_timestamp(this_converted_timestamp);
+       // write to an array, because writing directly to the DOM causes the loop to be too slow
+       converted_timestamp_array[i] = this_converted_timestamp + "\n";
+     } else {
+       converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+     }
+   }
+   
+   append_converted_timestamp(converted_timestamp_array.join(''));
+   
+ }
+
+  function convert_IGOR() {
+    var thisDate = new Date();
+    var this_milliseconds;
+    var this_converted_timestamp;		  
+    var IGOR_offset;
+    var converted_timestamp_array = new Array();
+
+    // subtract time so that we have "seconds since 01/01/1970" 
+    IGOR_offset_seconds = (1970 - 1904) * 365 * 24 * 3600.;
+    IGOR_offset_seconds = IGOR_offset_seconds + (17 * 24 * 3600.) // there were 17 leap days between 1904 and 1970, inclusive
+
+    var lines = $('#input_timestamps').val().split('\n'); 
+    for(var i = 0;i < lines.length;i++){
+      //code here using lines[i] which will give you each line
+      if (isNumber(lines[i])) {
+
+        this_milliseconds = (((parseFloat(lines[i]) - IGOR_offset_seconds) + ( output_gmt_hourOffset * 3600. ))) * 1000.
+        thisDate.setTime(this_milliseconds); // set time in milliseconds since 01/01/1970
+      
+        this_converted_timestamp = generate_timestamp(thisDate);
+
+        //append_converted_timestamp(this_converted_timestamp);
+        // write to an array, because writing directly to the DOM causes the loop to be too slow
+        converted_timestamp_array[i] = this_converted_timestamp + "\n";
+      } else {
+         converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+      }
+
+    }
+
+    append_converted_timestamp(converted_timestamp_array.join('')); 
+
+  }
+
+  
+  function convert_Excel_1900() {
+    var thisDate = new Date();
+    var this_milliseconds;
+    var converted_timestamp_array = new Array();
+    var integer_part;
+    var decimal_part;
+ 
+    var correction_1900; // used to account for the fact that days from 1/1/1900 to 2/29/1900 are off by 1.
+    var seconds_per_day = 86400;
+  
+     // subtract time so that we have "seconds since 01/01/1970" 
+    var Excel_offset_seconds = (1970 - 1900) * 365 * seconds_per_day;
+    Excel_offset_seconds = Excel_offset_seconds + (17 * seconds_per_day) // There were 17 leap days between 1900 and 1970, inclusive
+    Excel_offset_seconds = Excel_offset_seconds + ( 1 * seconds_per_day) // Excel thinks 1900 was a leap year even though it wasn't
+    Excel_offset_seconds = Excel_offset_seconds + ( 1 * seconds_per_day) // Correct for the fact that the Excel epoch is January 0, 1900
+    // NOTE: Excel thinks 1900 was a leap year even though it wasn't! See: http://support.microsoft.com/kb/214326
+    //       01/00/1900 = 0
+    //       01/01/1900 = 1
+
+    var lines = $('#input_timestamps').val().split('\n'); 
+    for(var i = 0;i < lines.length;i++){
+      //code here using lines[i] which will give you each line
+      if (isNumber(lines[i])) {
+        integer_part = Math.floor(lines[i]);     // days (1 = Jan 1, 1900)
+        decimal_part = parseFloat(lines[i]) - integer_part;  // fraction of a day
+
+        if (integer_part <= 60) {
+          correction_1900 = 1;
+        } else {
+          correction_1900 = 0;
+        }
+       
+
+        this_milliseconds =   integer_part          * (seconds_per_day * 1000)
+                            + decimal_part          * (seconds_per_day * 1000)
+                            + correction_1900       * (seconds_per_day * 1000)
+                            - (Excel_offset_seconds *                    1000)
+                            + ((output_gmt_hourOffset - orig_gmt_hourOffset) * 3600. ) * 1000.;
+        
+        thisDate.setTime(this_milliseconds); // set time in milliseconds since 01/01/1970
+        this_converted_timestamp = generate_timestamp(thisDate);
+        converted_timestamp_array[i] = this_converted_timestamp + "\n";
+      } else {
+         converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+      }
+    }
+
+    append_converted_timestamp(converted_timestamp_array.join('')); 
+  }
+
+
+  function convert_Excel_1904() {
+    var thisDate = new Date();
+    var this_milliseconds;
+    var converted_timestamp_array = new Array();
+    var integer_part;
+    var decimal_part;
+ 
+    var seconds_per_day = 86400;
+  
+     // subtract time so that we have "seconds since 01/01/1970" 
+    var Excel_offset_seconds = (1970 - 1904) * 365 * seconds_per_day;
+    Excel_offset_seconds = Excel_offset_seconds + (17 * seconds_per_day) // There were 17 leap days between 1904 and 1970, inclusive
+    Excel_offset_seconds = Excel_offset_seconds + ( 1 * seconds_per_day) // Correct for the fact that the Excel epoch is January 0, 1900
+
+    var lines = $('#input_timestamps').val().split('\n'); 
+    for(var i = 0;i < lines.length;i++){
+      //code here using lines[i] which will give you each line
+      if (isNumber(lines[i])) {
+        integer_part = Math.floor(lines[i]);     // days (1 = Jan 1, 1904)
+        decimal_part = parseFloat(lines[i]) - integer_part;  // fraction of a day
+
+        this_milliseconds =   integer_part          * (seconds_per_day * 1000)
+                            + decimal_part          * (seconds_per_day * 1000)
+                            - (Excel_offset_seconds *                    1000)
+                            + ((output_gmt_hourOffset - orig_gmt_hourOffset) * 3600. ) * 1000.;
+        
+        thisDate.setTime(this_milliseconds); // set time in milliseconds since 01/01/1970
+        this_converted_timestamp = generate_timestamp(thisDate);
+        converted_timestamp_array[i] = this_converted_timestamp + "\n";
+      } else {
+         converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+      }
+    }
+
+    append_converted_timestamp(converted_timestamp_array.join('')); 
+  }
+
+
+  function convert_Matlab() {
+    var thisDate = new Date();
+    var this_milliseconds;
+    var converted_timestamp_array = new Array();
+ 
+    var seconds_per_day = 86400;
+  
+     // subtract time so that we have "seconds since 00/00/0000" 
+    var Matlab_offset_seconds = (1970 - 0000) * 365 * seconds_per_day;
+    Matlab_offset_seconds = Matlab_offset_seconds + (478 * seconds_per_day) // there were 478 leap days between 0000 and 1970, inclusive
+    Matlab_offset_seconds = Matlab_offset_seconds + (  1 * seconds_per_day) // Matlab's epoch is 00/00/0000, which is one day less than what really exists
+
+
+    var lines = $('#input_timestamps').val().split('\n'); 
+    for(var i = 0;i < lines.length;i++){
+      //code here using lines[i] which will give you each line
+      if (isNumber(lines[i])) {
+
+        this_milliseconds =   (parseFloat(lines[i])) * (seconds_per_day * 1000)
+                            - (Matlab_offset_seconds * 1000)
+                            + ((output_gmt_hourOffset - orig_gmt_hourOffset) * 3600. ) * 1000.;
+        
+        thisDate.setTime(this_milliseconds); // set time in milliseconds since 01/01/1970
+        this_converted_timestamp = generate_timestamp(thisDate);
+        converted_timestamp_array[i] = this_converted_timestamp + "\n";
+      } else {
+         converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+      }
+    }
+
+    append_converted_timestamp(converted_timestamp_array.join('')); 
+  }
+
+
+
+  function convert_hhmmss() {
+    var thisDate = new Date();
+    var this_milliseconds;
+    var this_converted_timestamp;		  
+    var converted_timestamp_array = new Array();
+    var parse;
+    var this_MM;
+    var this_DD;
+    var this_YYYY;
+    var this_hh;
+    var this_mm;
+    var this_ss;
+    var this_ms;
+    var this_milliseconds;
+
+    var this_date = document.getElementById("SelectedDate").value;
+    parse = this_date.split("/");
+    this_MM   = parse[0] - 1; //correct for zero based month
+    this_DD   = parse[1];
+    this_YYYY = parse[2];
+
+    if (!check_date(this_MM, this_DD, this_YYYY)) {
+      alert("Please specify starting date");
+      return;
+    }
+
+    var lines = $('#input_timestamps').val().split('\n'); 
+    for(var i = 0;i < lines.length;i++){
+      //code here using lines[i] which will give you each line
+      
+      parse = lines[i].split(":");
+      this_hh = parse[0];
+      this_mm = parse[1];
+      this_ss = Math.floor(parse[2]);
+      this_ms = (parse[2] % 1) * 1000;
+ 
+      //debug(this_ss + " " + this_ms);
+      if (check_time(this_hh, this_mm, this_ss, this_ms)) {
+
+        // set base date in UTC
+        thisDate.setUTCFullYear(this_YYYY);
+        thisDate.setUTCMonth(this_MM);
+        thisDate.setUTCDate(this_DD);
+        thisDate.setUTCHours(this_hh);
+        thisDate.setUTCMinutes(this_mm);
+        thisDate.setUTCSeconds(this_ss);
+        thisDate.setUTCMilliseconds(this_ms);
+
+        // apply timezone offset
+        this_milliseconds = thisDate.getUTCMilliseconds();
+        this_milliseconds = this_milliseconds + ( (output_gmt_hourOffset - orig_gmt_hourOffset) * 3600. * 1000 );
+        thisDate.setUTCMilliseconds(this_milliseconds);
+
+        this_converted_timestamp = generate_timestamp(thisDate);
+        // write to an array, because writing directly to the DOM causes the loop to be too slow
+        converted_timestamp_array[i] = this_converted_timestamp + "\n";
+      } else {
+         converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+      }
+
+    }
+
+    append_converted_timestamp(converted_timestamp_array.join(''));
+
+  }
+
+  function convert_MMDDYYYYhhmmss() {
+    var thisDate = new Date();
+    var this_milliseconds;
+    var this_converted_timestamp;		  
+
+    var converted_timestamp_array = new Array();
+    var parse;
+    var this_MM;
+    var this_DD;
+    var this_YYYY;
+    var this_hh;
+    var this_mm;
+    var this_ss;
+    var this_ms;
+    var this_milliseconds;
+
+    var this_date;
+    var this_time;
+    var space_delimiter = new RegExp("\\s+");
+    var my_delimiter;
+      
+    var lines = $('#input_timestamps').val().split('\n'); 
+    for(var i = 0;i < lines.length;i++){
+      //code here using lines[i] which will give you each line
+
+      if (lines[i].indexOf('-') > 0) {
+          my_delimiter = '-';
+      } else {
+          my_delimiter = space_delimiter;
+      }
+        
+      try {
+        parse = lines[i].split(my_delimiter);
+        this_date = parse[0];
+        this_time = parse[1];
+    
+        parse = this_date.split("/");
+        this_MM   = parse[0] - 1; //correct for zero based month
+        this_DD   = parse[1];
+        this_YYYY = parse[2];
+
+        parse = this_time.split(":");
+        this_hh = parse[0];
+        this_mm = parse[1];
+        this_ss = Math.floor(parse[2]);
+	this_ms = (parse[2] % 1) * 1000;
+      } catch (err) {}
+
+
+      if (check_date(this_MM, this_DD, this_YYYY) &&
+          check_time(this_hh, this_mm, this_ss, this_ms)) { 
+
+        // set base date in UTC
+        thisDate.setUTCFullYear(this_YYYY);
+        thisDate.setUTCMonth(this_MM);
+        thisDate.setUTCDate(this_DD);
+        thisDate.setUTCHours(this_hh);
+        thisDate.setUTCMinutes(this_mm);
+        thisDate.setUTCSeconds(this_ss);
+        thisDate.setUTCMilliseconds(this_ms);
+
+        // apply timezone offset
+        this_milliseconds = thisDate.getUTCMilliseconds();
+        this_milliseconds = this_milliseconds + ( (output_gmt_hourOffset - orig_gmt_hourOffset) * 3600. * 1000 );
+        thisDate.setUTCMilliseconds(this_milliseconds);
+
+        this_converted_timestamp = generate_timestamp(thisDate);
+        // write to an array, because writing directly to the DOM causes the loop to be too slow
+        converted_timestamp_array[i] = this_converted_timestamp + "\n";
+      } else {
+         converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+      }
+    }
+
+    append_converted_timestamp(converted_timestamp_array.join(''));
+
+  }
+
+ 
+ function convert_Almost8601() {
+   var thisDate = new Date();
+   var this_milliseconds;
+   var this_converted_timestamp;		  
+   
+   var converted_timestamp_array = new Array();
+   var parse;
+   var this_MM;
+   var this_DD;
+   var this_YYYY;
+   var this_hh;
+   var this_mm;
+   var this_ss;
+   var this_ms;
+   var this_milliseconds;
+   
+   var this_date;
+   var this_time;
+   var this_tz;
+
+   let matchingIndex = 0; // default
+
+   lastTimeZoneDisambiguation = "";
+
+
+   var lines = $('#input_timestamps').val().split('\n'); 
+   for(var i = 0;i < lines.length;i++){
+     //code here using lines[i] which will give you each line
+     
+     try {
+       parse = lines[i].split(" ");
+       this_date = parse[0];
+       this_time = parse[1];
+       this_tz   = parse[2];
+
+       parse = this_date.split("-");
+       this_YYYY = parse[0];
+       this_MM   = parse[1] - 1; //correct for zero based month
+       this_DD   = parse[2];
+       
+       parse = this_time.split(":");
+       this_hh = parse[0];
+       this_mm = parse[1];
+       this_ss = Math.floor(parse[2]);
+       this_ms = (parse[2] % 1) * 1000;
+     } catch (err) {}
+     
+
+     if (check_date(this_MM, this_DD, this_YYYY) &&
+       check_time(this_hh, this_mm, this_ss, this_ms)) { 
+         
+
+         // set base date in UTC
+         thisDate.setUTCFullYear(this_YYYY);
+         thisDate.setUTCMonth(this_MM);
+         thisDate.setUTCDate(this_DD);
+         thisDate.setUTCHours(this_hh);
+         thisDate.setUTCMinutes(this_mm);
+         thisDate.setUTCSeconds(this_ss);
+         thisDate.setUTCMilliseconds(this_ms);
+
+         // search for timezone in lookup table
+         //let tzMatch = tzLookup.filter(o => o.abbr === this_tz);
+         //let tzMatch = tzLookup.filter(function(o){ return o.abbr === this_tz })[0];
+
+         let filteredResult =  tzLookup.filter(function(o){ return o.abbr === this_tz });
+
+//         if (filteredResult.length > 1) {
+//
+//           var queryUserFlag = true;
+//
+//           // check to see if user already selected a disambiguation
+//           for (ind=0; ind<filteredResult.length; ind++ ) {
+//             if (filteredResult[ind] === lastTimeZoneDisambiguation) {
+//               queryUserFlag = false;
+//             }
+//           }
+//
+//           createRadioButtons(filteredResult);
+//
+//           if (queryUserFlag) {
+//             $('#tzDialog').dialog({
+//               autoOpen: false,
+//               modal: true, // doesn't block (weak!)
+//               width: 550,
+//               height: 550,
+//               closeOnEscape: true,
+//               draggable: true,
+//               title: 'Timezone Picker',
+//               buttons: {
+//                 'OK': function () {
+//                   let selectedInd = getRadio('tzOptions');
+//                   matchingIndex = selectedInd;
+//                   lastTimeZoneDisambiguation = filteredResult[selectedInd];
+//                   $('#tzDialog').dialog('close');
+//                 },
+//                 'Cancel': function () {
+//                   $('#tzDialog').dialog('close');
+//                 }
+//                 
+//               }
+//             });
+//             $('#tzDialog').dialog('open');
+//           }
+//         }
+
+
+         //tzMatch = filteredResult[matchingIndex];
+         tzMatch = filteredResult[0];
+
+         if ( !(tzMatch === undefined) ) {
+           let parseOffset = tzMatch.offset.split(":");
+           let my_gmt_hourOffset = Number(parseOffset[0]) + (Number(parseOffset[1]) / 60.0);
+
+           // apply timezone offset
+           this_milliseconds = thisDate.getUTCMilliseconds();
+           this_milliseconds = this_milliseconds + ( (output_gmt_hourOffset - my_gmt_hourOffset) * 3600. * 1000 );
+           thisDate.setUTCMilliseconds(this_milliseconds);
+
+           this_converted_timestamp = generate_timestamp(thisDate);
+           // write to an array, because writing directly to the DOM causes the loop to be too slow
+           converted_timestamp_array[i] = this_converted_timestamp + "\n";
+           
+         } else {
+           console.log("Time zone abbreviation: ", this_tz, " not found.");
+           converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+         }
+
+        
+      } else {
+         converted_timestamp_array[i] = "Invalid_timestamp" + "\n";
+
+
+
+     }
+   }
+
+   append_converted_timestamp(converted_timestamp_array.join(''));
+
+}
+
+
+
+function createRadioButtons(filteredTimezones) {
+
+  var container = document.getElementById("tzDialog");
+
+  // Clear previous contents of the container
+  while (container.hasChildNodes()) {
+    container.removeChild(container.lastChild);
+  }
+
+  var p = document.createElement("p");
+  p.innerHTML = "This time zone abbreviation is not unique. Please select the one that applies to the data you are trying to convert.";
+  container.appendChild(p);
+
+  for (ind=0; ind<filteredTimezones.length; ind++) {
+    // Create an <input> element, set its type and name attributes
+    var input = document.createElement("input");
+    input.type = "radio";
+    input.name = "tzOptions";
+    if (ind == 0) {
+      input.checked = true;
+    }
+    container.appendChild(input);
+    container.appendChild(document.createTextNode(" " + filteredTimezones[ind].name));
+    // Append a line break 
+    container.appendChild(document.createElement("br"));
+  }
+
+}
+
+
+function getRadio(elementName) { 
+  var radios = document.getElementsByName(elementName);
+
+  for (var ind=0; ind< radios.length; ind++) {
+    if (radios[ind].checked) {
+      
+
+      // only one radio can be logically checked, don't check the rest
+      break;
+    }
+  }
+
+  return ind;
+}
+
+  function convert() {
+
+    clear_output();
+
+    switch(selected_format) {
+      case 'UNIX time (seconds since January 1, 1970)':
+        try{ convert_unix(); }
+        catch (err) {alert(processing_message);}		  
+      break;
+
+      case 'IGOR time (seconds since January 1, 1904)':
+        try{ convert_IGOR(); }
+        catch (err) {alert(processing_message);}
+      break;
+
+      case 'Excel serial time (1900 date system)':
+        try{ convert_Excel_1900(); }
+        catch (err) {alert(processing_message);}
+      break;
+
+      case 'Excel serial time (1904 date system)':
+        try{ convert_Excel_1904(); }
+        catch (err) {alert(processing_message);}
+      break;
+
+      case 'MATLAB serial time':
+        try{ convert_Matlab(); }
+        catch (err) {alert(processing_message);}
+      break;
+
+      case 'hh:mm:ss':
+        try{ convert_hhmmss(); }
+        catch (err) {alert(processing_message);}
+      break;
+
+      case 'MM/DD/YYYY-hh:mm:ss':
+        try{ convert_MMDDYYYYhhmmss();} 
+        catch (err) {alert(processing_message);}
+      break;
+
+      case 'YYYY-MM-DD hh:mm:ss TZ':
+        try{ convert_Almost8601();} 
+        catch (err) {console.log(err); alert(processing_message);}
+      break;
+
+    }  
+  }
+
+  function append_converted_timestamp(timestamp) {
+    $('#converted_timestamps').val($('#converted_timestamps').val() + timestamp);
+  }
+
+  function back() {
+     document.getElementById("div_fileSelection").style.display="block";
+     document.getElementById("div_dataDisplay").style.display="none";
+     location.reload();
+  }
+
+  function wait(milliSeconds) {
+    var startTime = new Date().getTime();
+    while ( (new Date().getTime() < startTime + milliSeconds) );
+  }
+
+  function getTimezone(object_id) {
+
+    var timezonelist  = document.getElementById(object_id);
+    selected_timezone = timezonelist.options[timezonelist.selectedIndex].text;
+    switch (selected_timezone) {
+      case 'GMT': 
+        this_hourOffset =  0; 
+        this_hourOffset_string = '+00:00';
+        break;
+      case 'EST': 
+        this_hourOffset = -5; 
+        this_hourOffset_string = '-05:00'; 
+        break;
+      case 'CST': 
+        this_hourOffset = -6; 
+        this_hourOffset_string = '-06:00'; 
+        break;
+      case 'MST': 
+        this_hourOffset = -7; 
+        this_hourOffset_string = '-07:00'; 
+        break;
+      case 'PST': 
+        this_hourOffset = -8;
+        this_hourOffset_string = '-08:00'; 
+        break;
+      case 'EDT': 
+        this_hourOffset = -4; 
+        this_hourOffset_string = '-04:00'; 
+        break;
+      case 'CDT': 
+        this_hourOffset = -5; 
+        this_hourOffset_string = '-05:00'; 
+        break;
+      case 'MDT': 
+        this_hourOffset = -6; 
+        this_hourOffset_string = '-06:00'; 
+        break;
+      case 'PDT': 
+        this_hourOffset = -7; 
+        this_hourOffset_string = '-07:00'; 
+        break;
+    }
+
+    switch (object_id) {
+      case 'orig_timezoneList':
+        orig_gmt_hourOffset = this_hourOffset;
+        orig_gmt_hourOffset_string = this_hourOffset_string;
+        break;
+      case 'output_timezoneList':
+        output_gmt_hourOffset = this_hourOffset;
+        output_gmt_hourOffset_string = this_hourOffset_string;
+        break;
+    }
+
+    //debug(selected_timezone);
+  }
+
+  function getTimestampFormat() {
+    var format_list  = document.getElementById("timestamp_format_list");
+    selected_format = format_list.options[format_list.selectedIndex].text;
+
+    switch (selected_format) {
+      case 'UNIX time (seconds since January 1, 1970)': 
+        document.getElementById('orig_timezoneList').disabled = true;
+        document.getElementById('orig_timezoneList').hidden   = true;
+        document.getElementById('SelectedDate').disabled      = true;
+        document.getElementById('SelectedDate').hidden        = true;
+        break;
+      case 'IGOR time (seconds since January 1, 1904)': 
+        document.getElementById('orig_timezoneList').disabled = true;
+        document.getElementById('orig_timezoneList').hidden   = true;
+        document.getElementById('SelectedDate').disabled      = true;
+        document.getElementById('SelectedDate').hidden        = true;
+        break;
+      case 'Excel serial time (1900 date system)':
+        document.getElementById('orig_timezoneList').disabled = false;
+        document.getElementById('orig_timezoneList').hidden   = false;
+        document.getElementById('SelectedDate').disabled      = true;
+        document.getElementById('SelectedDate').hidden        = true;
+      break;
+      case 'Excel serial time (1904 date system)':
+        document.getElementById('orig_timezoneList').disabled = false;
+        document.getElementById('orig_timezoneList').hidden   = false;
+        document.getElementById('SelectedDate').disabled      = true;
+        document.getElementById('SelectedDate').hidden        = true;
+      break;
+      case 'MATLAB serial time':
+        document.getElementById('orig_timezoneList').disabled = false;
+        document.getElementById('orig_timezoneList').hidden   = false;
+        document.getElementById('SelectedDate').disabled      = true;
+        document.getElementById('SelectedDate').hidden        = true;
+      break;
+      case 'hh:mm:ss': 
+        document.getElementById('orig_timezoneList').disabled = false;
+        document.getElementById('orig_timezoneList').hidden   = false;
+        document.getElementById('SelectedDate').disabled      = false;
+        document.getElementById('SelectedDate').hidden        = false;
+        break;
+      case 'MM/DD/YYYY-hh:mm:ss': 
+        document.getElementById('orig_timezoneList').disabled = false;
+        document.getElementById('orig_timezoneList').hidden   = false;
+        document.getElementById('SelectedDate').disabled      = true;
+        document.getElementById('SelectedDate').hidden        = true;
+        break;
+      case 'YYYY-MM-DD hh:mm:ss TZ': 
+        document.getElementById('orig_timezoneList').disabled = true;
+        document.getElementById('orig_timezoneList').hidden   = true;
+        document.getElementById('SelectedDate').disabled      = true;
+        document.getElementById('SelectedDate').hidden        = true;
+        break;
+    }
+
+    //debug(selected_format);
+  }
+
+
+  function debug(stuff) {
+    document.getElementById("error_textarea").value += "\n" + stuff;
+  }
+  
+    
+  function zeroPad(num,count) {
+    var numZeropad = num + '';
+    while(numZeropad.length < count) {
+      numZeropad = "0" + numZeropad;
+    }
+    return numZeropad;
+  }
+
+</script>
+
+<style type="text/css">
+    .tc_font1{ font-size:15px; }
+    .tc_font2{ font-size:13px; }
+</style>
+
+<body onload="initialize()" bgcolor="#99CCFF" height="100%" width="100%">
+<br>
+<div id="controls"> &nbsp;
+
+<table>
+<td class="tc_font1">Format:<td> <select class="tc_font2" id="timestamp_format_list" onchange="getTimestampFormat()" style="width:300px" title="Format of timestamps to be converted">
+                    <option>UNIX time (seconds since January 1, 1970)</option>
+                    <option>IGOR time (seconds since January 1, 1904)</option>
+                    <option>Excel serial time (1900 date system)</option>
+                    <option>Excel serial time (1904 date system)</option>
+                    <option>MATLAB serial time</option>
+                    <option>hh:mm:ss</option>
+		    <option>MM/DD/YYYY-hh:mm:ss</option>
+		    <option title="TZ can be any international time zone abbreviation">YYYY-MM-DD hh:mm:ss TZ</option>
+          </select>
+<tr>
+
+<div id="orig_timezone" style="display:block;width:100%;height:80%">
+  <td class="tc_font1">Original Timezone:&nbsp;&nbsp; <td><select class="tc_font2" disabled id="orig_timezoneList" onchange="getTimezone('orig_timezoneList')" style="width:60px"  title="Timezone corresponding to the original timestamps pasted below">
+                       <option>GMT</option>
+                       <option>EST</option>
+		       <option>CST</option>
+                       <option>MST</option>
+                       <option>PST</option>
+		       <option>EDT</option>
+		       <option>CDT</option>
+                       <option>MDT</option>
+                       <option>PDT</option>
+                     </select>
+</div>
+
+<tr>
+<td class="tc_font1">Starting Date: <td><input class="tc_font2" type="text" name="SelectedDate" id="SelectedDate" readonly onClick="GetDate(this);" title="Date coreesponding to the first timestamp in the list"/>
+</table>
+
+
+<br><br>
+
+<div class="tc_font1" id="output_timezone" style=display:block;width:100%;height:80%" >
+  Output  Timezone: <select class="tc_font2" id="output_timezoneList" onchange="getTimezone('output_timezoneList')" style="width:60px" title="Timezone of converted timestamps (All options are equivalent. Included for convenience.)">
+                       <option>GMT</option>
+                       <option>EST</option>
+		       <option>CST</option>
+                       <option>MST</option>
+                       <option>PST</option>
+		       <option>EDT</option>
+		       <option>CDT</option>
+                       <option>MDT</option>
+                       <option>PDT</option>
+                     </select>
+   
+&nbsp;&nbsp;&nbsp;&nbsp;
+  <input class="tc_font1" type="button" Value="      Convert      " id="convert" size=60 onclick="convert()"></input>
+</div> &nbsp;
+</div> <!-- conrtols -->
+
+
+<div id="tzDialog" style="display:none">
+  <!--  content will be added dynamically -->
+</div>
+
+<div id="div_dataDisplay" style="display:block;width:100%;height:80%">
+  <center><div id="busy_gif" style="display:none" ><p><image src="images/busy5.gif" /></p></div></center>
+
+  <p>
+  <left><table width="100%">
+    
+    <td width="40%"><div class="tc_font1" id="div_input_timestamps"  style="border:0px solid #E4E9ED;position:relative;height:400px;width:100%;margin:0px;overflow:hidden">&nbsp;&nbsp;Paste list of timestamps here:<textarea id="input_timestamps" style="position: relative; margin: 10px 10px 10px 10px; width:95%; height: 90%"></textarea></div>
+  
+    <td width="40%"><div class="tc_font1" id="div_converted_timestamps" style="border:0px solid #E4E9ED;position:relative;height:400px;width:100%;margin:0px;overflow:hidden">&nbsp;&nbsp;Converted timestamps:<textarea readonly id="converted_timestamps" style="position: relative; margin: 10px 10px 10px 10px; width:95%; height: 90%"></textarea></div>
+   
+  </table></left>
+  <p>
+
+
+
+
+    <center>
+    <textarea id="error_textarea" rows="5" cols="80" style="margin:20px" value=""></textarea>
+    </center>
+
+
+
+</div>
+
+
+
+
+<div class="tc_font2" id="div_fileSelection" style="display:block">
+  <!--<center><h1>Real-Time Geosptial Data Viewer (RETIGO)</h1></center>-->
+
+
+
+</div>
+
+<br>
+
+
+</body>

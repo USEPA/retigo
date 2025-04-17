@@ -1,0 +1,10 @@
+.indent {
+    padding-left: 22px ;
+}
+.indent2 {
+    padding-left: 44px ;
+}
+.hangingindent {
+    padding-left: 22px ;
+    text-indent: -22px ;
+}

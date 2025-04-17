@@ -1,0 +1,23 @@
+.emvlDropdown-item, .emvlDropdown-menu, .emvlDropdown-toggle, .emvlDropdown {
+    background-color:  #E9E9ED !important;
+    color:  #000000 !important;
+    width: 80px !important;
+    padding:2px !important;
+    border-radius: 5px !important;
+    font-size: 10px !important;
+}
+
+.emvlDropdown {
+    border: 1px solid black !important;
+    border-radius: 5px !important;
+    width: 90px !important;
+}
+
+.emvlDropdown-menu:hover .emvlDropdown-item:hover {
+    background-color:  #D0D0D9 !important;
+    width:90px !important;
+}
+
+.emvlDropdown-menu {
+    min-width:100%;
+}

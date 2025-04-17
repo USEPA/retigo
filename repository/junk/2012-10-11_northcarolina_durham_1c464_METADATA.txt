@@ -1,0 +1,13 @@
+APIKEY 1c464dc1df9ae27a55ed77a6707f7e627a806ad5d2e417de4b7575ebbc336694
+PROJECT mydata
+KEYWORDS particulate_matter
+FIRSTNAME none
+LASTNAME none
+ORG my_school
+EMAIL jane.doe@epa.gov
+PHONE none
+REASON i_want_to_upload_data.
+QUALITY low
+INSTRUMENT emerging
+DATATYPE ultrafine,o3
+ORIGFILE ramses_test.csv

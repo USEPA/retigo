@@ -1,0 +1,13 @@
+APIKEY 5eb60b24d9b087efdf5b3e9f4362835aba2681784cb6371820e70cec331c21cc
+PROJECT test
+KEYWORDS gayletest
+FIRSTNAME gayle
+LASTNAME hagler
+ORG epa
+EMAIL hagler.gayle@epa.gov
+PHONE 9195412827
+REASON thisisatest.
+QUALITY high
+INSTRUMENT advanced
+DATATYPE pm25,ultrafine,pmbc,other
+ORIGFILE retigo_mobile_stationary_example.csv

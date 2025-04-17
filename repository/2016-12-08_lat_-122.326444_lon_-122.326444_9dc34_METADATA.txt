@@ -1,0 +1,13 @@
+APIKEY 9dc34fd77ec9e11fca27f7d04a830022f8d0ed5b9e4853c35c4c074fa75b1162
+PROJECT chid
+KEYWORDS seattle_chinatown_highway_air_toxics
+FIRSTNAME matthew
+LASTNAME harper
+ORG pscaa
+EMAIL matth@pscleanair.org
+PHONE 2066894009
+REASON trying_to_see_if_this_tool_can_help_me_visualize_data_for_a_spatial_analysis_of_freeway_pollution.
+QUALITY medium
+INSTRUMENT emerging
+DATATYPE ultrafine,pmbc
+ORIGFILE 12082016_pscaa_ufpc_cid.csv

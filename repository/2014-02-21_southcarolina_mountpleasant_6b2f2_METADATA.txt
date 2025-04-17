@@ -1,0 +1,13 @@
+APIKEY 6b2f25c18109c852d71a83c18423db5f447fbbf4cef2bed7fda2f423f3ded57a
+PROJECT testing
+KEYWORDS none
+FIRSTNAME none
+LASTNAME none
+ORG self
+EMAIL test123@epa.gov
+PHONE none
+REASON testing
+QUALITY null
+INSTRUMENT null
+DATATYPE co,no2
+ORIGFILE mobile_charleston_retigo_test.txt

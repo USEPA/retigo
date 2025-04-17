@@ -1,0 +1,95 @@
+:root {
+  --main-bg-color:   #0071BC;
+  /*--main-bg-color:   #2F70B6;*/
+  --alt-bg-color:    #205493;
+  --button-bg-color: #D3E3EF;
+  --main-fg-color:   #FFFFFF;
+}
+
+.navbar-brand {
+  float: none;
+}
+.navbar-custom {
+    /*background-color:  #CEE7CB;*/
+    background-color:  var(--main-bg-color);
+    background-image:  none;
+    background-repeat: no-repeat;
+    
+}
+.dropdown-item, .dropdown-menu, .dropdown-toggle, .dropdown {
+    /*background-color:  #CEE7CB;*/
+    background-color:  var(--main-bg-color);
+    background-image:  none;
+    background-repeat: no-repeat;
+    color:  var(--main-fg-color);
+    background:none;
+    border:none;
+    box-shadow:none;
+    margin-right:7px;
+    margin-bottom:0px;
+}
+.dropdown-menu, .dropdown-toggle, .dropdown {
+    padding:3.5px 0px 0px 0px;
+}
+.dropdown-item {
+    padding:3.5px 0px 0px 5px;
+}
+
+.nav-button {
+    /*background-color:  #CEE7CB;*/
+    background-color:  var(--button-bg-color);
+    background-image:  none;
+    background-repeat: no-repeat;
+    color: var(--main-fg-color);
+    padding:7px 5px 5px 5px;
+    background:none;
+    border:none;
+    box-shadow:none;
+    margin-right:20px;
+    margin-bottom:0px;
+}
+.nav-button:hover, .dropdown:hover, .dropdown-menu:hover, .dropdown-toggle:hover {
+    /*background-color:  #FF0000;*/
+    background-color:  var(--alt-bg-color);
+    color: var(--main-fg-color);
+
+}
+.dropdown-item:hover {
+    /*background-color:  #CEE7CB;*/
+    background-color:  var(--main-bg-color);
+    color: var(--main-fg-color);
+}
+.dropdown-menu {
+    /*background-color:  #CEE7CB;*/
+    background-color:  var(--alt-bg-color);
+    color: var(--main-fg-color);
+}
+.nav-link {
+    color: #0250DD;   
+}
+
+.nav-link:hover {
+    color: #FFFFFF;    
+}
+
+.navbar-nav .nav-item {
+  float: none;
+}
+.navbar-divider,
+.navbar-nav .nav-item+.nav-item,
+.navbar-nav .nav-link + .nav-link {
+  margin-left: 0;
+}
+@media (min-width: 34em) {
+  .navbar-brand {
+    float: left;
+  }
+  .navbar-nav .nav-item {
+    float: left;
+  }
+  .navbar-divider, 
+  .navbar-nav .nav-item + .nav-item, 
+  .navbar-nav .nav-link + .nav-link {
+    margin-left: 1rem;
+  }
+}

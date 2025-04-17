@@ -1,0 +1,13 @@
+APIKEY a7b5710a624a121e405f953c7c15fa371d6e01625965d4864ce15af61b926721
+PROJECT myairdata
+KEYWORDS traffic
+FIRSTNAME gayle_
+LASTNAME hagler
+ORG epa
+EMAIL hagler.gayle@epa.gov
+PHONE 919-541-2827
+REASON uploading_to_demonstrate_retigo_s_data_repository._
+QUALITY medium
+INSTRUMENT advanced
+DATATYPE co,wind
+ORIGFILE retigo_pollutionrose_test.csv

@@ -1,0 +1,13 @@
+APIKEY 3c94de53eff576cf9dcc97d87cf53c1eb58065083f2325ab0c6bedf8c00e9be4
+PROJECT testing
+KEYWORDS mobilemonitoring,2012
+FIRSTNAME ryan
+LASTNAME brown
+ORG epa_region_iv_
+EMAIL brown.ryan@epa.gov
+PHONE 404-562-9147
+REASON retigo_beta_testing
+QUALITY medium
+INSTRUMENT mixture
+DATATYPE pm25,pm10,ultrafine,pmbc,co,co2,no2,other
+ORIGFILE ramses_05.csv

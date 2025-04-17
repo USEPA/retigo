@@ -1,0 +1,41 @@
+.emvlPlayPause {
+    padding:5px;
+    border-radius:5px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    border-right: 2px solid transparent;
+    box-shadow: 1px 1px 1px 1px #DDDDDD;
+}
+
+.emvlPlayPause:focus {
+    background-color: #AAAAAA;
+    background: #AA3333;
+    border: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+.emvlPlayPause:hover {
+    /*background-color: #EEEEEE;*/
+}
+
+.emvlPlayPause:active {
+    outline: none;
+    /*
+    border-top: 2px solid #CCCCCC;
+    border-left: 2px solid #CCCCCC;
+    border-bottom: 1px inset #EEEEEE;
+    border-right: 1px inset #EEEEEE;
+    */
+    box-shadow: none;
+}
+
+.emvlPlayPause:visited {
+    outline: none;
+    border: none;
+    box-shadow: none !important;
+}
+
+
+

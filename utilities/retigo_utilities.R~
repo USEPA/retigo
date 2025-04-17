@@ -1,0 +1,148 @@
+# retigo_utilities.R
+#
+# Purpose: Various utility function to support RETIGO:
+#
+#          - export_retigo:  Export data in the RETIGO file format
+#          - dms_to_decimal: Convert lat/lon degree, minutes, seconds
+#                            to decimal degrees.
+#          - utm_to_latlon:  Convert Universal Transverse Mercator (UTM)
+#                            coordingates to lat/lon decimal degrees.
+#                            Note: requires external RGDAL library.  
+#
+# Author: Matt Freeman freeman.matt@epa.gov
+#
+###############################################################################
+
+# Know if this file has been sourced
+UTIL_RETIGO <- T
+
+
+export_retigo <- function(fileName, df) {
+#
+# Purpose: Given a dataframe, export the data into a RETIGO csv file.
+#
+# Assumptions:
+#
+#   1) The dataframe contains:
+#        - Timestamps in ISO-8601 format
+#        - At least one scalar variable
+#        - Longitude in decimal degrees
+#        - Latitude in decimal degrees
+#        - ID string
+#        - Column names that correspond to the RETIGO header, e.g.:
+#           - Timestamp(UTC)
+#           - EAST_LONGITUDE(deg)
+#           - NORTH_LATITUDE(deg)
+#           - ID(-)
+#           - Variable_name(units)
+#        - No extraneous data
+#
+###############################################################################
+  
+  Npoints = nrow(df)
+  Ncols	  = ncol(df)
+
+  # get column indices
+  colTime = grep("Timestamp\\(UTC\\)", colnames(df), ignore.case=TRUE)
+  colLat  = grep("NORTH_LATITUDE\\(deg\\)", colnames(df), ignore.case=TRUE)
+  colLon  = grep("EAST_LONGITUDE\\(deg\\)", colnames(df), ignore.case=TRUE)
+  colId   = grep("ID\\(-\\)", colnames(df), ignore.case=TRUE)
+  colInds <- 1:Ncols
+  colData = colInds[colInds != colTime &
+                    colInds != colLat  &
+                    colInds != colLon  &
+                    colInds != colId]
+
+  # check column names
+  msg<-""
+  if (length(colTime) == 0) {msg<-paste("Timestamp column not found.\n",
+                                      "Looking for Timestamp(UTC)?\n",
+                                      "Are the timestamps in ISO-8601 format",
+                                      " (e.g. 2012-08-17T07:27:00-04:00)?\n",
+                                       sep="")}
+  if (length(colLat)  == 0) {msg<-paste("Latitude column not found.\n",
+                                     "Looking for NORTH_LATITUDE(deg)\n",
+                                     sep="")}           
+  if (length(colLon)  == 0) {msg<-paste("Longitude column not found.\n",
+                                     "Looking for EAST_LONGITUDE(deg)\n",
+                                     sep="")}
+  if (length(colId)   == 0) {msg<-paste("ID column not found.\n",
+                                     "Looking for ID(-)\n",
+                                     sep="")}   
+  if (length(colData) == 0) {msg<-paste("Data column(s) not found.\n",
+                                     sep="")}                      
+
+  # check timestamps to be sure they are consistent with ISO-8601.
+  # note: this is not a definitive test. Only the format is being
+  # checked.
+  pattern <- '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}-\\d{2}:\\d{2}'
+  for (ind in 1:Npoints) {
+    if (grepl(pattern, df[ind, colTime]) == FALSE) {
+      msg<-paste("Timestamp is invalid: ", df[ind, colTime], sep="")
+    }
+  }
+
+  if (nchar(msg) != 0) {
+    stop(msg)
+  } else {
+    # all good... write the file
+    write.csv(df[, c(colTime, colLon, colLat, colId, colData)], fileName, 
+              row.names=FALSE, quote=FALSE)
+  }
+
+} # end export_retigo
+#------------------------------------------------------------------------------
+
+
+
+
+dms_to_decimal <- function(degrees, minutes, seconds) {
+#
+# Purpose: Given a latitude or longitude coordinate in 
+#          degrees, minutes, seconds (DMS), return the coordinate 
+#          in decimal degrees.
+#
+# Assumptions: - The input DMS coordinate is valid.
+#
+###############################################################################
+
+  return(degrees + minutes/60.0 + seconds/3600.0)
+
+} # end dms_to_decimal
+#------------------------------------------------------------------------------
+
+
+
+
+
+utm_to_latlon <- function(easting, northing, zone, datum) {
+#
+# Purpose: Given Universal Transverse Mercator (UTM) coordinates, return the 
+#          latitude and longitude in decimal degrees. This function requires the 
+#          rgdal package:
+#          https://cran.r-project.org/web/packages/rgdal/index.html
+#
+# Assumptions: The input UTM coordinates are valid.
+#
+###############################################################################
+
+  rgdalLoaded = require("rgdal", quietly = TRUE)
+  
+  if (rgdalLoaded == TRUE) {
+    utmcoord<-SpatialPoints(cbind(easting, northing), 
+                            proj4string=CRS(paste("+proj=utm +datum=",datum," +zone=",zone,sep="")))
+    lonlatobj<-spTransform(utmcoord,CRS(paste("+proj=longlat +datum=",datum, sep="")))
+
+    # strip out the lon/lat values and return a simple vector
+    lonlat <- vector("numeric", 2)
+    lonlat[1] <- lonlatobj@coords[1]
+    lonlat[2] <- lonlatobj@coords[2]
+    return(lonlat)
+  } else {
+    msg<-paste("\n\nLibrary package RGDAL not loaded.\n",
+               "utm_to_latlon() failed\n", sep="")
+    warning(msg)
+  }
+
+} # end utm_to_latlon
+#------------------------------------------------------------------------------

@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': 'PM2.5(ug/m3)'}, 'Column4': {'prettyName': 'NORTH_LATITUDE(deg)'}, 'Column6': {'prettyName': 'EAST_LONGITUDE(deg)'}, 'Column1': {'prettyName': 'Timestamp(UTC)'}, 'Column3': {'prettyName': 'Black_carbon(ug/m3)'}, 'Column2': {'prettyName': 'ID(-)'}}, 'comments': ['## RETIGO upload']}

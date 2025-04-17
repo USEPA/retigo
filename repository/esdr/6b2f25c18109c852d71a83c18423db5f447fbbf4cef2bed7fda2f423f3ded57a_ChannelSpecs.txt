@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': 'CO(ppb)'}, 'Column4': {'prettyName': 'ID(-)'}, 'Column7': {'prettyName': 'Carspeed(mph)'}, 'Column6': {'prettyName': 'NO2(ppb)'}, 'Column1': {'prettyName': 'Timestamp'}, 'Column3': {'prettyName': 'NORTH_LATITUDE(deg)'}, 'Column2': {'prettyName': 'EAST_LONGITUDE(deg)'}}, 'comments': ['## RETIGO upload']}

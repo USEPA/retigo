@@ -1,0 +1,13 @@
+APIKEY adabdca9455df3656dbba5ad0e0eb62f44f5719dadbf8bde1cf23220934e612f
+PROJECT chid
+KEYWORDS seattle_chinatown_chid_air_toxics_study
+FIRSTNAME matt
+LASTNAME harper
+ORG pscaa
+EMAIL matth@pscleanair.org
+PHONE 2066894009
+REASON adding_some_black_carbon_files_i_collected_for_spatial_analysis_in_a_freeway_air_toxics_study
+QUALITY medium
+INSTRUMENT emerging
+DATATYPE pmbc
+ORIGFILE 112916_pscaa_bc_cid.csv

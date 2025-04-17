@@ -1,0 +1,13 @@
+APIKEY 692d91b5b225365275dc90e19bfcb7f7dd478323b8e21a90476dd8cdba7ee508
+PROJECT cu-pbl
+KEYWORDS pbl_aqiq
+FIRSTNAME percy
+LASTNAME smith
+ORG cu_pbl
+EMAIL percy.smith@colorado.edu
+PHONE none
+REASON aqiq_pbl_at_cu_boulder_
+QUALITY low
+INSTRUMENT mixture
+DATATYPE pm25,pm10,ultrafine,co2,o3,other
+ORIGFILE ypodtest_2024_08_26.csv

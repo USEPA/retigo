@@ -1,0 +1,1159 @@
+html {
+/* Address IE6 background flicker */
+filter: expression(document.execCommand(, false, true));
+}
+
+/* bluered symbols */
+.pm10_balloon_bluered_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_00.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_bluered_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluered/pm10_balloon_19.png');
+cursor: pointer;
+}
+
+
+/* stdgamma symbols */
+.pm10_balloon_stdgamma2_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_00.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_19.png');
+cursor: pointer;
+}
+
+
+/* stdgamma inverted symbols */
+.pm10_balloon_stdgamma2_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_19.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_stdgamma2_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_stdgamma2/pm10_balloon_00.png');
+cursor: pointer;
+}
+
+/* bluemono symbols */
+.pm10_balloon_bluemono_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_00.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_19.png');
+cursor: pointer;
+}
+
+/* bluemono inverted symbols */
+.pm10_balloon_bluemono_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_19.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_bluemono_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_bluemono/pm10_balloon_00.png');
+cursor: pointer;
+}
+
+
+/* viridis symbols */
+.pm10_balloon_viridis_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_00.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_19.png');
+cursor: pointer;
+}
+
+/* viridis inverted symbols */
+.pm10_balloon_viridis_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_19.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_viridis_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_viridis/pm10_balloon_00.png');
+cursor: pointer;
+}
+
+/* colorsafe symbols */
+.pm10_balloon_colorsafe_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_00.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_19.png');
+cursor: pointer;
+}
+
+/* colorsafe inverted symbols */
+.pm10_balloon_colorsafe_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_missing.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_19.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_18.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_17.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_16.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_15.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_14.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_13.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_12.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_11.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_10.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_09.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_08.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_07.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_06.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_05.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_04.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_03.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_02.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_01.png');
+cursor: pointer;
+}
+.pm10_balloon_colorsafe_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/airnow_balloons/pm10_balloon_colorsafe/pm10_balloon_00.png');
+cursor: pointer;
+}

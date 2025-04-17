@@ -1,0 +1,30 @@
+#!/bin/csh -f
+
+
+set colortable_stdgamma2=('#000000' '#000043' '#000087' '#0000D0' '#1C00EA' '#51009E' '#540057' '#950011' '#DE0000' '#FF2500' '#FF6D1C' '#FFA347' '#FFA300' '#A3A300' '#E5E623' '#FFFF50' '#FFFF7A' '#FFFFA7' '#FFFFD1' '#FFFFFF')
+set colortable_bluered  =('#000083' '#0000B3' '#0000E7' '#001BFF' '#004FFF' '#0087FF' '#00BBFF' '#00EFFF' '#23FFDB' '#57FFA7' '#8FFF6F' '#C3FF3B' '#FBFF03' '#FFCF00' '#FF9B00' '#FF6300' '#FF2F00' '#F60000' '#BD0000' '#830000')
+
+set colortable=`echo ${colortable_bluered}`
+set loc=bluered
+
+
+@ colorInd=0
+foreach thiscolor ($colortable)
+  echo $thiscolor
+  @ degrees=0
+  while ($degrees < 360)
+    set degree_zeropad = `echo $degrees | awk '{printf "%03d\n", $0}'`
+    set colorind_zeropad = `echo $colorInd | awk '{printf "%02d\n", $0}'`
+    set file_prefix1=conc_and_angle_${loc}/arrow_${colorind_zeropad}_${degree_zeropad}
+    cat arrow_template.svg |sed "s/#MYCOLOR/${thiscolor}/g" | sed "s/MYDEGREES/${degrees}/g" > arrow_test.svg
+    rsvg -w 44 -h 44 arrow_test.svg $file_prefix1.png
+ 
+    if ($degrees == 0) then
+      set file_prefix2=conc_{loc}
+      cp arrow_test.svg conc_${loc}/arrow_${colorind_zeropad}.svg
+    endif
+
+    @ degrees += 1
+  end
+  @ colorInd += 1
+end

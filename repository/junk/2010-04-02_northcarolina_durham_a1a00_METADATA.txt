@@ -1,0 +1,13 @@
+APIKEY a1a0029eedb34f2fbe51db66fdd89312a22190c614379264832fefa8b161d8b0
+PROJECT retigo
+KEYWORDS none
+FIRSTNAME matt
+LASTNAME freeman
+ORG lockheed
+EMAIL freeman.matt@epa.gov
+PHONE 919-541-4293
+REASON testing
+QUALITY high
+INSTRUMENT advanced
+DATATYPE pm25,ultrafine,pmbc,other
+ORIGFILE mobiledata_retigo.csv

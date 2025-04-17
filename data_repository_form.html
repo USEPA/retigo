@@ -1,0 +1,161 @@
+
+<div class="col-md-12" id="repositoryForm" style="display:none; margin:0px 20px 20px 20px">
+  <br>
+  <div class="col-md-12" style="background:#D8E5EF;overflow:hidden" >
+    <br>
+    <b>Describe data for open access here, and upload below</b><br><br>
+    <b>1) Contact information &ndash; this information will not be published and will be used for RETIGO team members to contact you if there are questions about your data.</b><br><br>
+    
+    <div id="firstColumn" style="float:left; width:330px">
+      <pre>
+ First name<font color="red"></font>    <input tabindex="1" type="text" maxlength="20" id="firstName" onpaste="disablePaste(event)" onkeypress="validateKeyName(event)"><br>
+ Last name<font color="red"></font>     <input tabindex="2" type="text" maxlength="20" id="lastName" onpaste="disablePaste(event)" onkeypress="validateKeyName(event)"><br>
+ Organization<font color="red">*</font>  <input tabindex="3" type="text" maxlength="40" id="Organization" onpaste="disablePaste(event)" onkeypress="validateKeyName(event)"><br>
+ Email address<font color="red">*</font> <input tabindex="4" type="text" maxlength="60" id="emailAddress" onpaste="disablePaste(event)" onkeypress="validateKeyEmail(event)"><br>
+ Phone number<font color="red"></font>  <input tabindex="5" type="text" maxlength="20" id="phoneNumber" onpaste="disablePaste(event)" onkeypress="validateKeyPhone(event)"><br>
+	<font color="red">* = required</font><br>
+      </pre>
+    </div>
+    
+    <div id="secondColumn" style="float:left;">
+      <div id="" style="float:left;width:220px">	
+        Please describe your reason for uploading data. This helps us verify that an actual person is uploading content. <font color="red">*</font><br> (4 char min., 100 char max.)
+      </div>    
+      <textarea tabindex="6" id="Reason" style="resize:none" onpaste="disablePaste(event)" onkeypress="validateKeyParagraph(event)"  maxlength="100" rows="4" cols="30" value=""></textarea>
+    </div>
+    
+    <div style="float:left;clear:both">
+      <b>2) Please provide some information about your data &ndash; this will help others to find your measurements in the database.</b><br>
+      Check all that apply:<br><br>
+      <input name="dataType" tabindex="7" type="checkbox" id="PM25"> Fine particulate matter (PM<sub>2.5</sub>)<br>
+      <input name="dataType" tabindex="8" type="checkbox" id="PM10"> Coarse particulate matter (PM<sub>10</sub>)<br>
+      <input name="dataType" tabindex="9" type="checkbox" id="Ultrafine"> Ultrafine particles<br>
+      <input name="dataType" tabindex="10" type="checkbox" id="PMBC"> PM-black carbon<br>
+      <input name="dataType" tabindex="11" type="checkbox" id="PMOrganic"> PM-organic carbon<br>
+      <input name="dataType" tabindex="12" type="checkbox" id="PMAromatic"> PM-particle-bound polycyclic aromatic hydrocarbons (PAH)<br>
+      <input name="dataType" tabindex="14" type="checkbox" id="PMOther"> PM-other<br>
+      <input name="dataType" tabindex="15" type="checkbox" id="CO"> Carbon monoxide (CO)<br>
+      <input name="dataType" tabindex="16" type="checkbox" id="CO2"> Carbon dioxide (CO<sub>2</sub>)<br>
+      <input name="dataType" tabindex="17" type="checkbox" id="NO"> Nitrogen oxide (NO)<br>
+      <input name="dataType" tabindex="18" type="checkbox" id="NO2"> Nitrogen dioxide (NO<sub>2</sub>)<br>
+      <input name="dataType" tabindex="19" type="checkbox" id="NOX"> Nitrogen oxides (NO<sub>x</sub>)<br>
+      <input name="dataType" tabindex="20" type="checkbox" id="SO2"> Sulphur dioxide (SO<sub>2</sub>)<br>
+      <input name="dataType" tabindex="21" type="checkbox" id="O3"> Ozone (O<sub>3</sub>)<br>
+      <input name="dataType" tabindex="22" type="checkbox" id="CH4"> Methane (CH<sub>4</sub>)<br>
+      <!--input name="dataType" tabindex="23" type="checkbox" id="Gas"> Gasses - other<br-->
+      <input name="dataType" tabindex="24" type="checkbox" id="Wind"> Wind speed and direction<br>
+      <input name="dataType" tabindex="25" type="checkbox" id="Other"> Other<br>
+    </div>
+    
+    <div style="float:left;clear:both">
+      <br>
+      <b>3) How would you rate the level of instrumentation utilized?</b><br><br>
+      <input tabindex="26" type="radio" name="radioInstrument" id="instrument.Advanced" style="float:left;clear:both;margin-top:5px"> 
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%">Advanced: Scientific instrumentation with past-proven performance.
+      </div>
+      
+      <input tabindex="27" type="radio" name="radioInstrument" id="instrument.Emerging" style="float:left;clear:both;margin-top:5px">
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%"> Emerging: New air measurement technologies (e.g., low cost sensors) with less history of use.
+      </div>
+      
+      <input tabindex="28" type="radio" name="radioInstrument" id="instrument.Mixture" style="float:left;clear:both;margin-top:5px">
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%"> Mixture: A mixture of both advanced and emerging technologies.
+      </div>
+      
+      <input tabindex="29" type="radio" name="radioInstrument" id="instrument.Null" checked="true" style="float:left;clear:both;margin-top:5px">
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%"> Not specified.
+      </div>
+      
+    </div>
+    
+    <div style="float:left;clear:both">
+      <br>
+      <b>4) How would you rate the quality level of the data you are providing?</b><br><br>
+      <input tabindex="30" type="radio" name="radioQuality" id="quality.High" style="float:left;clear:both;margin-top:5px"> 
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%">High: Quality checks (e.g., comparison of gas instrument readings against a standard) were conducted on the instruments close to the time of measurement, and I have reviewed the data to remove any periods with potential measurement issues.
+      </div>
+      
+      
+      <input tabindex="31" type="radio" name="radioQuality" id="quality.Medium" style="float:left;clear:both;margin-top:5px"> 
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%">Medium: Quality checks were conducted on the instruments close to the time of measurement, but I have not closely reviewed the data.
+      </div>
+      
+      
+      <input tabindex="32" type="radio" name="radioQuality" id="quality.Low" style="float:left;clear:both;margin-top:5px"> 
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%">Low: No quality checks were conducted close to the time of measurement.
+      </div>
+      
+      
+      <input tabindex="33" type="radio" name="radioQuality" id="quality.Null" checked="true" style="float:left;clear:both;margin-top:5px"> 
+      <div style="float:left;margin-left:5px;margin-top:2px;margin-bottom:5px;width:80%">Not specified.
+      </div>
+      
+    </div>
+    
+    
+    
+    <div style="float:left;clear:both;display:block">
+      <BR>
+      <b>5) Enter optional project code and/or search keywords.</b><br><br>
+      
+      <!--
+      &nbsp;&#8226; To send your data file to the repository, select the file below.<br><br>
+      &nbsp;&#8226;  You may also add an optional project code and/or keywords to associate with the data file.<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;This will allow others to search for your data in the repository.<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;The only allowed characters are letters, numbers, dots(.), dashes(-), commas(,), and underscores(_).<br><br>
+      &nbsp;&#8226;  To upload the file, just click 'Send file to repository'.<br><br>
+      -->
+      
+      
+      <pre>
+ Project code: <input tabindex="34" type="text" id="projectCode" value="" maxlength="20" size="35" onpaste="disablePaste(event)" onkeypress='validateKeyName(event)'> (20 characters max.)<br>
+ Keywords:     <input tabindex="35" type="text" id="keywords" maxlength="64" size="80" value="" onpaste="disablePaste(event)" onkeypress='validateKeyName(event)'> (64 characters max.)<br>
+      </pre>
+      
+      <b>6) Upload your file to the repository.</b><br><br>
+      <input tabindex="36" type="file" id=uploadFile style="width:80%"><br>
+      <!--input tabindex="37" type="button" value="Clear" style="margin-top:5px" onclick='repo.formClear1();'></input-->
+      <!--input tabindex="38" type="button" value="Send file to repository" style="margin-top:5px"  onclick='repo.upload();'></input-->
+      <button style="margin-top:5px" tabindex="37" type="button" class="btn btn-outline-primary" onclick='repo.formClear1();'>Clear</button>
+      <button style="margin-top:5px" tabindex="38" type="button" class="btn btn-primary" onclick='repo.upload();'>Send file to repository</button>
+      
+      
+      <br><br>
+      
+      <i>NOTE: For consistency, the uploaded file will be renamed on the RETIGO server according to its starting date and location. The new file name will appear below once the file has been uploaded. For reference, the original filename will be associated with the uploaded file and made available in the repository browser. NOTE: duplicate uploads (based on file checksum) will be purged from the repository.
+      </i><br><br><br>
+    </div> 
+    <br><br><br><br>
+  </div>
+  
+  <div id="div_dataDisplay" style="display:block;width:100%;height:80%">
+    <center><div id="busy_gif" style="display:none" ><p><img src="images/busy5.gif" /></p></div></center>
+    
+    <p>
+      
+      
+      
+      
+      
+      <center>
+	<textarea id="repo_textarea" onchange="repo.scrollDebug()" rows="5" cols="80" style="margin:20px" spellcheck="false" value=""></textarea>
+      </center>
+      
+      
+      
+  </div>
+  
+  
+  
+  
+  <div id="div_fileSelection" style="display:block">
+    <!--<center><h1>Real-Time Geosptial Data Viewer (RETIGO)</h1></center>-->
+    
+    
+    
+  </div>
+  
+  <br>
+  
+</div> <!-- repositoryForm -->
+

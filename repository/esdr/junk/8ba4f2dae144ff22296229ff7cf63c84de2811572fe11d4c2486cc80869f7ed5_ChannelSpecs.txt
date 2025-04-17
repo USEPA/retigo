@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': 'PM2.5_ugm3'}, 'Column4': {'prettyName': 'Ozone_ppb'}, 'Column7': {'prettyName': 'wind_direction(deg)'}, 'Column6': {'prettyName': 'wind_magnitude(m/s)'}, 'Column1': {'prettyName': 'EAST_LONGITUDE(deg)'}, 'Column3': {'prettyName': 'ID(-)'}, 'Column2': {'prettyName': 'NORTH_LATITUDE(deg)'}}, 'comments': []}

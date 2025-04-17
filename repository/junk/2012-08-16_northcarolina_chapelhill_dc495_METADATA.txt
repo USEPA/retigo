@@ -1,0 +1,13 @@
+APIKEY dc495b4850281421ec955c57bc288e3ff9f5a75ccdca03cf3f75b3dd4ded356a
+PROJECT test
+KEYWORDS test
+FIRSTNAME eben
+LASTNAME thoma
+ORG epa
+EMAIL thoma.eben@epa.gov
+PHONE 919-541-7969
+REASON test_of_system
+QUALITY medium
+INSTRUMENT emerging
+DATATYPE no2
+ORIGFILE ramses_01.csv

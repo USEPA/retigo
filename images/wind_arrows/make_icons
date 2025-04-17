@@ -1,0 +1,28 @@
+#!/bin/csh -f
+
+@ angle=1
+
+echo "#\!/bin/csh -f" > doit
+echo " " >> doit
+
+while ($angle < 360)
+
+  set outfile=`echo $angle | awk '{printf("arrow_""%.3d"".png", $1)}'`	
+
+  set cmd1 = "'(script-fu-matt-rotate "
+  set cmd2 = '"arrow_000.png" '
+  set cmd3 = '"'$outfile'"'
+  set cmd4 = " $angle)'"
+  set cmd5 = " '(gimp-quit 0)'"
+  set cmd  = " $cmd1 $cmd2 $cmd3 $cmd4 $cmd5"
+
+  echo "echo processing $outfile" >> doit
+  echo "/usr/bin/gimp -d -i -b $cmd >& /dev/null" >> doit
+
+
+  @ angle+=1
+
+end
+
+chmod u+x doit
+doit

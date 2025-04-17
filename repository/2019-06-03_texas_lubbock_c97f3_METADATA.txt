@@ -1,0 +1,13 @@
+APIKEY c97f3daed2e4687bae06dc24e63206b5c94f4842805cdf68c81c628f9df0633f
+PROJECT none
+KEYWORDS lubbock_pm
+FIRSTNAME jon
+LASTNAME thompson
+ORG texas_tech
+EMAIL jon.thompson@ttu.edu
+PHONE 806-834-6206
+REASON sharing_of_data_for_examining_long_term_trends_in_pm_levels_in_lubbock_tx.
+QUALITY medium
+INSTRUMENT mixture
+DATATYPE pm25,pm10
+ORIGFILE _june3.csv_.csv

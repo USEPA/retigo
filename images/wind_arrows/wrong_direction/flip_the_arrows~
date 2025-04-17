@@ -1,0 +1,7 @@
+#!/bin/csh -f
+
+@ orig_direction = 0
+
+while ($orig_direction < 359)
+  echo $orig_direction
+end

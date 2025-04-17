@@ -1,0 +1,20 @@
+#!/bin/csh -f
+
+@ orig_direction = 0
+
+while ($orig_direction <= 359)
+  #echo $orig_direction
+  if ($orig_direction < 180) then	
+    @ new_direction = $orig_direction + 180	
+  else
+    @ new_direction = $orig_direction - 180
+  endif
+
+  setenv orig_file `echo $orig_direction | awk '{printf("arrow_""%.3d"".png", $1)}'`
+  setenv new_file  `echo $new_direction  | awk '{printf("arrow_""%.3d"".png", $1)}'`
+
+  echo $orig_file $new_file	
+  cp $orig_file ../$new_file	
+
+  @ orig_direction += 1
+end

@@ -1,0 +1,1159 @@
+html {
+/* Address IE6 background flicker */
+filter: expression(document.execCommand(, false, true));
+}
+
+/* bluered symbols */
+.mysensor_balloon5_bluered_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluered_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluered/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+
+
+/* stdgamma symbols */
+.mysensor_balloon5_stdgamma2_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+
+
+/* stdgamma inverted symbols */
+.mysensor_balloon5_stdgamma2_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_stdgamma2_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_stdgamma2/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+
+/* bluemono symbols */
+.mysensor_balloon5_bluemono_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+
+/* bluemono inverted symbols */
+.mysensor_balloon5_bluemono_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_bluemono_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_bluemono/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+
+
+/* viridis symbols */
+.mysensor_balloon5_viridis_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+
+/* viridis inverted symbols */
+.mysensor_balloon5_viridis_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_viridis_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_viridis/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+
+/* colorsafe symbols */
+.mysensor_balloon5_colorsafe_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_00.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+
+/* colorsafe inverted symbols */
+.mysensor_balloon5_colorsafe_inverted_missing {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_missing.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_00 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_19.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_01 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_18.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_02 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_17.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_03 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_16.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_04 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_15.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_05 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_14.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_06 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_13.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_07 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_12.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_08 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_11.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_09 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_10.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_10 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_09.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_11 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_08.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_12 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_07.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_13 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_06.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_14 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_05.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_15 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_04.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_16 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_03.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_17 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_02.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_18 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_01.png');
+cursor: pointer;
+}
+.mysensor_balloon5_colorsafe_inverted_19 {
+height: 28px;
+width: 28px;
+background-image: url('images/mysensor_balloons/mysensor_balloon5_colorsafe/mysensor_balloon5_00.png');
+cursor: pointer;
+}

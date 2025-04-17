@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': ''}, 'Column4': {'prettyName': ''}, 'Column1': {'prettyName': ''}, 'Column3': {'prettyName': ''}, 'Column2': {'prettyName': ''}}, 'comments': ['## RETIGO upload']}

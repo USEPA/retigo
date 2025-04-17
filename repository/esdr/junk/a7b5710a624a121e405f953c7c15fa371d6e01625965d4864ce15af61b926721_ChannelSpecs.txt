@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': 'CO(ppb)'}, 'Column4': {'prettyName': 'ID(-)'}, 'Column7': {'prettyName': 'wind_direction(deg)'}, 'Column6': {'prettyName': 'wind_magnitude(m/s)'}, 'Column1': {'prettyName': 'Timestamp(UTC)'}, 'Column3': {'prettyName': 'NORTH_LATITUDE(deg)'}, 'Column2': {'prettyName': 'EAST_LONGITUDE(deg)'}}, 'comments': ['## RETIGO upload']}

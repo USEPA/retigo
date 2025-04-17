@@ -1,0 +1,13 @@
+APIKEY 950f9b17827dbe0b5438082b2e918da7cbf85dfd1bf9bc1756356a023a064035
+PROJECT blah
+KEYWORDS test
+FIRSTNAME marie
+LASTNAME oshea
+ORG epa
+EMAIL oshea.marie@epa.gov
+PHONE 555-555-5555
+REASON testing_retigo
+QUALITY low
+INSTRUMENT mixture
+DATATYPE pmbc,o3
+ORIGFILE ramses_06.csv

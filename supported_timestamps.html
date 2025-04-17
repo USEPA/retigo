@@ -1,0 +1,168 @@
+<!--#include file="bootstrap_header_timestampconverter.html" -->
+
+<div id="content" style="float:left;position:relative"><!-- BEGIN PAGE CONTENTS --><!-- EPA SITE-WIDE ANNOUNCEMENTS --><!-- DO NOT REMOVE - this code is used for emergency messages --><!-- If this page is a Program Office or a Topics home page, CHANGE "sitewidec" TO "sitewideb" -->
+
+<p id="sitewidec" style="margin:0px"></p>
+
+<!-- BEGIN PAGE NAME -->
+<br>
+<h3>RETIGO Timestamp Converter</h3>
+<!-- END PAGE NAME -->
+<!-- BEGIN CONTENT AREA -->
+
+<font size=3>
+  <p>The RETIGO timestamp converter can convert timestamps from a variety of formats to the UTC/ISO 8601 timestamp required by RETIGO. The converted timestamps can be copied and pasted into another application (such as a spreadsheet) to create a valid RETIGO input file. If you do not see a format that matches your data file, please <a href="mailto:retigo@epa.gov"> contact the RETIGO development team</a>.<br>
+  </p>
+
+  <h5>Supported timestamps</h5>
+  
+  <ul>
+    <li><b>UNIX</b>
+      <p> 
+        UNIX time is represented by the number of seconds since January 1, 1970, 00:00:00 UTC. 
+      </p>
+    </li>
+    
+    <li><b>IGOR</b>
+      <p>
+        IGOR time is represented by the number of seconds since January 1, 1904, 00:00:00 UTC.
+      </p>
+    </li>
+
+    <li><b>Excel serial time</b>
+      <p>
+        Microsoft Excel uses a floating point number to represent dates and times. The integer part corresponds to the number of days since a reference day, either January 1, 1900 (Windows) or January 1, 1904 (Mac). The decimal part corresponds to the time of day. 
+      </p>
+    </li>
+
+    <li><b>Matlab</b>
+      <p> 
+        Matlab time is represented by the number of days since January 0, 0000. 
+      </p>
+    </li>
+
+    <li><b>hh:mm:ss</b>
+      <p>
+        This is a generic time representation based upon a 24-hour clock. If you use this format you will be asked to supply the starting date and timezone.
+      </p>
+    </li>
+
+    <li><b>MM/DD/YYYY-hh:mm:ss</b>
+      <p>
+        This is a generic date/time representation based upon a 24-hour clock. If you use this format you will be asked to supply the timezone. Note that the field separator for the date is a forward slash (/), and the date and time are separated by a dash (-).
+      </p>
+    </li>
+
+    <li><b>YYYY-MM-DD hh:mm:ss TZ</b>
+      <p>
+        This is an intenational date/time format that supports international timezone codes. The date, time, and timezone code are separated by a spaces ( ). The timezone code, represented here by "TZ", can be any of the values given in the first column in the table below. The GMT offset and description are provided in the table for reference, but are not included in the timestamp to be converted.
+
+        <p id="timezone_table" style="padding-left:20px"></p>
+
+ 
+      </p>
+    </li>
+</ul>
+
+</font>
+
+
+<!-- BEGIN AREA FOOTER --><!-- ADD TEXT/LINKS FOR AREA FOOTER WITHIN THIS PARAGRAPH TAG -->
+<br>
+</div>
+
+<!-- END CONTENT -->
+<hr class="skip" />
+<div style="left: 5px; width: 129px;" id="area-nav"><!-- BEGIN LEFT SIDEBAR NAVIGATION -->
+<!--h3 class="skip">Local Navigation</h3-->
+
+
+<!-- END LEFT SIDEBAR NAVIGATION -->
+
+</div>
+
+<hr class="skip" />
+<div id="footer"><!-- BEGIN FOOTER -->
+<ul id="globalfooter">
+
+  <li><a href="http://www.epa.gov/">EPA Home</a></li>
+
+  <li><a href="http://www.epa.gov/epafiles/usenotice.htm">Privacy and Security Notice</a></li>
+
+<!-- BEGIN AREA COMMENTS LINK --><!-- CHANGE link to point to your own contact page -->
+  <li class="last"><a href="mailto:retigo@epa.gov">Contact Us</a></li>
+
+<!-- END AREA COMMENTS LINK -->
+</ul>
+
+</div>
+
+<!-- END FOOTER -->
+<p class="skip"><a id="skipbot" href="#content" title="Jump to main content.">Jump to main content.</a></p>
+
+</body>
+
+
+
+<!-- code to generate timezone table  -->
+<script type="text/javascript" src="timezones.js"></script>
+<script>
+
+ // create table header
+ let cellWidth   = '100px';
+ let cellPadding = '0px 20px 0px 00px';
+
+ var table = document.createElement("table");
+ var tr = table.insertRow(-1); 
+
+ var th = document.createElement("th"); // TABLE HEADER.
+ th.style.padding = cellPadding;
+ th.innerHTML = "Abbreviation";
+ tr.appendChild(th);
+
+ th = document.createElement("th"); // TABLE HEADER.
+ th.style.padding = cellPadding;
+ th.innerHTML = "GMT offset";
+ tr.appendChild(th);
+
+ th = document.createElement("th"); // TABLE HEADER.
+ th.style.padding = cellPadding;
+ th.innerHTML = "Description";
+ tr.appendChild(th);
+
+ 
+
+ // loop through data and create table rows
+ for (var ind=0; ind<tzLookup.length; ind++) {
+   let abbr   = tzLookup[ind].abbr;
+   let offset = tzLookup[ind].offset;
+   let name   = tzLookup[ind].name;
+   
+   var tr              = table.insertRow(-1);       // new table row.
+ 
+   var tableCell       = tr.insertCell(-1);
+   tableCell.innerHTML = abbr; 
+
+   tableCell       = tr.insertCell(-1);
+   tableCell.innerHTML = offset;  
+   
+   tableCell       = tr.insertCell(-1);
+   //tableCell.innerHTML = name.replace(/([A-Z])/g, ' $1').trim();    
+   tableCell.innerHTML = name;        
+ 
+ }
+
+ // add table to webpage
+ let tzTable = document.getElementById("timezone_table");
+ tzTable.innerHTML = "";
+ tzTable.appendChild(table);
+
+
+</script>
+
+
+
+
+
+
+</html>

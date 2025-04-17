@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': 'PM2.5(ug/m3)'}, 'Column4': {'prettyName': 'Ultrafine_particles(#/cm3)'}, 'Column7': {'prettyName': 'Vehicle_speed(mph)'}, 'Column6': {'prettyName': 'Black_carbon(ug/m3)'}, 'Column1': {'prettyName': 'EAST_LONGITUDE(deg)'}, 'Column3': {'prettyName': 'ID(-)'}, 'Column2': {'prettyName': 'NORTH_LATITUDE(deg)'}}, 'comments': []}

@@ -1,0 +1,13 @@
+APIKEY 55d753999f148c5ee2f7806d22981aeb7435fab890b4d9b1daaa32208e911f02
+PROJECT none
+KEYWORDS fgh_fghfgh_
+FIRSTNAME a
+LASTNAME a
+ORG a
+EMAIL a@a
+PHONE 1234567890
+REASON fgfdsg_dfgdfg_dfgdfg_.
+QUALITY high
+INSTRUMENT advanced
+DATATYPE pm25,pm10,ultrafine
+ORIGFILE minnetonkadatasep2014b_retigo.csv

@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': 'Speed(mph)'}, 'Column4': {'prettyName': 'ID(-)'}, 'Column7': {'prettyName': 'Humidity()'}, 'Column6': {'prettyName': 'Temperature(F)'}, 'Column1': {'prettyName': 'Timestamp'}, 'Column3': {'prettyName': 'NORTH_LATITUDE(deg)'}, 'Column2': {'prettyName': 'EAST_LONGITUDE(deg)'}}, 'comments': ['## RETIGO upload']}

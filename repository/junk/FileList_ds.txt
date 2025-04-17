@@ -1,0 +1,5 @@
+2010-04-02_northcarolina_durham_033b7.csv none none mobiledata_retigo.csv high advanced pm25,ultrafine,pmbc,other
+2010-04-02_northcarolina_durham_e8fd8.csv none none test123.csv null null null
+2012-08-17_northcarolina_chapelhill_75045.csv gmap none ramses_02.csv high advanced pm25,pm10,ultrafine,pmbc,co,co2,no2,other
+2012-09-04_northcarolina_durham_4ea7f.csv gmap none ramses_12.csv high advanced pm25,pm10,ultrafine,pmbc,co,co2,no2,other
+2012-09-20_northcarolina_chapelhill_0f81e.csv gmap none ramses_22.csv high advanced pm25,pm10,ultrafine,pmbc,co,co2,no2,other

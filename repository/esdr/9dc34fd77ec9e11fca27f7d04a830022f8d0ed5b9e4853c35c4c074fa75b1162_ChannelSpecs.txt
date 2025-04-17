@@ -1,0 +1,1 @@
+{'channels': {'Column5': {'prettyName': 'UltrafineParticleCount(#/cc)'}, 'Column4': {'prettyName': 'ID(-)'}, 'Column1': {'prettyName': 'Timestamp'}, 'Column3': {'prettyName': 'NORTH_LATITUDE(deg)'}, 'Column2': {'prettyName': 'EAST_LONGITUDE(deg)'}}, 'comments': ['## RETIGO upload']}

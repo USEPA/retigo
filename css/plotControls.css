@@ -1,0 +1,13 @@
+.plotControls {
+    font-size:10px;
+    margin-top:0px;
+    margin-bottom:1px;
+    margin-left:0px;
+    margin-right:0px;
+    padding:0px;
+    line-height:100%;
+}
+
+.plotControls input {
+    margin-right:5px;
+}

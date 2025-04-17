@@ -1,0 +1,13 @@
+APIKEY 966f1bd3518c3c1dc480811f2bd685cc118e65cc2a5aa25b36b34d8301dcb6ea
+PROJECT none
+KEYWORDS none
+FIRSTNAME none
+LASTNAME none
+ORG epa
+EMAIL test@test
+PHONE none
+REASON testing
+QUALITY null
+INSTRUMENT null
+DATATYPE null
+ORIGFILE retigo_example.csv

@@ -1,0 +1,13 @@
+APIKEY 2c0f783ad3f4b8eaa89fc8a90021b7135aa23a96ca8e24c6be9d17d52c4b7ff9
+PROJECT cu_boulder_pbl
+KEYWORDS none
+FIRSTNAME alexandra
+LASTNAME fowler
+ORG university_of_colorado_boulder
+EMAIL alexandra.fowler@colorado.edu
+PHONE none
+REASON this_data_is_used_as_a_test_to_see_if_we_are_able_to_upload_files_into_the_retigo_platform._
+QUALITY low
+INSTRUMENT emerging
+DATATYPE pm25,pm10,co,co2,o3,other
+ORIGFILE ypodz2_2024_07_08.csv

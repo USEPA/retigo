@@ -1,0 +1,720 @@
+#!/bin/csh -f
+ 
+echo processing arrow_001.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_001.png"  1)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_002.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_002.png"  2)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_003.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_003.png"  3)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_004.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_004.png"  4)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_005.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_005.png"  5)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_006.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_006.png"  6)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_007.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_007.png"  7)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_008.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_008.png"  8)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_009.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_009.png"  9)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_010.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_010.png"  10)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_011.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_011.png"  11)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_012.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_012.png"  12)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_013.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_013.png"  13)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_014.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_014.png"  14)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_015.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_015.png"  15)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_016.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_016.png"  16)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_017.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_017.png"  17)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_018.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_018.png"  18)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_019.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_019.png"  19)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_020.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_020.png"  20)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_021.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_021.png"  21)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_022.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_022.png"  22)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_023.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_023.png"  23)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_024.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_024.png"  24)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_025.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_025.png"  25)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_026.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_026.png"  26)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_027.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_027.png"  27)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_028.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_028.png"  28)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_029.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_029.png"  29)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_030.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_030.png"  30)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_031.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_031.png"  31)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_032.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_032.png"  32)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_033.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_033.png"  33)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_034.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_034.png"  34)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_035.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_035.png"  35)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_036.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_036.png"  36)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_037.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_037.png"  37)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_038.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_038.png"  38)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_039.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_039.png"  39)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_040.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_040.png"  40)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_041.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_041.png"  41)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_042.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_042.png"  42)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_043.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_043.png"  43)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_044.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_044.png"  44)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_045.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_045.png"  45)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_046.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_046.png"  46)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_047.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_047.png"  47)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_048.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_048.png"  48)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_049.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_049.png"  49)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_050.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_050.png"  50)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_051.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_051.png"  51)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_052.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_052.png"  52)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_053.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_053.png"  53)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_054.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_054.png"  54)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_055.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_055.png"  55)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_056.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_056.png"  56)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_057.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_057.png"  57)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_058.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_058.png"  58)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_059.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_059.png"  59)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_060.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_060.png"  60)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_061.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_061.png"  61)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_062.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_062.png"  62)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_063.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_063.png"  63)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_064.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_064.png"  64)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_065.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_065.png"  65)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_066.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_066.png"  66)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_067.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_067.png"  67)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_068.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_068.png"  68)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_069.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_069.png"  69)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_070.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_070.png"  70)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_071.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_071.png"  71)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_072.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_072.png"  72)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_073.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_073.png"  73)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_074.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_074.png"  74)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_075.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_075.png"  75)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_076.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_076.png"  76)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_077.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_077.png"  77)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_078.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_078.png"  78)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_079.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_079.png"  79)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_080.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_080.png"  80)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_081.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_081.png"  81)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_082.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_082.png"  82)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_083.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_083.png"  83)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_084.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_084.png"  84)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_085.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_085.png"  85)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_086.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_086.png"  86)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_087.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_087.png"  87)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_088.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_088.png"  88)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_089.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_089.png"  89)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_090.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_090.png"  90)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_091.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_091.png"  91)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_092.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_092.png"  92)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_093.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_093.png"  93)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_094.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_094.png"  94)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_095.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_095.png"  95)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_096.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_096.png"  96)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_097.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_097.png"  97)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_098.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_098.png"  98)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_099.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_099.png"  99)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_100.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_100.png"  100)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_101.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_101.png"  101)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_102.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_102.png"  102)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_103.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_103.png"  103)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_104.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_104.png"  104)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_105.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_105.png"  105)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_106.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_106.png"  106)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_107.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_107.png"  107)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_108.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_108.png"  108)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_109.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_109.png"  109)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_110.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_110.png"  110)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_111.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_111.png"  111)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_112.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_112.png"  112)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_113.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_113.png"  113)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_114.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_114.png"  114)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_115.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_115.png"  115)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_116.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_116.png"  116)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_117.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_117.png"  117)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_118.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_118.png"  118)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_119.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_119.png"  119)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_120.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_120.png"  120)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_121.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_121.png"  121)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_122.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_122.png"  122)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_123.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_123.png"  123)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_124.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_124.png"  124)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_125.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_125.png"  125)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_126.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_126.png"  126)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_127.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_127.png"  127)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_128.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_128.png"  128)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_129.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_129.png"  129)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_130.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_130.png"  130)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_131.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_131.png"  131)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_132.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_132.png"  132)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_133.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_133.png"  133)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_134.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_134.png"  134)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_135.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_135.png"  135)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_136.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_136.png"  136)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_137.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_137.png"  137)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_138.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_138.png"  138)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_139.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_139.png"  139)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_140.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_140.png"  140)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_141.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_141.png"  141)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_142.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_142.png"  142)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_143.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_143.png"  143)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_144.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_144.png"  144)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_145.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_145.png"  145)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_146.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_146.png"  146)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_147.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_147.png"  147)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_148.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_148.png"  148)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_149.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_149.png"  149)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_150.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_150.png"  150)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_151.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_151.png"  151)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_152.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_152.png"  152)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_153.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_153.png"  153)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_154.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_154.png"  154)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_155.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_155.png"  155)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_156.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_156.png"  156)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_157.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_157.png"  157)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_158.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_158.png"  158)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_159.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_159.png"  159)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_160.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_160.png"  160)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_161.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_161.png"  161)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_162.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_162.png"  162)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_163.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_163.png"  163)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_164.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_164.png"  164)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_165.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_165.png"  165)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_166.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_166.png"  166)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_167.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_167.png"  167)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_168.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_168.png"  168)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_169.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_169.png"  169)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_170.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_170.png"  170)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_171.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_171.png"  171)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_172.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_172.png"  172)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_173.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_173.png"  173)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_174.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_174.png"  174)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_175.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_175.png"  175)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_176.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_176.png"  176)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_177.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_177.png"  177)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_178.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_178.png"  178)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_179.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_179.png"  179)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_180.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_180.png"  180)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_181.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_181.png"  181)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_182.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_182.png"  182)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_183.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_183.png"  183)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_184.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_184.png"  184)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_185.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_185.png"  185)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_186.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_186.png"  186)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_187.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_187.png"  187)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_188.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_188.png"  188)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_189.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_189.png"  189)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_190.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_190.png"  190)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_191.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_191.png"  191)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_192.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_192.png"  192)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_193.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_193.png"  193)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_194.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_194.png"  194)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_195.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_195.png"  195)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_196.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_196.png"  196)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_197.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_197.png"  197)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_198.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_198.png"  198)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_199.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_199.png"  199)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_200.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_200.png"  200)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_201.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_201.png"  201)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_202.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_202.png"  202)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_203.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_203.png"  203)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_204.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_204.png"  204)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_205.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_205.png"  205)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_206.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_206.png"  206)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_207.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_207.png"  207)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_208.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_208.png"  208)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_209.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_209.png"  209)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_210.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_210.png"  210)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_211.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_211.png"  211)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_212.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_212.png"  212)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_213.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_213.png"  213)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_214.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_214.png"  214)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_215.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_215.png"  215)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_216.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_216.png"  216)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_217.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_217.png"  217)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_218.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_218.png"  218)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_219.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_219.png"  219)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_220.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_220.png"  220)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_221.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_221.png"  221)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_222.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_222.png"  222)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_223.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_223.png"  223)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_224.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_224.png"  224)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_225.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_225.png"  225)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_226.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_226.png"  226)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_227.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_227.png"  227)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_228.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_228.png"  228)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_229.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_229.png"  229)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_230.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_230.png"  230)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_231.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_231.png"  231)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_232.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_232.png"  232)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_233.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_233.png"  233)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_234.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_234.png"  234)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_235.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_235.png"  235)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_236.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_236.png"  236)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_237.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_237.png"  237)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_238.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_238.png"  238)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_239.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_239.png"  239)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_240.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_240.png"  240)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_241.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_241.png"  241)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_242.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_242.png"  242)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_243.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_243.png"  243)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_244.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_244.png"  244)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_245.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_245.png"  245)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_246.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_246.png"  246)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_247.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_247.png"  247)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_248.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_248.png"  248)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_249.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_249.png"  249)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_250.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_250.png"  250)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_251.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_251.png"  251)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_252.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_252.png"  252)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_253.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_253.png"  253)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_254.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_254.png"  254)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_255.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_255.png"  255)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_256.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_256.png"  256)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_257.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_257.png"  257)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_258.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_258.png"  258)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_259.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_259.png"  259)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_260.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_260.png"  260)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_261.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_261.png"  261)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_262.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_262.png"  262)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_263.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_263.png"  263)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_264.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_264.png"  264)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_265.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_265.png"  265)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_266.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_266.png"  266)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_267.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_267.png"  267)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_268.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_268.png"  268)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_269.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_269.png"  269)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_270.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_270.png"  270)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_271.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_271.png"  271)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_272.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_272.png"  272)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_273.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_273.png"  273)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_274.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_274.png"  274)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_275.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_275.png"  275)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_276.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_276.png"  276)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_277.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_277.png"  277)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_278.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_278.png"  278)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_279.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_279.png"  279)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_280.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_280.png"  280)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_281.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_281.png"  281)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_282.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_282.png"  282)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_283.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_283.png"  283)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_284.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_284.png"  284)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_285.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_285.png"  285)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_286.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_286.png"  286)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_287.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_287.png"  287)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_288.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_288.png"  288)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_289.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_289.png"  289)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_290.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_290.png"  290)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_291.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_291.png"  291)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_292.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_292.png"  292)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_293.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_293.png"  293)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_294.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_294.png"  294)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_295.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_295.png"  295)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_296.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_296.png"  296)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_297.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_297.png"  297)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_298.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_298.png"  298)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_299.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_299.png"  299)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_300.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_300.png"  300)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_301.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_301.png"  301)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_302.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_302.png"  302)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_303.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_303.png"  303)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_304.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_304.png"  304)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_305.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_305.png"  305)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_306.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_306.png"  306)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_307.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_307.png"  307)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_308.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_308.png"  308)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_309.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_309.png"  309)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_310.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_310.png"  310)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_311.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_311.png"  311)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_312.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_312.png"  312)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_313.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_313.png"  313)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_314.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_314.png"  314)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_315.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_315.png"  315)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_316.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_316.png"  316)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_317.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_317.png"  317)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_318.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_318.png"  318)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_319.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_319.png"  319)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_320.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_320.png"  320)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_321.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_321.png"  321)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_322.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_322.png"  322)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_323.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_323.png"  323)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_324.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_324.png"  324)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_325.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_325.png"  325)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_326.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_326.png"  326)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_327.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_327.png"  327)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_328.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_328.png"  328)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_329.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_329.png"  329)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_330.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_330.png"  330)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_331.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_331.png"  331)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_332.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_332.png"  332)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_333.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_333.png"  333)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_334.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_334.png"  334)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_335.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_335.png"  335)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_336.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_336.png"  336)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_337.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_337.png"  337)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_338.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_338.png"  338)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_339.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_339.png"  339)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_340.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_340.png"  340)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_341.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_341.png"  341)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_342.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_342.png"  342)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_343.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_343.png"  343)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_344.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_344.png"  344)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_345.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_345.png"  345)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_346.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_346.png"  346)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_347.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_347.png"  347)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_348.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_348.png"  348)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_349.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_349.png"  349)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_350.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_350.png"  350)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_351.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_351.png"  351)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_352.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_352.png"  352)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_353.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_353.png"  353)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_354.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_354.png"  354)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_355.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_355.png"  355)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_356.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_356.png"  356)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_357.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_357.png"  357)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_358.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_358.png"  358)'  '(gimp-quit 0)' >& /dev/null
+echo processing arrow_359.png
+/usr/bin/gimp -d -i -b  '(script-fu-matt-rotate  "arrow_000.png"  "arrow_359.png"  359)'  '(gimp-quit 0)' >& /dev/null

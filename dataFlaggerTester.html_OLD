@@ -1,0 +1,335 @@
+
+
+<!--link href="external/bootstrap-4.0.0-alpha.5-dist/css/bootstrap.min.css" rel="stylesheet"-->
+<script src="external/jquery-1.12.4.js"></script>
+<!--script src="external/bootstrap-4.0.0-alpha.5-dist/js/bootstrap.min.js"></script-->
+
+<link type="text/css" href="external/jquery-ui-1/css/ui-lightness/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="external/jquery-ui-1/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="external/jquery-ui-1/js/jquery-ui-1.8.24.custom.min.js"></script>
+
+<script type="text/javascript" src="external/FileSaver.js"></script>
+<script type="text/javascript" src="external/jszip/dist/jszip.js"></script>
+
+<script language="javascript" type="text/javascript" src="external/flot/flot_0.8.1/emvl_jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="external/flot/flot_0.8.1/jquery.flot.time.js"></script>
+<script language="javascript" type="text/javascript" src="external/flot/flot_0.8.1/jquery.flot.symbol.js"></script>
+<script language="javascript" type="text/javascript" src="external/flot/flot_0.8.1/jquery.flot.errorbars.js"></script>
+<script language="javascript" type="text/javascript" src="external/flot/flot_0.8.1/jquery.flot.selection.js"></script>
+<script language="javascript" type="text/javascript" src="external/flot/flot-axislabels-master/jquery.flot.axislabels.js"></script>
+    
+<script src="dataFlagger.js"></script>
+
+<div class="container-fluid" style="margin:10px;padding:10px;">
+  <div id="SmoketractDescription" class="row">
+    <div class="col-1"></div>
+    <div class="col-10" style="padding-top:20px;">
+      
+      Read a sensor data file and analyze it with dataFlagger:<br><br>
+      
+      File 1:&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="file"  id="file1" style="min-width:400px;max-width:400px;background-color:#E9E9ED;padding-right:10px">
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <table style="display:inline-block;vertical-align:bottom">
+        <tr>
+          <td><button id="load1"    type="button" onclick='loadSensorFile(this.id)'>Load</button></td>
+          <td><button id="view1"    type="button" onclick='viewSensor(this.id)'    >Show Obj</button></td>
+          <td><button id="analyze1" type="button" onclick='analyzeSensor(this.id)' >Analyze</button></td>
+          <td><select id="varSelector1" onchange="analyzeSensor('analyze1')"></select></td>
+        </tr>
+      </table>
+      <div title="Timeseries plot 1" id="ts_canvas1" style="height:200px;width:100%;margin:0px;padding:0px;font-size:14px;"></div>
+      <div style="display:inline-block;">
+        <span id="plot1_colorbar1" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>Constant</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span id="plot1_colorbar2" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>OutlierStat</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span id="plot1_colorbar3" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>OutlierStddev</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span id="plot1_colorbar4" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>Drift</label>
+      </div>      
+
+      <br>
+      <hr>
+      <br>
+      File 2:&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="file"  id="file2" style="min-width:400px;max-width:400px;background-color:#E9E9ED;padding-right:10px">
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <table style="display:inline-block;vertical-align:bottom">
+        <tr>
+          <td><button id="load2"    type="button" onclick='loadSensorFile(this.id)'>Load</button></td>
+          <td><button id="view2"    type="button" onclick='viewSensor(this.id)'    >Show Obj</button></td>
+          <td><button id="analyze2" type="button" onclick='analyzeSensor(this.id)' >Analyze</button></td>
+          <td><select id="varSelector2" onchange="analyzeSensor('analyze2')"></select></td>
+        </tr>
+      </table>
+      <div title="Timeseries plot 2" id="ts_canvas2" style="height:200px;width:100%;margin:0px;padding:0px;font-size:14px;"></div>
+      <div style="display:inline-block;">
+        <span id="plot2_colorbar1" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>Constant</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span id="plot2_colorbar2" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>OutlierStat</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span id="plot2_colorbar3" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>OutlierStddev</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span id="plot2_colorbar4" style="display:inline-block;width:20px;height:10pt;border:1px solid black"></span><label>Drift</label>
+      </div>     
+
+      
+    </div>
+    <div class="col-1"></div>
+  </div>
+</div>
+<br>
+
+
+
+<!-- functions related to processing events on this page -->
+<script>
+
+  var oSensor1;
+  var oSensor2;
+  var myFlaggedIndices1;
+  var myFlaggedIndices2;
+
+  
+  var missingValue = -9999;
+
+  colorGray          = "#CCCCCC";
+  colorConstant      = "#FF0000";
+  colorOutlierStat   = "#00FF00";
+  colorOutlierStddev = "#0000FF";
+  colorDrift         = "#FFFF00";
+
+  document.getElementById("plot1_colorbar1").style.backgroundColor = colorConstant;
+  document.getElementById("plot2_colorbar1").style.backgroundColor = colorConstant;
+  
+  document.getElementById("plot1_colorbar2").style.backgroundColor = colorOutlierStat;
+  document.getElementById("plot2_colorbar2").style.backgroundColor = colorOutlierStat;
+
+  document.getElementById("plot1_colorbar3").style.backgroundColor = colorOutlierStddev;
+  document.getElementById("plot2_colorbar3").style.backgroundColor = colorOutlierStddev;
+
+  document.getElementById("plot1_colorbar4").style.backgroundColor = colorDrift;
+  document.getElementById("plot2_colorbar4").style.backgroundColor = colorDrift;
+  
+  
+  $(window).resize(function() {
+      updateTsPlot("analyze1");
+      updateTsPlot("analyze2");
+  });
+
+
+
+  
+  function loadSensorFile(elementID) {
+
+      var fileNum;
+      if (elementID == "load1") {
+          fileNum = "file1";
+      } else if (elementID == "load2") {
+          fileNum = "file2";
+      }
+      
+      fileToLoad = document.getElementById(fileNum).files[0];
+            
+      var fr = new FileReader();
+      fr.onload = (function (myFile) {
+
+          if (fileNum == "file1") {
+              oSensor1 = JSON.parse(fr.result);
+              uniqueIDs = oSensor1.id.filter(onlyUnique).sort(function(a, b){return a - b});
+              mySelector = document.getElementById("varSelector1");
+              while (mySelector.options.length > 0) {
+                  mySelector.remove(0);
+              }
+              for (i=0; i<uniqueIDs.length; i++) {
+                  mySelector.options[mySelector.options.length] = new Option(uniqueIDs[i], uniqueIDs[i]);
+              }
+          } else if (fileNum == "file2") {
+              oSensor2 = JSON.parse(fr.result);
+              uniqueIDs = oSensor2.id.filter(onlyUnique).sort(function(a, b){return a - b});
+              mySelector = document.getElementById("varSelector2");
+              while (mySelector.options.length > 0) {
+                  mySelector.remove(0);
+              }
+              for (i=0; i<uniqueIDs.length; i++) {
+                  mySelector.options[mySelector.options.length] = new Option(uniqueIDs[i], uniqueIDs[i]);
+              }
+          }
+          console.log("loaded", fileToLoad.name, "as", fileNum);
+          
+      })
+
+      fr.onerror = (function (myFile) {
+          console.log("Error loading", fileToLoad.name);
+      })
+      
+      // load local file
+      fr.readAsText(fileToLoad);
+  }
+
+
+  function viewSensor(elementID) {
+
+      var mySensor;
+      
+      if (elementID == "view1") {
+          mySensorObj = oSensor1;
+      } else if (elementID == "view2") {
+          mySensorObj = oSensor2;
+      }
+      
+      console.log(mySensorObj.name, ":");
+      console.log(mySensorObj);
+      console.log("--------");
+  }
+
+  
+  function analyzeSensor(elementID) {
+
+      let mySensorObj;
+      let myID;
+
+      console.log("dataFlagger output:");
+
+      console.log(elementID);
+      
+      if (elementID == "analyze1") {
+          mySensorObj       = oSensor1;
+          myVarID           = document.getElementById("varSelector1").value;
+          myFlaggedIndices1 = [];
+          myFlaggedIndices1 = dataFlagger(mySensorObj, myVarID);
+      } else if (elementID == "analyze2") {
+          mySensorObj       = oSensor2;
+          myVarID           = document.getElementById("varSelector2").value;
+          myFlaggedIndices2 = [];
+          myFlaggedIndices2 = dataFlagger(mySensorObj, myVarID);
+      }
+      
+      
+      updateTsPlot(elementID);
+      
+      console.log("--------");
+      console.log(mySensorObj.name, "flagged indices:");
+      if (elementID == "analyze1") {
+          console.log(myFlaggedIndices1);
+      } else if (elementID == "analyze2") {
+          console.log(myFlaggedIndices2);
+      }
+      console.log("--------");
+  }
+  
+
+  function onlyUnique(value, index, array) {
+      return array.indexOf(value) === index;
+  }
+
+
+  function updateTsPlot(elementID) {
+
+      let myPlotData = [];
+
+      if (elementID == "analyze1") {
+          mySensorObj      = oSensor1;
+          myVarID          = document.getElementById("varSelector1").value;
+          myCanvas         = document.getElementById("ts_canvas1");
+          myFlaggedIndices = myFlaggedIndices1;
+      } else if (elementID == "analyze2") {
+          mySensorObj      = oSensor2;
+          myVarID          = document.getElementById("varSelector2").value;
+          myCanvas         = document.getElementById("ts_canvas2");
+          myFlaggedIndices = myFlaggedIndices2;
+      }
+
+      if (mySensorObj !== undefined) {
+          let isSiteArrayRegular = ! Array.isArray(mySensorObj.nSites);
+          let nTimesteps         = mySensorObj.nTimes;
+          let nSites;
+          
+          let globalIndex        = 0;
+          let my_ymin = 1000000000000000.0;
+          let my_ymax = 0.0;
+          for (ts=0; ts<nTimesteps; ts++) {
+              
+              if ( isSiteArrayRegular ) {
+                  nSites =  mySensorObj.nSites;
+              } else {
+                  nSites = mySensorObj.nSites[ts];
+              }
+              
+              for (site=0; site<nSites; site++) {
+                  let thisID       = mySensorObj.id[globalIndex];
+                  if (thisID == myVarID) {
+                      let thisMsec      = mySensorObj.msec[globalIndex];
+                      let thisTimestamp = mySensorObj.timestamp[globalIndex];
+                      let thisData      = mySensorObj.variable[globalIndex];
+                      
+                      if (thisData != missingValue) {
+                          myPlotData.push([thisMsec, thisData]);
+                          if (thisData < my_ymin) { my_ymin = thisData; }
+                          if (thisData > my_ymax) { my_ymax = thisData; }
+                      }
+                  }
+                  globalIndex += 1;
+              }
+          }
+
+          console.log(my_ymin, my_ymax);
+          
+          //myFlagData = [];
+          markings = [];
+          sampleRateMsec = 3600 * 1000;
+
+          if (myFlaggedIndices !== undefined) {
+              for (i=0; i<myFlaggedIndices.constant.length; i++) {
+                  myFlaggedMsec = myFlaggedIndices.constant[i][3];
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)}, color:colorGray} );
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)},
+                                 yaxis: {from: my_ymin, to: my_ymax/4},
+                                 color:colorConstant} );
+              }
+          
+              for (i=0; i<myFlaggedIndices.outlierStat.length; i++) {
+                  myFlaggedMsec = myFlaggedIndices.outlierStat[i][3];
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)}, color:colorGray} );
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)},
+                                 yaxis: {from: my_ymax/4, to: my_ymax/2},
+                                 color:colorOutlierStat} );
+              }
+              for (i=0; i<myFlaggedIndices.outlierStddev.length; i++) {
+                  myFlaggedMsec = myFlaggedIndices.outlierStddev[i][3];
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)}, color:colorGray} );
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)},
+                                 yaxis: {from: my_ymax/2, to: 3*my_ymax/4},
+                                 color:colorOutlierStddev} );
+              }
+              for (i=0; i<myFlaggedIndices.drift.length; i++) {
+                  myFlaggedMsec = myFlaggedIndices.drift[i][3];
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)}, color:colorGray} );
+                  markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)},
+                                 yaxis: {from: 3*my_ymax/4, to: 3*my_ymax/4},
+                                 color:colorDrift} );
+              }
+          }
+          
+          tsPlotOptions = { xaxis: {mode:"time", axisLabel:"Time", color:"#000000"},
+                            yaxis: {min:my_ymin, max:my_ymax, axisLabel:"Sensor " + myVarID, color:"#000000", position:"left"},
+                            grid:  {show:true, markings:markings},
+                            legend: {}
+                          };
+          
+          tsPlot = $.plot(myCanvas,
+                          [{data:myPlotData, color:"#000000", points:{show:true, symbol:"circle", fill:true, fillColor:"#0000FF"}}],
+                          tsPlotOptions);
+
+
+         
+
+          
+      }
+      
+  }
+
+
+  
+</script>
+
+
+
+
+
+

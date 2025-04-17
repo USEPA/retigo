@@ -1,0 +1,13 @@
+APIKEY 343fca033843fbcdb3b087201dc3a0c30584f5921ed2c979ac1186c4d4e4d8fa
+PROJECT none
+KEYWORDS none
+FIRSTNAME john
+LASTNAME doe
+ORG not_applicable
+EMAIL doe.john@mail.com
+PHONE 555-555-1212
+REASON i_wanted_to_share_my_environmental_data_with_the_citizen_science_community.
+QUALITY medium
+INSTRUMENT emerging
+DATATYPE pm25,ultrafine,pmbc
+ORIGFILE mobiledata_retigo.csv
