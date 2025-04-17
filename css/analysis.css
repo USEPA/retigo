@@ -2,44 +2,44 @@
   display: block;
   width:31px;
   height:31px;
-  background: url('images/analysis/home2.png') no-repeat top;
+  background: url('../images/analysis/home2.png') no-repeat top;
 }
 #home_b:active {
-  background: url('images/analysis/home_selected2.png') no-repeat bottom;
+  background: url('../images/analysis/home_selected2.png') no-repeat bottom;
 }
 
 #hand_b {
   width:31px;
   height:31px;
-  background-image: url('images/analysis/hand.png');
+  background-image: url('../images/analysis/hand.png');
 }
 #hand_b.selected {
-  background-image: url('images/analysis/hand_selected.png');
+  background-image: url('../images/analysis/hand_selected.png');
 }
 
 #marker_b {
   width:31px;
   height:31px;
-  background-image: url('images/analysis/place_marker.png');
+  background-image: url('../images/analysis/place_marker.png');
 }
 #marker_b.selected {
-  background-image: url('images/analysis/place_marker_selected.png');
+  background-image: url('../images/analysis/place_marker_selected.png');
 }
 
 #line_b {
   width:31px;
   height:31px;
-  background-image: url('images/analysis/place_line.png');
+  background-image: url('../images/analysis/place_line.png');
 }
 #line_b.selected {
-  background-image: url('images/analysis/place_line_selected.png');
+  background-image: url('../images/analysis/place_line_selected.png');
 }
 
 #crop_b {
   width:31px;
   height:31px;
-  background-image: url('images/analysis/crop.png');
+  background-image: url('../images/analysis/crop.png');
 }
 #crop_b.selected {
-  background-image: url('images/analysis/crop_selected.png');
+  background-image: url('../images/analysis/crop_selected.png');
 }

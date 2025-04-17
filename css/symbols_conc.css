@@ -5,100 +5,100 @@ filter: expression(document.execCommand(, false, true));
 .highlight_symbol {
 height: 25px;
 width: 25px;
-background-image: url('images/misc_symbols/selected_marker_symbol.png');
+background-image: url('../images/misc_symbols/selected_marker_symbol.png');
 cursor: pointer;
 }
 .aqs_symbol_muted {
 height: 40px;
 width: 40px;
-/*background-image: url('images/aqs_icon3_muted.png');*/
-background-image: url('images/aqs_icon3_muted_notext.png');
+/*background-image: url('../images/aqs_icon3_muted.png');*/
+background-image: url('../images/aqs_icon3_muted_notext.png');
 background-repeat: no-repeat;
 cursor: pointer;
 }
 .ozone_flag {
 height: 28px;
 width: 28px;
-background-image: url('images/ozone_balloon.png');
+background-image: url('../images/ozone_balloon.png');
 background-repeat: no-repeat;
 cursor: pointer;
 }
 .pm25_flag {
 height: 28px;
 width: 28px;
-background-image: url('images/pm25_balloon.png');
+background-image: url('../images/pm25_balloon.png');
 background-repeat: no-repeat;
 cursor: pointer;
 }
 .co_flag {
 height: 28px;
 width: 28px;
-background-image: url('images/co_balloon.png');
+background-image: url('../images/co_balloon.png');
 background-repeat: no-repeat;
 cursor: pointer;
 }
 .no2_flag {
 height: 28px;
 width: 28px;
-background-image: url('images/no2_balloon.png');
+background-image: url('../images/no2_balloon.png');
 background-repeat: no-repeat;
 cursor: pointer;
 }
 .so2_flag {
 height: 28px;
 width: 28px;
-background-image: url('images/so2_balloon.png');
+background-image: url('../images/so2_balloon.png');
 background-repeat: no-repeat;
 cursor: pointer;
 }
 .aqs_symbol {
 height: 40px;
 width: 40px;
-background-image: url('images/aqs_icon3.png');
+background-image: url('../images/aqs_icon3.png');
 background-repeat: no-repeat;
 cursor: pointer;
 }
 /*.surfmet_symbol {
 height: 40px;
 width: 40px;
-background-image: url('images/surfmet_icon.png');
+background-image: url('../images/surfmet_icon.png');
 cursor: pointer;
 }*/
 .metar_temperature_symbol {
 height: 20px;
 width: 20px;
-background-image: url('images/metar3_temperature.png');
+background-image: url('../images/metar3_temperature.png');
 cursor: pointer;
 }
 .metar_pressure_symbol {
 height: 20px;
 width: 20px;
-background-image: url('images/metar3_pressure.png');
+background-image: url('../images/metar3_pressure.png');
 cursor: pointer;
 }
 .metar_windspeed_symbol {
 height: 20px;
 width: 20px;
-background-image: url('images/metar3_windspeed.png');
+background-image: url('../images/metar3_windspeed.png');
 cursor: pointer;
 }
 .metar_winddirection_symbol {
 height: 20px;
 width: 20px;
-background-image: url('images/metar3_winddirection.png');
+background-image: url('../images/metar3_winddirection.png');
 cursor: pointer;
 }
 .purpleair_pm25_symbol{
 height: 20px;
 width: 20px;
-/*background-image: url('images/purpleair_pm25.png');*/
-background-image: url('images/purpleair_square.png');
+/*background-image: url('../images/purpleair_pm25.png');*/
+background-image: url('../images/purpleair_square.png');
 cursor: pointer;
 }
 .hms_firepower_symbol {
 height: 20px;
 width: 20px;
-background-image: url('images/fire_icon.png');
+background-image: url('../images/fire_icon.png');
 cursor: pointer;
 }
 
@@ -106,133 +106,133 @@ cursor: pointer;
 .conc_bluered_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_bluered/conc_missing.gif');
+background-image: url('../images/conc_symbols_bluered/conc_missing.gif');
 cursor: pointer;
 }
 .conc_bluered_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_fill.gif');
+background-image: url('../images/conc_symbols_bluered/conc_fill.gif');
 cursor: pointer;
 }
 .conc_bluered_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_00.gif');
+background-image: url('../images/conc_symbols_bluered/conc_00.gif');
 cursor: pointer;
 }
 .conc_bluered_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_01.gif');
+background-image: url('../images/conc_symbols_bluered/conc_01.gif');
 cursor: pointer;
 }
 .conc_bluered_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_02.gif');
+background-image: url('../images/conc_symbols_bluered/conc_02.gif');
 cursor: pointer;
 }
 .conc_bluered_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_03.gif');
+background-image: url('../images/conc_symbols_bluered/conc_03.gif');
 cursor: pointer;
 }
 .conc_bluered_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_04.gif');
+background-image: url('../images/conc_symbols_bluered/conc_04.gif');
 cursor: pointer;
 }
 .conc_bluered_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_05.gif');
+background-image: url('../images/conc_symbols_bluered/conc_05.gif');
 cursor: pointer;
 }
 .conc_bluered_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_06.gif');
+background-image: url('../images/conc_symbols_bluered/conc_06.gif');
 cursor: pointer;
 }
 .conc_bluered_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_07.gif');
+background-image: url('../images/conc_symbols_bluered/conc_07.gif');
 cursor: pointer;
 }
 .conc_bluered_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_08.gif');
+background-image: url('../images/conc_symbols_bluered/conc_08.gif');
 cursor: pointer;
 }
 .conc_bluered_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_09.gif');
+background-image: url('../images/conc_symbols_bluered/conc_09.gif');
 cursor: pointer;
 }
 .conc_bluered_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_10.gif');
+background-image: url('../images/conc_symbols_bluered/conc_10.gif');
 cursor: pointer;
 }
 .conc_bluered_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_11.gif');
+background-image: url('../images/conc_symbols_bluered/conc_11.gif');
 cursor: pointer;
 }
 .conc_bluered_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_12.gif');
+background-image: url('../images/conc_symbols_bluered/conc_12.gif');
 cursor: pointer;
 }
 .conc_bluered_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_13.gif');
+background-image: url('../images/conc_symbols_bluered/conc_13.gif');
 cursor: pointer;
 }
 .conc_bluered_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_14.gif');
+background-image: url('../images/conc_symbols_bluered/conc_14.gif');
 cursor: pointer;
 }
 .conc_bluered_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_15.gif');
+background-image: url('../images/conc_symbols_bluered/conc_15.gif');
 cursor: pointer;
 }
 .conc_bluered_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_16.gif');
+background-image: url('../images/conc_symbols_bluered/conc_16.gif');
 cursor: pointer;
 }
 .conc_bluered_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_17.gif');
+background-image: url('../images/conc_symbols_bluered/conc_17.gif');
 cursor: pointer;
 }
 .conc_bluered_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_18.gif');
+background-image: url('../images/conc_symbols_bluered/conc_18.gif');
 cursor: pointer;
 }
 .conc_bluered_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluered/conc_19.gif');
+background-image: url('../images/conc_symbols_bluered/conc_19.gif');
 cursor: pointer;
 }
 
@@ -240,133 +240,133 @@ cursor: pointer;
 .conc_stdgamma2_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_stdgamma2/conc_missing.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_missing.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_fill.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_fill.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_00.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_00.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_01.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_01.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_02.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_02.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_03.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_03.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_04.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_04.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_05.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_05.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_06.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_06.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_07.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_07.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_08.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_08.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_09.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_09.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_10.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_10.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_11.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_11.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_12.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_12.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_13.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_13.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_14.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_14.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_15.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_15.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_16.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_16.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_17.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_17.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_18.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_18.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_19.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_19.gif');
 cursor: pointer;
 }
 
@@ -374,133 +374,133 @@ cursor: pointer;
 .conc_stdgamma2_inverted_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_stdgamma2/conc_missing.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_missing.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_fill.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_fill.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_19.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_19.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_18.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_18.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_17.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_17.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_16.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_16.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_15.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_15.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_14.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_14.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_13.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_13.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_12.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_12.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_11.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_11.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_10.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_10.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_09.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_09.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_08.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_08.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_07.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_07.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_06.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_06.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_05.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_05.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_04.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_04.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_03.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_03.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_02.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_02.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_01.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_01.gif');
 cursor: pointer;
 }
 .conc_stdgamma2_inverted_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_stdgamma2/conc_00.gif');
+background-image: url('../images/conc_symbols_stdgamma2/conc_00.gif');
 cursor: pointer;
 }
 
@@ -508,133 +508,133 @@ cursor: pointer;
 .conc_bluemono_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_bluemono/conc_missing.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_missing.gif');
 cursor: pointer;
 }
 .conc_bluemono_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_fill.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_fill.gif');
 cursor: pointer;
 }
 .conc_bluemono_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_00.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_00.gif');
 cursor: pointer;
 }
 .conc_bluemono_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_01.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_01.gif');
 cursor: pointer;
 }
 .conc_bluemono_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_02.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_02.gif');
 cursor: pointer;
 }
 .conc_bluemono_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_03.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_03.gif');
 cursor: pointer;
 }
 .conc_bluemono_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_04.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_04.gif');
 cursor: pointer;
 }
 .conc_bluemono_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_05.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_05.gif');
 cursor: pointer;
 }
 .conc_bluemono_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_06.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_06.gif');
 cursor: pointer;
 }
 .conc_bluemono_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_07.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_07.gif');
 cursor: pointer;
 }
 .conc_bluemono_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_08.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_08.gif');
 cursor: pointer;
 }
 .conc_bluemono_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_09.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_09.gif');
 cursor: pointer;
 }
 .conc_bluemono_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_10.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_10.gif');
 cursor: pointer;
 }
 .conc_bluemono_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_11.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_11.gif');
 cursor: pointer;
 }
 .conc_bluemono_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_12.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_12.gif');
 cursor: pointer;
 }
 .conc_bluemono_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_13.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_13.gif');
 cursor: pointer;
 }
 .conc_bluemono_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_14.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_14.gif');
 cursor: pointer;
 }
 .conc_bluemono_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_15.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_15.gif');
 cursor: pointer;
 }
 .conc_bluemono_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_16.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_16.gif');
 cursor: pointer;
 }
 .conc_bluemono_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_17.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_17.gif');
 cursor: pointer;
 }
 .conc_bluemono_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_18.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_18.gif');
 cursor: pointer;
 }
 .conc_bluemono_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_bluemono/conc_19.gif');
+background-image: url('../images/conc_symbols_bluemono/conc_19.gif');
 cursor: pointer;
 }
 
@@ -642,133 +642,133 @@ cursor: pointer;
 .conc_viridis_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_viridis/conc_missing.gif');
+background-image: url('../images/conc_symbols_viridis/conc_missing.gif');
 cursor: pointer;
 }
 .conc_viridis_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_fill.gif');
+background-image: url('../images/conc_symbols_viridis/conc_fill.gif');
 cursor: pointer;
 }
 .conc_viridis_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_00.gif');
+background-image: url('../images/conc_symbols_viridis/conc_00.gif');
 cursor: pointer;
 }
 .conc_viridis_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_01.gif');
+background-image: url('../images/conc_symbols_viridis/conc_01.gif');
 cursor: pointer;
 }
 .conc_viridis_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_02.gif');
+background-image: url('../images/conc_symbols_viridis/conc_02.gif');
 cursor: pointer;
 }
 .conc_viridis_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_03.gif');
+background-image: url('../images/conc_symbols_viridis/conc_03.gif');
 cursor: pointer;
 }
 .conc_viridis_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_04.gif');
+background-image: url('../images/conc_symbols_viridis/conc_04.gif');
 cursor: pointer;
 }
 .conc_viridis_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_05.gif');
+background-image: url('../images/conc_symbols_viridis/conc_05.gif');
 cursor: pointer;
 }
 .conc_viridis_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_06.gif');
+background-image: url('../images/conc_symbols_viridis/conc_06.gif');
 cursor: pointer;
 }
 .conc_viridis_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_07.gif');
+background-image: url('../images/conc_symbols_viridis/conc_07.gif');
 cursor: pointer;
 }
 .conc_viridis_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_08.gif');
+background-image: url('../images/conc_symbols_viridis/conc_08.gif');
 cursor: pointer;
 }
 .conc_viridis_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_09.gif');
+background-image: url('../images/conc_symbols_viridis/conc_09.gif');
 cursor: pointer;
 }
 .conc_viridis_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_10.gif');
+background-image: url('../images/conc_symbols_viridis/conc_10.gif');
 cursor: pointer;
 }
 .conc_viridis_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_11.gif');
+background-image: url('../images/conc_symbols_viridis/conc_11.gif');
 cursor: pointer;
 }
 .conc_viridis_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_12.gif');
+background-image: url('../images/conc_symbols_viridis/conc_12.gif');
 cursor: pointer;
 }
 .conc_viridis_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_13.gif');
+background-image: url('../images/conc_symbols_viridis/conc_13.gif');
 cursor: pointer;
 }
 .conc_viridis_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_14.gif');
+background-image: url('../images/conc_symbols_viridis/conc_14.gif');
 cursor: pointer;
 }
 .conc_viridis_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_15.gif');
+background-image: url('../images/conc_symbols_viridis/conc_15.gif');
 cursor: pointer;
 }
 .conc_viridis_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_16.gif');
+background-image: url('../images/conc_symbols_viridis/conc_16.gif');
 cursor: pointer;
 }
 .conc_viridis_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_17.gif');
+background-image: url('../images/conc_symbols_viridis/conc_17.gif');
 cursor: pointer;
 }
 .conc_viridis_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_18.gif');
+background-image: url('../images/conc_symbols_viridis/conc_18.gif');
 cursor: pointer;
 }
 .conc_viridis_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_19.gif');
+background-image: url('../images/conc_symbols_viridis/conc_19.gif');
 cursor: pointer;
 }
 
@@ -776,133 +776,133 @@ cursor: pointer;
 .conc_viridis_inverted_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_viridis/conc_missing.gif');
+background-image: url('../images/conc_symbols_viridis/conc_missing.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_fill.gif');
+background-image: url('../images/conc_symbols_viridis/conc_fill.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_19.gif');
+background-image: url('../images/conc_symbols_viridis/conc_19.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_18.gif');
+background-image: url('../images/conc_symbols_viridis/conc_18.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_17.gif');
+background-image: url('../images/conc_symbols_viridis/conc_17.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_16.gif');
+background-image: url('../images/conc_symbols_viridis/conc_16.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_15.gif');
+background-image: url('../images/conc_symbols_viridis/conc_15.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_14.gif');
+background-image: url('../images/conc_symbols_viridis/conc_14.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_13.gif');
+background-image: url('../images/conc_symbols_viridis/conc_13.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_12.gif');
+background-image: url('../images/conc_symbols_viridis/conc_12.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_11.gif');
+background-image: url('../images/conc_symbols_viridis/conc_11.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_10.gif');
+background-image: url('../images/conc_symbols_viridis/conc_10.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_09.gif');
+background-image: url('../images/conc_symbols_viridis/conc_09.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_08.gif');
+background-image: url('../images/conc_symbols_viridis/conc_08.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_07.gif');
+background-image: url('../images/conc_symbols_viridis/conc_07.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_06.gif');
+background-image: url('../images/conc_symbols_viridis/conc_06.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_05.gif');
+background-image: url('../images/conc_symbols_viridis/conc_05.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_04.gif');
+background-image: url('../images/conc_symbols_viridis/conc_04.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_03.gif');
+background-image: url('../images/conc_symbols_viridis/conc_03.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_02.gif');
+background-image: url('../images/conc_symbols_viridis/conc_02.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_01.gif');
+background-image: url('../images/conc_symbols_viridis/conc_01.gif');
 cursor: pointer;
 }
 .conc_viridis_inverted_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_viridis/conc_00.gif');
+background-image: url('../images/conc_symbols_viridis/conc_00.gif');
 cursor: pointer;
 }
 
@@ -910,133 +910,133 @@ cursor: pointer;
 .conc_colorsafe_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_colorsafe/conc_missing.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_missing.gif');
 cursor: pointer;
 }
 .conc_colorsafe_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_fill.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_fill.gif');
 cursor: pointer;
 }
 .conc_colorsafe_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_00.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_00.gif');
 cursor: pointer;
 }
 .conc_colorsafe_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_01.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_01.gif');
 cursor: pointer;
 }
 .conc_colorsafe_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_02.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_02.gif');
 cursor: pointer;
 }
 .conc_colorsafe_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_03.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_03.gif');
 cursor: pointer;
 }
 .conc_colorsafe_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_04.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_04.gif');
 cursor: pointer;
 }
 .conc_colorsafe_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_05.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_05.gif');
 cursor: pointer;
 }
 .conc_colorsafe_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_06.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_06.gif');
 cursor: pointer;
 }
 .conc_colorsafe_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_07.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_07.gif');
 cursor: pointer;
 }
 .conc_colorsafe_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_08.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_08.gif');
 cursor: pointer;
 }
 .conc_colorsafe_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_09.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_09.gif');
 cursor: pointer;
 }
 .conc_colorsafe_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_10.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_10.gif');
 cursor: pointer;
 }
 .conc_colorsafe_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_11.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_11.gif');
 cursor: pointer;
 }
 .conc_colorsafe_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_12.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_12.gif');
 cursor: pointer;
 }
 .conc_colorsafe_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_13.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_13.gif');
 cursor: pointer;
 }
 .conc_colorsafe_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_14.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_14.gif');
 cursor: pointer;
 }
 .conc_colorsafe_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_15.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_15.gif');
 cursor: pointer;
 }
 .conc_colorsafe_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_16.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_16.gif');
 cursor: pointer;
 }
 .conc_colorsafe_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_17.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_17.gif');
 cursor: pointer;
 }
 .conc_colorsafe_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_18.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_18.gif');
 cursor: pointer;
 }
 .conc_colorsafe_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_19.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_19.gif');
 cursor: pointer;
 }
 
@@ -1044,132 +1044,132 @@ cursor: pointer;
 .conc_colorsafe_inverted_missing {
 height: 25px;
 width: 20px;
-background-image: url('images/conc_symbols_colorsafe/conc_missing.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_missing.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_fill {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_fill.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_fill.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_00 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_19.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_19.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_01 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_18.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_18.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_02 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_17.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_17.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_03 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_16.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_16.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_04 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_15.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_15.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_05 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_14.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_14.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_06 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_13.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_13.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_07 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_12.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_12.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_08 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_11.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_11.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_09 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_10.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_10.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_10 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_09.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_09.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_11 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_08.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_08.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_12 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_07.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_07.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_13 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_06.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_06.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_14 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_05.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_05.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_15 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_04.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_04.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_16 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_03.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_03.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_17 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_02.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_02.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_18 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_01.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_01.gif');
 cursor: pointer;
 }
 .conc_colorsafe_inverted_19 {
 height: 15px;
 width: 15px;
-background-image: url('images/conc_symbols_colorsafe/conc_00.gif');
+background-image: url('../images/conc_symbols_colorsafe/conc_00.gif');
 cursor: pointer;
 }

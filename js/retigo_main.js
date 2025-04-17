@@ -77,8 +77,8 @@ $(document).ready(function(){
     rsigserver = 'https://ofmpub.epa.gov/rsig/rsigserver?';
   }
 
-  imageserver = rsigserver + 'retigo/stable/';  
-	
+  //imageserver = rsigserver + 'retigo/stable/';  
+imageserver = "";	
 
   var setDefaultRadio = true; // for setting the default variable when the file is first read
 
@@ -1796,7 +1796,7 @@ function initScatterplotExternalMenuItems() {
     hideAllLayers(highlightMarker);
     hideAllLayers(markerLayer);
 
-    loadViperData();
+    //loadViperData();
 
   }
 
