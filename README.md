@@ -231,7 +231,7 @@ This option connects your data with a red line to better visualize the path that
 
 | ![](markdown_assets/step4_connectingline.png "Figure 12") |
 |:--:|
-| *Figure 12: RETIGO show connecting line option]* |
+| *Figure 12: RETIGO show connecting line option* |
 
 **Crop region**
 
