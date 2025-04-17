@@ -229,7 +229,7 @@ If wind vector data is present in your data, you can view a wind-pollution plot 
 
 This option connects your data with a red line to better visualize the path that was taken during the data collection. It is useful if you are viewing data in "single point" mode (Figure 12).
 
-| ![(markdown_assets/step4_connectingline.png "Figure 12") |
+| ![](markdown_assets/step4_connectingline.png "Figure 12") |
 |:--:|
 | *Figure 12: RETIGO show connecting line option]* |
 
