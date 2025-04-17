@@ -110,7 +110,8 @@ RETIGO displays the wind in a vector sense, where the tip of the arrow points in
 ### Step 2: Load Data or Select from Data Repository
 Once you have a data file to view, go to the RETIGO application page and select a file to view from your local filesystem. If you have a second file pertaining to the same time period (e.g., from a second measurement system), you can include it as an optional second file. At this time, the application can only accept a maximum of two data files. If you do not have a file of your own to view, you can select a file from RETIGO's data repository. Once you have selected your options, click the View button to load the data and begin viewing it.
 
-![Figure 1: Uploading a file to the RETIGO repository](markdown_assets/retigo_tut-2-datarepo.png "Figure 1")
+| ![](markdown_assets/retigo_tut-2-datarepo.png "Figure 1") |
+| Figure 1: *Uploading a file to the RETIGO repository* |
 
 ### Step 3: View the data
 After you click the View button, your data will be loaded into the browser and displayed on both a map and a timeseries plot as shown in Figure 2. The colors indicate the value of the selected variable, ranging from dark blue (low) to red (high) by default. RETIGO automatically determines the lowest and highest values of the selected variable and adjusts the color scale accordingly. You can also customize the colorbar by setting the minimum and maximum values for each variable.
