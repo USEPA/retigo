@@ -112,12 +112,14 @@ Once you have a data file to view, go to the RETIGO application page and select 
 
 | ![](markdown_assets/retigo_tut-2-datarepo.png "Figure 1") |
 |:--:|
-| Figure 1: *Uploading a file to the RETIGO repository* |
+| *Figure 1: Uploading a file to the RETIGO repository* |
 
 ### Step 3: View the data
 After you click the View button, your data will be loaded into the browser and displayed on both a map and a timeseries plot as shown in Figure 2. The colors indicate the value of the selected variable, ranging from dark blue (low) to red (high) by default. RETIGO automatically determines the lowest and highest values of the selected variable and adjusts the color scale accordingly. You can also customize the colorbar by setting the minimum and maximum values for each variable.
 
-![Figure 2: Uploaded RETIGO data displayed on a map and a timeseries plot, with display settings highlighted](markdown_assets/retigo_tut-3.1-controls.png "Figure 2")
+| ![](markdown_assets/retigo_tut-3.1-controls.png "Figure 2") |
+|:--:|
+| *Figure 2: Uploaded RETIGO data displayed on a map and a timeseries plot, with display settings highlighted* |
 
 **Data Control Toggle**
 
@@ -139,9 +141,13 @@ The Data/Settings control toggle allows you to change menus to perform different
 - “Settings" (gear icon) (Figure 4) is for selecting certain options for how plots are presented.
   - When the Data Control Toggle is set to "Settings", the menu options allow you to choose the font size for the control panel and plot options for the various supporting plot types (timeseries, scatterplot, etc.).
   
-![Figure 3: RETIGO's MyData and Merge menu options](markdown_assets/retigo_tut-3.2-mydata-merge.png "Figure 3")
+| ![](markdown_assets/retigo_tut-3.2-mydata-merge.png "Figure 3") |
+|:--:|
+| *Figure 3: RETIGO's MyData and Merge menu options* |
 
-![Figure 4: RETIGO's Settings menu (gear icon)](markdown_assets/retigo_tut-3.3-settings.png "Figure 4")
+| ![](markdown_assets/retigo_tut-3.3-settings.png "Figure 4") |
+|:--:|
+| *Figure 4: RETIGO's Settings menu (gear icon)* |
 
 **Select variable**
 
@@ -151,11 +157,15 @@ All the measured variable names (in column 5 and beyond in the data file) are sh
 
 The time control is a horizontal slider (Figure 5) near the top of the application that is used to pinpoint a particular data sample in time. The selected time is shown above the slider, referenced to the desired timezone. The corresponding data value is shown below the slider. Dragging the slider allows you to track the dataset over time. You can also use the animation controls to animate or single-step through time.
 
-![Figure 5: RETIGO time control slider with associated timestamp ](markdown_assets/retigo_tut-3.4-time-control.png "Figure 5")
+| ![](markdown_assets/retigo_tut-3.4-time-control.png "Figure 5") |
+|:--:|
+| *Figure 5: RETIGO time control slider with associated timestamp* |
 
 **Toolbar**
 
-![Figure 6: RETIGO toolbar](markdown_assets/retigo04_650x266.jpg "Figure 6")
+| ![](markdown_assets/retigo04_650x266.jpg "Figure 6") |
+|:--:|
+| *Figure 6: RETIGO toolbar* |
 
 The toolbar (Figure 6) allows you to interact with the map in various ways:
 
@@ -181,47 +191,63 @@ You can turn the supporting plots on and off using the checkboxes underneath the
 
 The timeseries plot (Figure 7) shows the selected variable as a function of time. As you move the time control slider, the corresponding datapoint is highlighted in the timeseries plot with a black circle. You can also add a second variable to the plot, which will be shown with a black triangle and will correspond to a new y-axis on the right. You can zoom into a smaller portion of the time series by using your mouse to click and drag around the area of interest in the horizontal direction. Checking the “hourly average” option may be handy for comparing your data to AirNow and other monitoring data that are on an hourly timebase.
 
-![Figure 7: RETIGO timeseries plot](markdown_assets/retigo_tut-4.0-timeseries-plot.png "Figure 7")
+| ![](markdown_assets/retigo_tut-4.0-timeseries-plot.png "Figure 7") |
+|:--:|
+| *Figure 7: RETIGO timeseries plot* |
 
 **Analysis plot**
 
 The analysis plot (Figure 8) shows the selected variable as a function of distance from the designated analysis point or polyline. See the “Toolbar” controls section above to learn how to designate these. As you move the time control slider, the corresponding datapoint is highlighted in the analysis plot with a black circle (marker) or triangle (polyline). 
 
-![Figure 8: RETIGO analysis plot](markdown_assets/retigo_tut-4.1-analysis-plot.png "Figure 8")
+| ![](markdown_assets/retigo_tut-4.1-analysis-plot.png "Figure 8") |
+|:--:|
+| *Figure 8: RETIGO analysis plot* |
 
 You can also choose to aggregate the data into bins of a designated size; the mean and standard deviation are automatically computed and displayed (Figure 9).
 
-![Figure 9: RETIGO analysis plot with data aggregated into bins](markdown_assets/retigo_tut-4.2-analysis-plot.png "Figure 9")
+| ![](markdown_assets/retigo_tut-4.2-analysis-plot.png "Figure 9") |
+|:--:|
+| *Figure 9: RETIGO analysis plot with data aggregated into bins* |
 
 **Scatterplot**
 
 The scatterplot is used for plotting one source of data versus another (Figure 10). This can be useful for investigating correlations between differing data variables or for comparing like variables separated in space. You can choose any of the variables from your dataset, as well as any merged variables. Simply choose which variable to plot on the X and Y axes. All data are automatically aggregated to the hour to ensure that each point on the scatterplot is equally represented in time with respect to the selected X/Y variables. Summary statistics are automatically computed, including the correlation coefficient, the y-intercept and slope of the regression line, and the root-mean-square (rms) error. 
 
-![Figure 10: Plotting one source of data versus another](markdown_assets/retigo_tut-4.3-scatterplot.png "Figure 10")
+| ![](markdown_assets/retigo_tut-4.3-scatterplot.png "Figure 10") |
+|:--:|
+| *Figure 10: Plotting one source of data versus another* |
 
 **Wind pollution plot**
 
 If wind vector data is present in your data, you can view a wind-pollution plot for the selected variable (Figure 11). This is a polar plot, where the angle is equal to the wind heading, the distance from the center is equal to the wind magnitude, and the color corresponds to the value of the selected variable. For example, the marker located within the square on the image below represents a measurement that occurred when the wind was from the southeast, with an approximate wind speed of 4 m/s, and the color can be matched to the colorbar representing the pollution concentration range, in this case about 50 ppb. The wind-pollution plot is best suited for stationary data.
 
-![Figure 11: RETIGO wind-pollution plot](markdown_assets/step4_wind-pollution.png "Figure 11")
+| ![](markdown_assets/step4_wind-pollution.png "Figure 11") |
+|:--:|
+| *Figure 11: RETIGO wind-pollution plot* |
 
 **Show connecting line**
 
 This option connects your data with a red line to better visualize the path that was taken during the data collection. It is useful if you are viewing data in "single point" mode (Figure 12).
 
-![Figure 12: RETIGO show connecting line option](markdown_assets/step4_connectingline.png "Figure 12")
+| ![(markdown_assets/step4_connectingline.png "Figure 12") |
+|:--:|
+| *Figure 12: RETIGO show connecting line option]* |
 
 **Crop region**
 
 Use the crop region function to exclude data outside of a region of interest (Figure 13). After clicking on the crop region icon, simply left click and drag on the map to define the region. When the mouse button is released the map and analysis plots will automatically be updated. The crop box can be deleted by right-clicking anywhere inside it.
 
-![Figure 13: RETIGO crop region function](markdown_assets/step4_crop.png "Figure 13")
+| ![](markdown_assets/step4_crop.png "Figure 13") |
+|:--:|
+| *Figure 13: RETIGO crop region function* |
 
 **Using IDs**
 
 The RETIGO file specification allows you to tag each data point with an identifier (ID), which is composed of alphanumeric characters. You can use the IDs to group your data in any way you like, and isolate them in the visualization (Figure 14).
 
-![Figure 14: Isolating data points tagged with identifiers ](markdown_assets/step4_ids.png "Figure 14")
+| ![](markdown_assets/step4_ids.png "Figure 14") |
+|:--:|
+| *Figure 14: Isolating data points tagged with identifiers* |
 
 **Time mode / Large file support**
 
@@ -230,13 +256,17 @@ For efficiency, RETIGO only shows 1,000 points at a time. If your dataset contai
 - Using average mode (default), the data is time averaged into bins, such that there will be approximately 1,000 bins. In this example, every 100 points would be time-averaged, yielding 1,000 points to be shown on the map.
 - If you want to see your un-averaged data, select block mode. Here, the data can be accessed 1,000 points at a time in blocks. The starting time of each block is listed in the menu. You can click through the list of blocks one by one to view the entire dataset. There is no limit to the number of data points that your dataset may have; larger files will simply have more blocks. If you are using the timeseries plot, you can extend the range by clicking "Extend blocks" and selecting the number of additional blocks to view (up to five).
 
-![Figure 15: Viewing time-averaged data (left) and non-averaged data (right)](markdown_assets/step4_average-mode.png "Figure 15")
+| ![](markdown_assets/step4_average-mode.png "Figure 15") |
+|:--:|
+| *Figure 15: Viewing time-averaged data (left) and non-averaged data (right)* |
 
 **Other features**
 
 The map display is a fully functioning Google Map™ display (Figure 16).
 
-![Figure 16: Google Maps functionality available](markdown_assets/map.png "Figure 16")
+| ![](markdown_assets/map.png "Figure 16") |
+|:--:|
+| *Figure 16: Google Maps functionality available* |
 
 The map selector lets you switch between a regular roadmap, a terrain map, or a satellite view. The zoom control allows you to zoom in or out using the slider or the plus and minus buttons at the top and bottom of the slider. Sometimes the terrain view limits the zoom level, so you may need to choose a different map if you want to zoom all the way in.
 
@@ -244,7 +274,9 @@ To use Google Street View™, left-click on the Street View icon and drag it to 
 
 **Note**: The satellite map and Street View images are collected at different times (sometimes months or years apart), but both are updated periodically by Google, Inc. Both may not reflect the exact conditions present at the time of your data collection, so care must be taken when interpreting the imagery.
 
-![Figure 17: RETIGO data is viewable via Google Maps' Street View](markdown_assets/streetview.png "Figure 17")
+| ![](markdown_assets/streetview.png "Figure 17") |
+|:--:|
+| *Figure 17: RETIGO data is viewable via Google Maps' Street View* |
 
 ### Step 5: Merging in other data
 
@@ -256,11 +288,15 @@ You can add various point data to the map or timeseries, including AirNow monito
 
 When AirNow, PurpleAir, or METAR data are added to the timeseries plot, the added data uses a separate y-axis and data range (Figure 18). When comparing to your data, be sure to adjust the data ranges accordingly. 
  
- ![Figure 18: AirNow and PurpleAir data sites mapped in RETIGO](markdown_assets/retigo_tut-5.1-point-sources.png "Figure 18")
+ | ![](markdown_assets/retigo_tut-5.1-point-sources.png "Figure 18") |
+ |:--:|
+ | *Figure 18: AirNow and PurpleAir data sites mapped in RETIGO* |
  
  If you are plotting AirNow, PurpleAir, or METAR data on the timeseries, its corresponding site on the map will have a halo around it (Figure 19). You can select a different site by clicking the site’s icon on the map. In addition, you can hover the mouse over any map icon to see its data value corresponding to the selected time.
  
- ![Figure 19: A PurpleAir site marked by a "halo"](markdown_assets/retigo_tut-5.2-halo.png "Figure 19")
+ | ![](markdown_assets/retigo_tut-5.2-halo.png "Figure 19") |
+ |:--:|
+ | *Figure 19: A PurpleAir site marked by a "halo"* |
  
  **Satellite derived data**
  
@@ -273,10 +309,18 @@ When AirNow, PurpleAir, or METAR data are added to the timeseries plot, the adde
 
 Following are examples of satellite data products added to the map (via the Merge tab) that help characterize the location of a wildfire and the downwind transport of the associated smoke plume.
 
-![Figure 20: Cluster of fire icons on RETIGO map signifying satellite-based fire detections](markdown_assets/retigo_tut-5.3-satellite.png "Figure 20")
+| ![](markdown_assets/retigo_tut-5.3-satellite.png "Figure 20") |
+|:--:|
+| *Figure 20: Cluster of fire icons on RETIGO map signifying satellite-based fire detections* |
 
-![Figure 21: VIIRS true-color imagery showing smoke plume from detected fires](markdown_assets/retigo_tut-5.4-viirs-true-color.png "Figure 21")
+| ![](markdown_assets/retigo_tut-5.4-viirs-true-color.png "Figure 21") |
+|:--:|
+| *Figure 21: VIIRS true-color imagery showing smoke plume from detected fires* |
 
-![Figure 22: VIIRS AOD data shows more aerosols in the air columns as the plume extends](markdown_assets/retigo_tut-5.5-viirs-aod.png "Figure 22")
+| ![](markdown_assets/retigo_tut-5.5-viirs-aod.png "Figure 22") |
+|:--:|
+| *Figure 22: VIIRS AOD data shows more aerosols in the air columns as the plume extends* |
 
-![Figure 23: TROPOMI data showing the density of nitrogen dioxide in the atmosphere as an impact from the plume](markdown_assets/retigo_tut-5.6-tropomi.png "Figure 23")
+| ![](markdown_assets/retigo_tut-5.6-tropomi.png "Figure 23") |
+|:--:|
+| *Figure 23: TROPOMI data showing the density of nitrogen dioxide in the atmosphere as an impact from the plume* |
