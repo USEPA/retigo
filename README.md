@@ -9,9 +9,9 @@ REal TIme Geospatial Data Viewer (RETIGO) is a free, web-based tool that can be 
 
 ## Running RETIGO
 
-Retigo is a client-side web application. It can be run directly from the github site by simply navigating to https://usepa.github.io/retigo.
+Retigo is a client-side web application. It can be run directly by clicking https://usepa.github.io/retigo.
 
-Alternatively it can be downloaded and run from your computer using a temporary local http server. Popular options include using Python to launch an http server. To do this, open a terminal and navigate to the directory where retigo was installed. Then issue the command
+Alternatively you can download the code and run a standalone version directly on your computer using a temporary local http server. Popular options include using Python or Node.js to launch an http server. To use Python, open a terminal and navigate to the directory where retigo was installed. Then issue the command
 
 _python3 -m http.server_
 
