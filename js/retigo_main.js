@@ -2012,7 +2012,7 @@ function load_kmlFile(myFileName) {
     hideAllLayers(highlightMarker);
     hideAllLayers(markerLayer);
 
-    loadViperData();
+    //loadViperData();
 
   }
 
