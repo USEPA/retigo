@@ -1710,15 +1710,15 @@ function load_kmlFile(myFileName) {
     const fileInput = document.getElementById('kmlFile0');
     //const fileInput = myFileName;
 
-    //console.log(myFileName.value);
-    //console.log(fileInput);
+    console.log(myFileName.value);
+    console.log(fileInput);
     kmzLayer = new google.maps.KmlLayer({
         ///url: 'https://ftp.wildfire.gov/public/incident_specific_data/pacific_nw/2023_Incidents_Oregon/2023_Lookout_ORWIF230327/IR/20230921/20230921_Lookout_IR.kmz',
         //url: 'data:text/plain;charset=utf-8,' + encodeURIComponent(kmlData),
         url: myFileName.value,
         options: {
             preserveViewport: true,
-            screenOverlays: true,
+            screenOverlays: false,
             screenXY: new google.maps.Point(0, 0),
             overlayXY: new google.maps.Point(100, 100) // Adjust the values as needed
         }
@@ -5459,7 +5459,7 @@ function export_kml(mslVarname, groundlevelVarname, colorbarsize) {
     var max_eInd = oUserdata.lon[selected_block].length;
     for (eInd=0; eInd<max_eInd; eInd++) { // loop over all datapoints
         thisMsec = oUserdata.msec[selected_block][eInd];
-        //console.log(eInd, flagger, noExport, isMsecFlagged(thisMsec), (!flagger) || (flagger && (!isMsecFlagged(thisMsec)) && (!noExport)) );
+        console.log(eInd, flagger, noExport, isMsecFlagged(thisMsec), (!flagger) || (flagger && (!isMsecFlagged(thisMsec)) && (!noExport)) );
         
         if ( (!flagger) || (flagger && (!isMsecFlagged(thisMsec))) || (flagger && isMsecFlagged(thisMsec) && (!noExport)) ) {
             this_dateObj = create_dateObjectUTC(oUserdata.timestamp[selected_block][eInd]);
@@ -7265,11 +7265,11 @@ function moveMySensorHighlightMarker(lat, lon) {
 }
 
 function pickAQS(lat, lon, id, handle) {
-    //console.log("in pickAQS");
+    console.log("in pickAQS");
     //console.log(lat);
     //console.log(lon);
-    //console.log('id =', id);
-    //console.log('handle =', handle);
+    console.log('id =', id);
+    console.log('handle =', handle);
     
     var bbox_width  = 0.011; //degrees
     var bbox_height = 0.011; //degrees
@@ -7890,7 +7890,7 @@ function pickMySensor(lat, lon, sensorID) {
                       thisHandle = dataObject.handle;
                       
 		      thisTimestamp = dataObject.timestamp[n];
-                      //console.log(n, dataObject.timestamp[n]);
+                      console.log(n, dataObject.timestamp[n]);
                       nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(dataObject.timestamp[n]), 'GMT', "ISO8601-roundToMinute", "null", -1);
                       
 		      this_data1 = dataObject.variable[n];
