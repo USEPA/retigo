@@ -15,7 +15,8 @@ $(document).ready(function(){
 	evt.preventDefault();
 	
     });
-    
+
+    dataFlaggerInitParams();
     restoreSettings();
 
     // set defaults for merged variables
@@ -54,6 +55,17 @@ $(document).ready(function(){
     document.getElementById("merge_min_MySensor4").value           = mySensorArray[4].curMin;
     document.getElementById("merge_max_MySensor4").value           = mySensorArray[4].curMax;
 
+
+    // data flagger stuff
+    document.getElementById("plot1_colorbar1").style.backgroundColor = flagger_colorConstant;
+    document.getElementById("plot1_colorbar2").style.backgroundColor = flagger_colorLongMissing;
+    document.getElementById("plot1_colorbar3").style.backgroundColor = flagger_colorOutlierStat;
+    document.getElementById("plot1_colorbar4").style.backgroundColor = flagger_colorOutlierSpike;
+    document.getElementById("plot1_colorbar5").style.backgroundColor = flagger_colorAboveConc;
+    document.getElementById("plot1_colorbar6").style.backgroundColor = flagger_colorBelowConc;
+    document.getElementById("plot1_colorbar7").style.backgroundColor = flagger_colorInvalidated;
+
+    
     //kml_airnowicon_imgarray    = new Array();
     kml_purpleairicon_imgarray = new Array();
     //kml_mysensoricon_imgarray  = new Array();
@@ -77,8 +89,8 @@ $(document).ready(function(){
     rsigserver = 'https://ofmpub.epa.gov/rsig/rsigserver?';
   }
 
-  //imageserver = rsigserver + 'retigo/stable/';  
-imageserver = "";	
+  imageserver = rsigserver + 'retigo/stable/';  
+	
 
   var setDefaultRadio = true; // for setting the default variable when the file is first read
 
@@ -116,6 +128,7 @@ var mergedFilestream = {result:""}; // mimics fr_file*, but for concatenated fil
   var keywordList = "";
 
   //user data
+  var sortedData1;
   var oUserdata = new Object();
   // init arrays (first index is for blocks 0=avg data, 1=blocked data)
   oUserdata.timestamp  = new Array();
@@ -137,9 +150,21 @@ var mergedFilestream = {result:""}; // mimics fr_file*, but for concatenated fil
   oUserdata.fileLinesA = "";
   oUserdata.delimiter  = "";
   oUserdata.name       = "userdata";
+  oUserdata.flagger    = ""; 
+  oUserdata.flaggedIndices = "";               // returned info from the dataflagger module
+  oUserdata.flagged_constant_msec        = []; // same info as above, but optimized for excluding data from plots 
+  oUserdata.flagged_longMissing_msec     = []; 
+  oUserdata.flagged_outlierStat_msec     = []; 
+  oUserdata.flagged_outlierSpike_msec    = []; 
+  oUserdata.flagged_aboveConc_msec       = []; 
+  oUserdata.flagged_belowConc_msec       = []; 
+  oUserdata.flagged_userInvalidated_msec = []; 
 
-  var oStats         = new Object(); // statistical info for user variables
-  var oStatsExternal = new Object(); // statistical info for external variables (Airnow, etc)
+
+  var oStatsHourly         = new Object(); // statistical info for user variables
+  var oStatsHourlyExternal = new Object(); // statistical info for external variables (Airnow, etc)
+  var oStatsNative         = new Object(); // statistical info at native time resolution for user variables
+
 
   var selected_block = 0; // default
   var lastCheckedTimeBlock = 0;  // default
@@ -222,6 +247,7 @@ var mergedFilestream = {result:""}; // mimics fr_file*, but for concatenated fil
   oAirnowPM25.imgArray = new Array();
   oAirnowPM25.nImgsLoaded = 0;
   oAirnowPM25.handle = "airnow_pm25";
+  oAirnowPM25.selectedSiteID = "";
 
   oAirnowPM10 = new Object();
   oAirnowPM10.min = 0.0;  // default
@@ -229,6 +255,7 @@ var mergedFilestream = {result:""}; // mimics fr_file*, but for concatenated fil
   oAirnowPM10.imgArray = new Array();
   oAirnowPM10.nImgsLoaded = 0;
   oAirnowPM10.handle = "airnow_pm10";
+  oAirnowPM10.selectedSiteID = "";
 
   oAirnowCO = new Object();
   oAirnowCO.min = 0.0;  // default
@@ -236,6 +263,7 @@ var mergedFilestream = {result:""}; // mimics fr_file*, but for concatenated fil
   oAirnowCO.imgArray = new Array();
   oAirnowCO.nImgsLoaded = 0;
   oAirnowCO.handle = "airnow_co";
+  oAirnowCO.selectedSiteID = "";
 
   oAirnowNO2 = new Object();
   oAirnowNO2.min = 0.0;   // default
@@ -243,6 +271,7 @@ var mergedFilestream = {result:""}; // mimics fr_file*, but for concatenated fil
   oAirnowNO2.imgArray = new Array();
   oAirnowNO2.nImgsLoaded = 0;
   oAirnowNO2.handle = "airnow_no2";
+  oAirnowNO2.selectedSiteID = "";
 
   oAirnowSO2 = new Object();
   oAirnowSO2.min = 0.0;   // default
@@ -250,23 +279,28 @@ var mergedFilestream = {result:""}; // mimics fr_file*, but for concatenated fil
   oAirnowSO2.imgArray = new Array();
   oAirnowSO2.nImgsLoaded = 0;
   oAirnowSO2.handle = "airnow_so2";
+  oAirnowSO2.selectedSiteID = "";
 
   // SURFMET 
   oSurfmetTemperature   = new Object();
   oSurfmetTemperature.min = -10.0; // default
   oSurfmetTemperature.max = 40.0;  // default
-    
+  oSurfmetTemperature.selectedSiteID = "";
+
   oSurfmetPressure      = new Object();
   oSurfmetPressure.min = 900.0;  // default
   oSurfmetPressure.max = 1200.0; // default
+  oSurfmetPressure.selectedSiteID = "";
 
   oSurfmetWindSpeed     = new Object();
   oSurfmetWindSpeed.min = 0.0;  // default
   oSurfmetWindSpeed.max = 20.0; // default
+  oSurfmetWindSpeed.selectedSiteID = "";
 
   oSurfmetWindDirection = new Object();
   oSurfmetWindDirection.min = 0.0;  // default
   oSurfmetWindDirection.max = 360.0; // default
+  oSurfmetWindDirection.selectedSiteID = "";
 
   // Met info
   oMetInfo = new Object();
@@ -319,6 +353,7 @@ for (i=0; i<mySensorArray.length; i++) {
   oPurpleairPM25 = new Object();
   oPurpleairPM25.min = 0.0;   // default
   oPurpleairPM25.max = 120.0; // default
+  oPurpleairPM25.selectedSiteID = "";
 
   // VIIRS AOD
   viirsAOD_uniqueID      = ""; 
@@ -350,6 +385,17 @@ for (i=0; i<mySensorArray.length; i++) {
   tropomiNO2Opacity      = 0.7;
   tropomiNO2Zindex       = 10;
 
+  // Tempo NO2
+  tempoNO2_uniqueID    = ""; 
+  tempoOverlay         = new Object();
+  lastTempoNO2Date     = "";
+  tempoNO2MinVal       = 0.0;
+  tempoNO2MaxVal       = 10000000000000000 // 1e16
+  tempoNO2DateList     = new Array(); // list of TEMPO NO2 data which has been loaded for this session
+  tempoNO2LoadedFlag   = false;
+  tempoNO2Opacity      = 0.7;
+  tempoNO2Zindex       = 10;
+
   // HMS
   oHmsFire   = new Object();
 
@@ -366,6 +412,7 @@ for (i=0; i<mySensorArray.length; i++) {
   var nextColorbarVerticalPos = 85; // for keeping track of colorbar placement
   var viirsColorTable = new Array();
   var tropomiNO2ColorTable = new Array();
+  var tempoNO2ColorTable = new Array();
   const color_table_stdgamma2 = ['#000000', '#000043', '#000087', '#0000D0', '#1C00EA', '#51009E', '#540057', '#950011', '#DE0000', '#FF2500', '#FF6D1C', '#FFA347', '#FFA300', '#A3A300', '#E5E623', '#FFFF50', '#FFFF7A', '#FFFFA7', '#FFFFD1', '#FFFFFF'];
   const color_table_bluered = ['#000083', '#0000B3', '#0000E7', '#001BFF', '#004FFF', '#0087FF', '#00BBFF', '#00EFFF', '#23FFDB', '#57FFA7', '#8FFF6F', '#C3FF3B', '#FBFF03', '#FFCF00', '#FF9B00', '#FF6300', '#FF2F00', '#F60000', '#BD0000', '#830000'];
   const color_table_bluemono = ['#99ccff', '#8cc3fc', '#80b9f8', '#73b0f4', '#68a6f1', '#5c9ded', '#5093e8', '#4589e4', '#3a80e0', '#2f76db', '#236cd6', '#1763d0', '#0859cb', '#004fc5', '#0044be', '#003ab7', '#002fb0', '#0023a9', '#0015a1', '#000099'];
@@ -420,6 +467,7 @@ var plotColorGray        = "#DDDDDD";
 
   // default settings in the settings tab
   var settings = {}
+  settings.fontSize                = 12;
   settings.plotPrimaryColor        = plotColorLightblue;
   settings.plotPrimaryColorIndex   = 0; // ensure index corresponds to color above
   settings.plotSecondaryColor      = plotColorMaroon;
@@ -433,7 +481,16 @@ var plotColorGray        = "#DDDDDD";
   settings.plotFilledSymbolFlag    = false;
   settings.plotLogAxisFlag         = false;
   settings.plotDataColorsFlag      = false;
-
+  settings.flaggerConstantRepeatNum      = 8;
+  settings.flaggerMissingRepeatNum       = 8;
+  settings.flaggerMissingValue           = -9999;
+  settings.flaggerOutlierStatSDfactor    = 4;
+  settings.flaggerOutlierSpikeTimeWindow = 12;
+  settings.flaggerOutlierSpikeSDfactor   = 6;
+  settings.flaggerAboveConc              = 100;
+  settings.flaggerBelowConc              = 0;
+  settings.flaggerUserInvalidateStart    = "";
+  settings.flaggerUserInvalidateEnd      = "";
 
   var updateOptionalFlag = true;
 
@@ -607,6 +664,12 @@ for (i=0; i<allMySensorFastMarkers.length; i++) {
   var connectingLineMaxRegions = 100;
   var connectingLineDistThreshold= 1500.0; // meters. if points are spaced farther apart they are considered discontinous
 
+  //today's date
+  today_yyyy = new Date().getFullYear(); // needed for current fire perimeters
+
+  var firePerimeterLoadMessage = "Getting fire perimeters...";
+
+
   // interpolate
   var interpolate_flag = true;
 
@@ -640,9 +703,9 @@ for (i=0; i<allMySensorFastMarkers.length; i++) {
       zoom: 4,
       center: myLatLngBounds.getCenter(),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDoubleClickZoom: true,
       disableDefaultUI: true,
       zoomControl: true,
-      disableDoubleClickZoom: true,
       keyboardShortcuts: false,
       navigationControl: true, 
       mapTypeControl: true,
@@ -689,6 +752,8 @@ for (i=0; i<allMySensorFastMarkers.length; i++) {
 
   var clear_analysisMarker_flag = true; // default
   var clear_analysisLine_flag   = true; // default
+
+  var timeseries_height = 150;
 
   var map_height_percent = 0.87;
   var map_width_percent  = 0.87;
@@ -737,6 +802,12 @@ for (i=0; i<allMySensorFastMarkers.length; i++) {
 	      
       }
   });
+
+
+function isOverflownVertical(element) {
+    // detect if a dom element has overflowed vertically
+    return element.scrollHeight > element.clientHeight;
+}
 
 
 function busyMessageQueueMapAdd(message) {
@@ -1092,6 +1163,7 @@ function updateSettings(menu) {
     // font size
     } else if (menu.id.indexOf("fontSize") >= 0) {
         let myFontSize = document.getElementById(menu.id).value;
+        settings.fontSize = myFontSize;
         $(".controls").css("font-size", myFontSize + "px");
 
         let baseControlsSize = 210;
@@ -1102,6 +1174,12 @@ function updateSettings(menu) {
         } else {
             controlsSize = baseControlsSize + ((myFontSize - 8) * increment);
         }
+
+        timeDisplaySize = document.getElementById("displayed_data_value").clientWidth;
+        if (controlsSize < timeDisplaySize) {
+            //controlsSize = timeDisplaySize;
+        }
+        
         controlsSizeString = controlsSize + "px";
         document.getElementById("MyDataDiv").style.width    = controlsSizeString;
         document.getElementById("MergeDataDiv").style.width = controlsSizeString;
@@ -1114,13 +1192,33 @@ function updateSettings(menu) {
         document.getElementById("mySensorSelector4").style.width  = controlsSize - 10 + "px";
 
         // for time slider width
-        document.getElementById("table_td2").style.paddingRight =  controlsSizeString;
+        //document.getElementById("table_td2").style.paddingRight =  controlsSizeString;
+        document.getElementById("timebox").style.width =  controlsSizeString;
         
         // force map to update via a window resize event
         var evt = document.createEvent("HTMLEvents");
         evt.initEvent('resize', true, false);
         window.dispatchEvent(evt);
-        
+
+    // data flagger    
+    } else if (menu.id.indexOf("constantNum") >= 0) {
+        settings.flaggerConstantRepeatNum = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("missingNum") >= 0) {
+        settings.flaggerMissingRepeatNum = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("outlierStatSDfactor") >= 0) {
+        settings.flaggerOutlierStatSDfactor = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("outlierSpikeTimeWindow") >= 0) {
+        settings.flaggerOutlierSpikeTimeWindow = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("outlierSpikeSDfactor") >= 0) {
+        settings.flaggerOutlierSpikeSDfactor = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("aboveConcentration") >= 0) {
+        settings.flaggerAboveConc = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("belowConcentration") >= 0) {
+        settings.flaggerBelowConc = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("invalidateStart") >= 0) {
+        settings.flaggerUserInvalidateStart = document.getElementById(menu.id).value;
+    } else if (menu.id.indexOf("invalidateEnd") >= 0) {
+        settings.flaggerUserInvalidateEnd = document.getElementById(menu.id).value;
         
     // somthing aint right    
     } else {
@@ -1335,6 +1433,8 @@ function restoreSettings() {
         }
     }
 
+    //console.log(settings);
+    document.getElementById('fontSize').value                       = settings.fontSize;
     document.getElementById("plot_symbolfill").checked              = settings.plotFilledSymbolFlag;
     document.getElementById("plot_logoption").checked               = settings.plotLogAxisFlag;
     
@@ -1345,6 +1445,18 @@ function restoreSettings() {
     document.getElementById("secondaryColormap_list").selectedIndex = settings.plotSecondaryColorIndex;
     document.getElementById("plotSecondaryOpacity").value           = settings.plotSecondaryOpacity;
     document.getElementById("secondaryStyle_list").selectedIndex    = settings.plotSecondaryStyleIndex;
+
+    document.getElementById("constantNum").value                    = settings.flaggerConstantRepeatNum;
+    document.getElementById("missingNum").value                     = settings.flaggerMissingRepeatNum;
+    document.getElementById("outlierStatSDfactor").value            = settings.flaggerOutlierStatSDfactor;
+    document.getElementById("outlierSpikeTimeWindow").value         = settings.flaggerOutlierSpikeTimeWindow;
+    document.getElementById("outlierSpikeSDfactor").value           = settings.flaggerOutlierSpikeSDfactor;
+    document.getElementById("aboveConcentration").value             = settings.flaggerAboveConc;
+    document.getElementById("belowConcentration").value             = settings.flaggerBelowConc;
+    document.getElementById("invalidateStart").value                = settings.flaggerUserInvalidateStart;
+    document.getElementById("invalidateEnd").value                  = settings.flaggerUserInvalidateEnd;
+
+    dataFlaggerInitParams();
 }
 
 
@@ -1425,61 +1537,34 @@ function restoreSettings() {
   }
 
 
-//function update_scatterplot_menu(thisVarname) {
-//
-//    // possible scatterplot menu items
-//    scatterplot_externalMenuItems = oStatsExternal.menuItems; // (e.g. "Airnow NO2", etc)
-//    
-//    // corresponding IDs (e.g. addAqsNO2)
-//    scatterplot_externalIDs = oStatsExternal.IDs;
-//
-//    // corresponding varnames (e.g. airnow.no2)
-//    scatterplot_varnames = oStatsExternal.varName;
-//
-//    // index that matches the specified varName
-//    idIndex = scatterplot_varnames.indexOf(thisVarname);
-//
-//    console.log(thisVarname, scatterplot_varnames);
-//    
-//    // x and y axes have same menus, so just check the x axis
-//    xAxis = document.getElementById("scatter_xaxisVar");
-//    optionExists = false;
-//    for (i=0; i<xAxis.options.length; i++) {
-//        console.log(xAxis.options[i].value, scatterplot_varnames.indexOf(xAxis.options[i].value));
-//        if (scatterplot_externalMenuItems.indexOf(xAxis.options[i].value) >= 0) {
-//            optionExists = true;
-//        }
-//    }
-//    
-//    if (! optionExists) {
-//        console.log("adding", scatterplot_externalMenuItems[idIndex]);
-//        this_option_scatter_xaxis   = document.createElement("option");
-//        this_option_scatter_yaxis   = document.createElement("option");
-//        
-//        this_option_scatter_xaxis.value    = scatterplot_externalMenuItems[idIndex];
-//        this_option_scatter_yaxis.value    = scatterplot_externalMenuItems[idIndex];
-//        
-//        //this_option_scatter_xaxis.text    = scatterplot_externalIDs[idIndex];
-//        //this_option_scatter_yaxis.text    = scatterplot_externalIDs[idIndex];
-//        this_option_scatter_xaxis.text    = scatterplot_externalMenuItems[idIndex];
-//        this_option_scatter_yaxis.text    = scatterplot_externalMenuItems[idIndex];
-//        
-//        document.getElementById("scatter_xaxisVar").add(this_option_scatter_xaxis);
-//        document.getElementById("scatter_yaxisVar").add(this_option_scatter_yaxis);
-//    }
-//  }
+
+function process_scatterOptionRadio(element) {
+    //console.log(element.id);
+    
+    if (element.id == "scatterchoiceHourly") {
+        document.getElementById('scatterAxisMenusHourly').style.display="inline-block";
+        document.getElementById('scatterAxisMenusNative').style.display="none";
+    } else {
+        document.getElementById('scatterAxisMenusHourly').style.display="none";
+        document.getElementById('scatterAxisMenusNative').style.display="inline-block";
+    }
+    
+    update_scatterPlot();
+}
+
+
 
 function update_scatterplot_menu(targetVarname, disabledFlag) {
     //console.log(targetVarname);
     
     // possible scatterplot menu items
-    scatterplot_externalMenuItems = oStatsExternal.menuItems; // (e.g. "Airnow NO2", etc)
+    scatterplot_externalMenuItems = oStatsHourlyExternal.menuItems; // (e.g. "Airnow NO2", etc)
     
     // corresponding IDs (e.g. addAqsNO2)
-    //scatterplot_externalIDs = oStatsExternal.IDs;
+    //scatterplot_externalIDs = oStatsHourlyExternal.IDs;
     
     // corresponding varnames (e.g. airnow.no2)
-    scatterplot_varnames = oStatsExternal.varName;
+    scatterplot_varnames = oStatsHourlyExternal.varName;
     
     // index that matches the specified varName
     idIndex = scatterplot_varnames.indexOf(targetVarname);
@@ -1503,13 +1588,13 @@ function initScatterplotExternalMenuItems() {
     scatterplot_baseMenuLength = document.getElementById("scatter_xaxisVar").options.length;
     
     // possible scatterplot menu items
-    scatterplot_externalMenuItems = oStatsExternal.menuItems; // (e.g. "Airnow NO2", etc)
+    scatterplot_externalMenuItems = oStatsHourlyExternal.menuItems; // (e.g. "Airnow NO2", etc)
     
     // corresponding IDs (e.g. addAqsNO2)
-    //scatterplot_externalIDs = oStatsExternal.IDs;
+    //scatterplot_externalIDs = oStatsHourlyExternal.IDs;
 
     // corresponding varnames (e.g. airnow.no2)
-    scatterplot_varnames = oStatsExternal.varName;
+    scatterplot_varnames = oStatsHourlyExternal.varName;
 
     for (menuInd=0; menuInd<scatterplot_externalMenuItems.length; menuInd++) {
         //console.log("adding", scatterplot_externalMenuItems[menuInd]);
@@ -1534,6 +1619,113 @@ function initScatterplotExternalMenuItems() {
     //document.getElementById("timeseriesHourlyOption").disabled = false;
 
   }
+
+let geoJsonData;
+let geoJsonFilteredFeatures;
+function addGeoJsonToMap(geoJsonData) {
+
+
+    if (Array.isArray(geoJsonFilteredFeatures) == false) {
+        // bbox for fire perimeters will be this big
+        let latRange = 4.0; //degrees
+        let lonRange = 4.0; //degrees
+        
+        let latCenter = myLatLngCenter.lat();
+        let lonCenter = myLatLngCenter.lng();
+        let minLon = lonCenter - lonRange/2;
+        let maxLon = lonCenter + lonRange/2;
+        let minLat = latCenter - latRange/2;
+        let maxLat = latCenter + latRange/2;
+        if (minLon < -180) {minLon = -180;}
+        if (maxLon >  180) {maxLon =  180;}
+        if (minLat <  -90) {minLat =  -90;}
+        if (maxLat >   90) {maxLat =   90;}
+        
+        const bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(minLat, minLon), //SW
+            new google.maps.LatLng(maxLat, maxLon)  //NE
+        );
+        
+        geoJsonFilteredFeatures = geoJsonData.features.filter(function(feature) {
+            if (feature.geometry.type == "Polygon") {
+                const coordinates = feature.geometry.coordinates[0];
+                for (let i = 0; i < coordinates.length; i++) {
+                    if (!bounds.contains(new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))) {
+                        return false;
+                    }
+                }
+                return true;
+
+            } else if (feature.geometry.type == "MultiPolygon") {
+                const coordinates = feature.geometry.coordinates[0][0];
+                for (let i = 0; i < coordinates.length; i++) {
+                    if (!bounds.contains(new google.maps.LatLng(coordinates[i][1], coordinates[i][0]))) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        });
+                
+    }
+
+    
+    map.data.addGeoJson({
+        type: 'FeatureCollection',
+        features: geoJsonFilteredFeatures,
+    });
+
+    //map.data.addGeoJson(geoJsonData);
+
+    // colors for fire perimeters
+    let fillColor;
+    let strokeColor;
+    let mapid = map.getMapTypeId();
+    if ( (mapid == "satellite") || (mapid == "hybrid") ) {
+        fillColor = '#666666';
+        strokeColor = '#FFFFFF';
+    } else {
+        fillColor = '#111111';
+        strokeColor = '#000000';
+    }
+    map.data.setStyle(function(feature) {
+    return {
+        fillColor: fillColor,
+        strokeColor: strokeColor,
+        strokeWeight: 1
+    };
+});
+}
+
+function removeGeoJsonFromMap() {
+    map.data.forEach(function(feature) {
+        map.data.remove(feature);
+    });
+}
+
+
+var kmzLayer;
+function load_kmlFile(myFileName) {
+
+    const fileInput = document.getElementById('kmlFile0');
+    //const fileInput = myFileName;
+
+    //console.log(myFileName.value);
+    //console.log(fileInput);
+    kmzLayer = new google.maps.KmlLayer({
+        ///url: 'https://ftp.wildfire.gov/public/incident_specific_data/pacific_nw/2023_Incidents_Oregon/2023_Lookout_ORWIF230327/IR/20230921/20230921_Lookout_IR.kmz',
+        //url: 'data:text/plain;charset=utf-8,' + encodeURIComponent(kmlData),
+        url: myFileName.value,
+        options: {
+            preserveViewport: true,
+            screenOverlays: true,
+            screenXY: new google.maps.Point(0, 0),
+            overlayXY: new google.maps.Point(100, 100) // Adjust the values as needed
+        }
+    });
+    kmzLayer.setMap(map);
+}
+
 
 
 // initialize the map
@@ -1604,7 +1796,8 @@ function initScatterplotExternalMenuItems() {
       
       map = null;
       map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
+     
+      
       // This is an attempt to show fire perimeters. Can't because Google API is limited to
       // 10MB file and 1000 total features (per API spec). 
       //kmlsrc = rsigserver + 'download/WFIGS_-_Current_Wildland_Fire_Locations.kml';
@@ -1619,8 +1812,7 @@ function initScatterplotExternalMenuItems() {
       //    var testimonial = document.getElementById('capture');
       //    testimonial.innerHTML = content;
       //});
-
-
+      
       
       //map.fitBounds(myLatLngBounds);
       google.maps.event.addDomListener(map, 'idle', function() {
@@ -1632,15 +1824,39 @@ function initScatterplotExternalMenuItems() {
       google.maps.event.addDomListener(window, 'resize', function() {       
 	      set_mapsize();
 	      $('#map_size').slider("option", "value", map_height);
-	  });  
+      });
+
+      google.maps.event.addDomListener(window, 'resize', function() {       
+	      set_timeseriesSize();
+	      $('#timeseries_size').slider("option", "value", timeseries_height);
+      });
+      
       google.maps.event.addListener( map, "maptypeid_changed", function() { 
-	      mapid = map.getMapTypeId();
+	  mapid = map.getMapTypeId();
 	      if ( (mapid == "satellite") || (mapid == "hybrid") ) {
 		  cropRegion.setOptions({fillColor:"#FFFF00", strokeColor:"#FFFFFF", strokeWeight:2});
+
+                  // styling for geoJsonData (e.g. fire perimeters)
+                  map.data.setStyle(function(feature) {
+                      return {
+                          fillColor: '#FFCCCC',
+                          strokeColor: '#FFFFFF',
+                          strokeWeight: 1
+                      };
+                  });            
 	      } else {
 		  cropRegion.setOptions({fillColor:"#F0F000", strokeColor:"#000000", strokeWeight:1});
-	      }
-	  } );
+
+                  // styling for geoJsonData (e.g. fire perimeters)
+                  map.data.setStyle(function(feature) {
+                      return {
+                          fillColor: '#111111',
+                          strokeColor: '#000000',
+                          strokeWeight: 1
+                      };
+	          });
+              }
+	  });
       
       //console.log(map);
 
@@ -1796,7 +2012,7 @@ function initScatterplotExternalMenuItems() {
     hideAllLayers(highlightMarker);
     hideAllLayers(markerLayer);
 
-    //loadViperData();
+    loadViperData();
 
   }
 
@@ -1945,7 +2161,7 @@ function clear_2darray(myarray) {
       if (appendFlagAqsPm25 == false && isPM25Checked && isPM25) {
           if (nChecked == 1) {
               //moveFunc = "moveAqsHighlightMarker(oAirnowPM25.closestLonLat[1], oAirnowPM25.closestLonLat[0]);";
-              moveFunc = "pickAQS(oAirnowPM25.closestLonLat[1], oAirnowPM25.closestLonLat[0]);";
+              moveFunc = "pickAQS(oAirnowPM25.closestLonLat[1], oAirnowPM25.closestLonLat[0], '', '');";
           } else {
               moveFunc = "";
           }
@@ -1960,7 +2176,7 @@ function clear_2darray(myarray) {
       if (appendFlagAqsPm10 == false && isPM10Checked && isPM10) {
           if (nChecked == 1) {
               //moveFunc = "moveAqsHighlightMarker(oAirnowPM25.closestLonLat[1], oAirnowPM25.closestLonLat[0]);";
-              moveFunc = "pickAQS(oAirnowPM10.closestLonLat[1], oAirnowPM10.closestLonLat[0]);";
+              moveFunc = "pickAQS(oAirnowPM10.closestLonLat[1], oAirnowPM10.closestLonLat[0]. '', '');";
           } else {
               moveFunc = "";
           }
@@ -1975,7 +2191,7 @@ function clear_2darray(myarray) {
       if (appendFlagAqsOzone == false && isOzoneChecked && isOzone) {
           if (nChecked == 1) {
               //moveFunc = "moveAqsHighlightMarker(oAirnowOzone.closestLonLat[1], oAirnowOzone.closestLonLat[0]);";
-              moveFunc = "pickAQS(oAirnowOzone.closestLonLat[1], oAirnowOzone.closestLonLat[0]);";
+              moveFunc = "pickAQS(oAirnowOzone.closestLonLat[1], oAirnowOzone.closestLonLat[0], '', '');";
           } else {
               moveFunc = "";
           }
@@ -1990,7 +2206,7 @@ function clear_2darray(myarray) {
       if (appendFlagAqsCO == false && isCOChecked && isCO) {
           if (nChecked == 1) {
               //moveFunc = "moveAqsHighlightMarker(oAirnowCO.closestLonLat[1], oAirnowCO.closestLonLat[0]);";
-              moveFunc = "pickAQS(oAirnowCO.closestLonLat[1], oAirnowCO.closestLonLat[0]);";
+              moveFunc = "pickAQS(oAirnowCO.closestLonLat[1], oAirnowCO.closestLonLat[0], '', '');";
           } else {
               moveFunc = "";
           }
@@ -2005,7 +2221,7 @@ function clear_2darray(myarray) {
       if (appendFlagAqsNO2 == false && isNO2Checked && isNO2) {
           if (nChecked == 1) {
               //moveFunc = "moveAqsHighlightMarker(oAirnowNO2.closestLonLat[1], oAirnowNO2.closestLonLat[0]);";
-              moveFunc = "pickAQS(oAirnowNO2.closestLonLat[1], oAirnowNO2.closestLonLat[0]);";
+              moveFunc = "pickAQS(oAirnowNO2.closestLonLat[1], oAirnowNO2.closestLonLat[0], '', '');";
           } else {
               moveFunc = "";
           }
@@ -2020,7 +2236,7 @@ function clear_2darray(myarray) {
       if (appendFlagAqsSO2 == false && isSO2Checked && isSO2) {
           if (nChecked == 1) {
               //moveFunc = "moveAqsHighlightMarker(oAirnowSO2.closestLonLat[1], oAirnowSO2.closestLonLat[0]);";
-              moveFunc = "pickAQS(oAirnowSO2.closestLonLat[1], oAirnowSO2.closestLonLat[0]);";
+              moveFunc = "pickAQS(oAirnowSO2.closestLonLat[1], oAirnowSO2.closestLonLat[0], '');";
           } else {
               moveFunc = "";
           }
@@ -2259,6 +2475,53 @@ function toggleMySensorLocations(myID) {
       setTimeout("update_optional(lastpos)", 0);
   }
 
+function toggleFirePerimeters() {
+
+    let thisDate = create_dateObjectUTC(oUserdata.timestamp[selected_block][0]);
+    let thisYear = Number(thisDate.getUTCFullYear());
+
+    if (! document.getElementById("addFirePerimeters").checked) {
+        removeGeoJsonFromMap();
+
+    } else if (typeof geoJsonData !== 'undefined') {
+        // geoJsonData is already loaded. Now add it to the map
+        addGeoJsonToMap(geoJsonData);
+        
+    } else {
+       // first load the geoJsonData, then add it to the map
+        let geojson_url;
+        if (thisYear == today_yyyy) {
+            busyShow('map');
+            geojson_url = "https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/WFIGS_Interagency_Perimeters_YearToDate/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson";
+        } else if (thisYear <= 2022 && thisYear >= 2020) {
+            busyShow('map');
+            geojson_url = "fire_perimeters/InterAgencyFirePerimeterHistory_All_Years_View_epsg3857_simplify100_epsg4326_extract" + thisYear.toString() + ".geojson";
+        } else if (thisYear == 2019) {
+            busyShow('map');
+            geojson_url = "fire_perimeters/Historic_GeoMAC_Perimeters_2019_-3339961634056411187_simplify100_epsg4326.geojson";
+        } else if (thisYear <= 2018) {
+            busyShow('map');
+            geojson_url = "fire_perimeters/Historic_Geomac_Perimeters_Combined_2000_2018_6787151615263611623_epsg4326_simplify100_extract" + thisYear.toString() + ".geojson";
+        }
+
+        busyMessageQueueMapAdd(firePerimeterLoadMessage);
+        $.ajax({
+            //url: 'fire_perimeters/Historic_Geomac_Perimeters_2018_-108808624027135419_epsg4326_simplify100.geojson',
+            url: geojson_url,
+            dataType: 'json',
+            success: function(data) {
+                geoJsonData = data;
+                // Call a function to add the GeoJSON data to the map
+                addGeoJsonToMap(geoJsonData);                
+                busyMessageQueueMapRemove(firePerimeterLoadMessage);
+                busyHide('map');
+            }
+        });
+    }
+
+}
+
+
 
  function toggleViirsTruecolorMap() {
       // if we don't already have VIIRS Truecolor loaded, get it
@@ -2354,6 +2617,7 @@ function toggleMySensorLocations(myID) {
 
       // uncheck other satellite layers
       addTropomiNO2Map.checked = false;
+      addTempoNO2Map.checked = false;
       
       if (addViirsAodMap.checked) {
           loadSatelliteMapBySource("viirsAOD");
@@ -2374,9 +2638,31 @@ function toggleMySensorLocations(myID) {
 
       // uncheck other satellite layers
       addViirsAodMap.checked = false;
+      addTempoNO2Map.checked = false;
       
       if (addTropomiNO2Map.checked) {
           loadSatelliteMapBySource("tropomiNO2");
+      } else {
+          if (satelliteOverlay != null && typeof satelliteOverlay.setMap !== "undefined") {
+              satelliteOverlay.setMap(null);
+              satelliteOverlay = null;
+          }
+          $("#colorbar_satellite_canvas").hide();
+      }
+      arrangeColorbars();
+  }
+
+  function toggleTempoNO2Map() {
+      // if we don't already have TEMPO NO2 loaded, get it
+      // NOTE: we only load the current day's worth of data in order to minimize
+      // load on the server. 
+
+      // uncheck other satellite layers
+      addTropomiNO2Map.checked = false;
+      addViirsAodMap.checked = false;
+      
+      if (addTempoNO2Map.checked) {
+          loadSatelliteMapBySource("tempoNO2");
       } else {
           if (satelliteOverlay != null && typeof satelliteOverlay.setMap !== "undefined") {
               satelliteOverlay.setMap(null);
@@ -2399,6 +2685,10 @@ function toggleMySensorLocations(myID) {
       if (addTropomiNO2Map.checked) {
           loadSatelliteMapBySource('tropomiNO2');
       }
+
+      if (addTempoNO2Map.checked) {
+          loadSatelliteMapBySource('tempoNO2');
+      }
   }
 
 
@@ -2412,9 +2702,13 @@ function toggleMySensorLocations(myID) {
 
       let thisDateObj = create_dateObjectUTC(oUserdata.timestamp[selected_block][lastpos]);
       let thisDateGMT = get_yyyymmdd(thisDateObj);
+      let thisHHMMSS  = get_time(thisDateObj);
+      let thisHH      = thisHHMMSS.split(":")[0];
       let thisMessage = "";
+      let thisTimerange = "";
       let thisSliderPercent = $("#time_slider").slider( "option", "value" ) / $("#time_slider").slider( "option", "max" ) * 100.0;
-
+      let satelliteUniqueIDPrefix = "";
+      
       //console.log(thisDateGMT, lastViirsAODDate);
 
       // set certain variables based on the desired source
@@ -2423,36 +2717,63 @@ function toggleMySensorLocations(myID) {
           isGuiChecked             = addViirsAodMap.checked;
           annotationCharacter      = "V";
           annotationOffset         = "0.05em";
-          satelliteUniqueID        = viirsAOD_uniqueID;
+          //satelliteUniqueID        = viirsAOD_uniqueID;
+          satelliteUniqueID        = viirsAOD_uniqueID + '_' + thisDateGMT;
+          satelliteUniqueIDPrefix  = viirsAOD_uniqueID;
           lastAcquiredDate         = lastViirsAODDate;
           satelliteMinVal          = viirsMinVal;
           satelliteMaxVal          = viirsMaxVal;
           //satelliteShowWarningFlag = viirsShowWarningFlag;
           satelliteOpacity         = viirsAodOpacity;
           satelliteZindex          = viirsAodZindex;
-          thisMessage  = document.getElementById('addViirsAodMapLabel').innerHTML + ' ' + thisDateGMT;
+          thisMessage              = document.getElementById('addViirsAodMapLabel').innerHTML + ' ' + thisDateGMT;
+          thisTimerange            = thisDateGMT + "T00:00:00Z/" + thisDateGMT + "T23:59:59Z";
+
       } else if (source == "tropomiNO2") {
           //satelliteLayer           = "tropomi.rpro.no2.nitrogendioxide_tropospheric_column";
           satelliteLayer           = "tropomi.offl.no2.nitrogendioxide_tropospheric_column";
           isGuiChecked             = addTropomiNO2Map.checked;
           annotationCharacter      = "T";
           annotationOffset         = "-0.8em";
-          satelliteUniqueID        = tropomiNO2_uniqueID;
+          //satelliteUniqueID        = tropomiNO2_uniqueID;
+          satelliteUniqueID        = tropomiNO2_uniqueID + '_' + thisDateGMT;
+          satelliteUniqueIDPrefix  = tropomiNO2_uniqueID;
           lastAcquiredDate         = lastTropomiNO2Date;
           satelliteMinVal          = tropomiNO2MinVal;
           satelliteMaxVal          = tropomiNO2MaxVal;
           //satelliteShowWarningFlag = tropomiNO2ShowWarningFlag;
           satelliteOpacity         = tropomiNO2Opacity;
           satelliteZindex          = tropomiNO2Zindex;
-          thisMessage  = document.getElementById('addTropomiNO2MapLabel').innerHTML + ' ' + thisDateGMT;
+          thisMessage              = document.getElementById('addTropomiNO2MapLabel').innerHTML + ' ' + thisDateGMT;
+          thisTimerange            = thisDateGMT + "T00:00:00Z/" + thisDateGMT + "T23:59:59Z";
+
+      } else if (source == "tempoNO2") {
+          satelliteLayer           = "tempo.l2.no2.vertical_column_troposphere";
+          isGuiChecked             = addTempoNO2Map.checked;
+          annotationCharacter      = "M";
+          annotationOffset         = "-0.8em";
+          //satelliteUniqueID        = tempoNO2_uniqueID;
+          satelliteUniqueID        = tempoNO2_uniqueID + '_' + thisDateGMT + "_" + thisHH + "00";
+          satelliteUniqueIDPrefix  = tempoNO2_uniqueID;
+          lastAcquiredDate         = lastTempoNO2Date;
+          satelliteMinVal          = tempoNO2MinVal;
+          satelliteMaxVal          = tempoNO2MaxVal;
+          //satelliteShowWarningFlag = tropomiNO2ShowWarningFlag;
+          satelliteOpacity         = tempoNO2Opacity;
+          satelliteZindex          = tempoNO2Zindex;
+          thisMessage              = document.getElementById('addTempoNO2MapLabel').innerHTML + ' ' + thisDateGMT;
+          thisTimerange            = thisDateGMT + "T" + thisHH + ":00:00Z/" + thisDateGMT + "T" + thisHH + ":59:59Z";
       }
 
-      // Request the current day's VIIRS AOD map
+      //console.log(source, thisTimerange);
+      
+      // Request the current day's satellite map (or hour for tempo)
       if (isGuiChecked && satelliteUniqueID != "" && thisDateGMT != lastAcquiredDate && busyMessageQueueMap.indexOf(thisMessage) == -1) {
 
 
           let lastViirsAODDate;
           let lastTropomiNO2Date;
+          let lastTempoNO2Date;
           let addSliderElementFlag = false; // default
           
           if (source == "viirsAOD") {
@@ -2469,9 +2790,15 @@ function toggleMySensorLocations(myID) {
                   tropomiNO2DateList.push(lastTropomiNO2Date);
                   addSliderElementFlag = true;
               }
+          } else if (source == "tempoNO2") {
+              lastTempoNO2Date = thisDateGMT + "T" + thisHH;
+              addSliderElementFlag = false; // default
+              if (!tempoNO2DateList.includes(lastTempoNO2Date)) {
+                  tempoNO2DateList.push(lastTempoNO2Date);
+                  addSliderElementFlag = true;
+              }
           }
 
-          let thisTimerange = thisDateGMT + "T00:00:00Z/" + thisDateGMT + "T23:59:59Z";
 
           // bbox for VIIRS AOD will be this big
           //let latRange = 2.5; //degrees
@@ -2538,19 +2865,20 @@ function toggleMySensorLocations(myID) {
               '&MINVAL=' + satelliteMinVal                             + 
               '&MAXVAL=' + satelliteMaxVal                             +
               '&QAFLAG=medium'                                         +
-              '&ID=' + satelliteUniqueID + '_' + thisDateGMT;
-
-          let colorbarURL = rsigserver                                 + 
-              'SERVICE=retigowms'                                      + 
-              '&VERSION=1.3.0'                                         + 
-              '&REQUEST=GetLegend'                                     +
+              //'&ID=' + satelliteUniqueID + '_' + thisDateGMT;
               '&ID=' + satelliteUniqueID;
+
+          //let colorbarURL = rsigserver                                 + 
+          //    'SERVICE=retigowms'                                      + 
+          //    '&VERSION=1.3.0'                                         + 
+          //    '&REQUEST=GetLegend'                                     +
+          //    '&ID=' + satelliteUniqueID;
           
           let colorbarInfoURL = rsigserver                             + 
               'SERVICE=retigowms'                                      + 
               '&VERSION=1.3.0'                                         + 
               '&REQUEST=GetLegendInfo'                                 +
-              '&ID=' + satelliteUniqueID;
+              '&ID=' + satelliteUniqueIDPrefix;
 
 
           if (satelliteShowWarningFlag) {
@@ -2650,6 +2978,16 @@ function toggleMySensorLocations(myID) {
                                               init_colorbar(cbStartX, cbStartY, tropomiNO2MinVal, tropomiNO2MaxVal, 'TROPOMI NO2 (#/cm2)', 'colorbar_satellite_canvas', tropomiNO2ColorTable,1);
                                               $("#colorbar_satellite_canvas").show();
                                           }
+                                      } else if (source == "tempoNO2") {
+                                          for (cInd=0; cInd<dataParse.length; cInd++) {
+                                              if (dataParse[cInd] != '') {
+                                                  tempoNO2ColorTable.push(dataParse[cInd]);
+                                              } 
+                                          }
+                                          if (isGuiChecked && tempoNO2ColorTable.length > 0) {
+                                              init_colorbar(cbStartX, cbStartY, tempoNO2MinVal, tempoNO2MaxVal, 'TEMPO NO2 (#/cm2)', 'colorbar_satellite_canvas', tempoNO2ColorTable,1);
+                                              $("#colorbar_satellite_canvas").show();
+                                          }
                                       }
                                       
                                       arrangeColorbars();
@@ -2669,6 +3007,9 @@ function toggleMySensorLocations(myID) {
                               $("#colorbar_satellite_canvas").show();
                               arrangeColorbars();
                           } else if (source == "tropomiNO2" && isGuiChecked && tropomiNO2ColorTable.length > 0) {
+                              $("#colorbar_satellite_canvas").show();
+                              arrangeColorbars();
+                          } else if (source == "tempoNO2" && isGuiChecked && tempoNO2ColorTable.length > 0) {
                               $("#colorbar_satellite_canvas").show();
                               arrangeColorbars();
                           }
@@ -2726,6 +3067,14 @@ function toggleMySensorLocations(myID) {
       }
   }
 
+  function updateTempoNO2Opacity() {
+      tempoNO2Opacity = parseFloat(document.getElementById("tempoNO2OpacityControl").value) / 100.0;
+      
+      if (satelliteOverlay != null && typeof satelliteOverlay.setMap !== "undefined") {
+          satelliteOverlay.setOpacity(tempoNO2Opacity);
+      }
+  }
+
 
   function getSatelliteUniqueID() {
       // get a unique ID for Satellite data requests
@@ -2733,6 +3082,7 @@ function toggleMySensorLocations(myID) {
 
       viirsAOD_uniqueID   = ""; // default
       tropomiNO2_uniqueID = ""; // default
+      tempoNO2_uniqueID = ""; // default
       $.ajax({
               //url: "https://ofmpub.epa.gov/rsig/rsigserver?SERVICE=retigowms&VERSION=1.3.0&REQUEST=GetId",
               url: rsigserver + "SERVICE=retigowms&VERSION=1.3.0&REQUEST=GetId",
@@ -2741,6 +3091,7 @@ function toggleMySensorLocations(myID) {
                   //alert(data);
                       viirsAOD_uniqueID = 'viirsaod-' + data; // all lowercase, no underscores
                       tropomiNO2_uniqueID = 'tropomino2-' + data; // all lowercase, no underscores
+                      tempoNO2_uniqueID = 'tempono2-' + data; // all lowercase, no underscores
               },
                   error: function (jqXHR, textStatus, errorThrown) {
                   print("Unique ID for satellite data not issued.");
@@ -3152,6 +3503,7 @@ function resetGUI() {
     document.getElementById("addAqsNO2Locations").checked = false;
     document.getElementById("addAqsSO2Locations").checked = false;
     document.getElementById("addSurfmetLocations").checked = false;
+    document.getElementById("addFirePerimeters").checked = false;
     document.getElementById("addHmsFireLocations").checked = false;
     document.getElementById("addPurpleairLocations").checked = false;
     document.getElementById("addMySensorLocations0").checked = false;
@@ -3162,6 +3514,7 @@ function resetGUI() {
     document.getElementById("addViirsAodMap").checked = false;
     document.getElementById("addViirsTruecolorMap").checked = false;
     document.getElementById("addTropomiNO2Map").checked = false;
+    document.getElementById("addTempoNO2Map").checked = false;
     //document.getElementById("addWeather").checked = false;
     document.getElementById("addAqsPm25").checked = false;
     document.getElementById("addAqsPm10").checked = false;
@@ -3180,6 +3533,7 @@ function resetGUI() {
     document.getElementById("viirsAodOpacityControl").value = 70;
     document.getElementById("viirsTruecolorOpacityControl").value = 70;
     document.getElementById("tropomiNO2OpacityControl").value = 70;
+    document.getElementById("tempoNO2OpacityControl").value = 70;
 
     // set avg/block mode to 'avg'
     document.getElementById("Average").checked = true;
@@ -3250,6 +3604,7 @@ function resetGUI() {
     viirsDateList = [];
     viirsTruecolorDateList = [];
     tropomiNO2DateList = [];
+    tempoNO2DateList = [];
     
 }
 
@@ -3405,7 +3760,6 @@ function init_colorbar(x, y, min, max, title, canvas_string, color_table, useExp
       //satelliteOverlay.setMap(map);
       //console.log(satelliteOverlay);
 
-
   }
 
 
@@ -3425,6 +3779,7 @@ function init_colorbar(x, y, min, max, title, canvas_string, color_table, useExp
 	      initGoogleLatLng();
 	      mergedFlag = true;
 	      sortAndProcessData(mergedFlag);
+
           }
 	 
       }
@@ -3581,10 +3936,12 @@ function init_colorbar(x, y, min, max, title, canvas_string, color_table, useExp
       // windrose colorbar
       setTimeout("init_colorbar(cbStartX, cbStartY, oUserdata.min[0][get_selected_varselector_index()], oUserdata.max[0][get_selected_varselector_index()], oUserdata.varname[0][get_selected_varselector_index()], 'colorbar_canvas_windrose', color_table,0)",0);
 
-      setTimeout("computeCovarianceElements(sortedData1);", 0);
+      setTimeout("computeCovarianceElementsHourly(sortedData1);", 0);
+      setTimeout("computeCovarianceElementsNative();", 0);
       setTimeout("initExternalCovarianceElements();", 0);
       setTimeout("initScatterplotExternalMenuItems();", 0);
       setTimeout("stats_sliderpos_lookup();", 0);
+      setTimeout("statsNative_sliderpos_lookup();", 0);
       setTimeout("updateSettings(document.getElementById('fontSize'));");
 
       
@@ -3649,6 +4006,10 @@ function init_colorbar(x, y, min, max, title, canvas_string, color_table, useExp
       $("#windrose_canvas").hide();
       $("#windrose_canvas_button").hide();
       $("#scatter_canvas").hide();
+
+      // Resize the map twice. For some unknown reason the width of table_td1 changes, which throws off the slider sizing.
+      setTimeout("set_mapsize();", 500);
+      setTimeout("set_mapsize();", 1000);
       
   }
 
@@ -3674,22 +4035,23 @@ function init_colorbar(x, y, min, max, title, canvas_string, color_table, useExp
     }
 
 
-    function export_analysis() {
-      // export the distance from point and/or line to a text file 
-      fname = document.getElementById("user_datafile1").value.replace(/^.*\\/, "").split('.');
-      fname = fname[0] + "_ANALYSIS.txt";
-
-      print("exporting " + fname);
-
-      try {
-	  var blob = new Blob(analysisExportArray,{type: "text/plain;charset=utf-8"});
-	  saveAs(blob, fname);
-
-      } catch (e) {
-	  print("File export is not supported by this browser.");
-      }
-
+function export_analysis() {
+    update_analysisPlot();
+    // export the distance from point and/or line to a text file 
+    fname = document.getElementById("user_datafile1").value.replace(/^.*\\/, "").split('.');
+    fname = fname[0] + "_ANALYSIS.txt";
+    
+    print("exporting " + fname);
+    
+    try {
+	var blob = new Blob(analysisExportArray,{type: "text/plain;charset=utf-8"});
+	saveAs(blob, fname);
+        
+    } catch (e) {
+	print("File export is not supported by this browser.");
     }
+    
+}
 
     function export_scatter() {
         // export the distance from point and/or line to a text file 
@@ -3700,18 +4062,62 @@ function init_colorbar(x, y, min, max, title, canvas_string, color_table, useExp
         
         export_array = new Array();
 
-        xVarIndex = document.getElementById("scatter_xaxisVar").selectedIndex;
-        yVarIndex = document.getElementById("scatter_yaxisVar").selectedIndex;
+        // for data flagger
+        flagger  = document.getElementById("excludeFlaggerOption").checked;
+        noExport = document.getElementById("chkFlaggerDoNotExport").checked;
+        code_constant     = 'C';
+        code_missing      = 'M';
+        code_outlierStat  = 'T';
+        code_outlierSpike = 'P';
+        code_above        = 'A';
+        code_below        = 'B';
+        code_user         = 'U';
 
-        if (xVarIndex >= oStats.nVars) {
-            xIsExternalFlag = true;
-            xStatsArray = oStatsExternal;
-            xVarIndexPush = oStatsExternal.menuItems.indexOf(xVarName); //variable index in the statsExternal array
+        if (flagger && (! noExport) ) {
+            export_array.push(['# Data flagger codes: constant=' + code_constant + ', missing=' + code_missing + ', outlierStat=' + code_outlierStat + ', outlierSpike=' + code_outlierSpike + ', aboveValue=' + code_above + ', belowValue=' + code_below + ',  userInvalidated=' + code_user + '\n']);
+            export_array.push(['# Data flagger constant repeat num=' + settings.flaggerConstantRepeatNum + '\n']);
+            export_array.push(['# Data flagger missing repeat num=' + settings.flaggerMissingRepeatNum + '\n']);
+            export_array.push(['# Data flagger missing value=' + settings.flaggerMissingValue + '\n']);
+            export_array.push(['# Data flagger outlier stat sd factor value=' + settings.flaggerOutlierStatSDfactor + '\n']);
+            export_array.push(['# Data flagger outlier spike time window value=' + settings.flaggerOutlierSpikeTimeWindow + '\n']);
+            export_array.push(['# Data flagger outlier spike sd factor value=' + settings.flaggerOutlierSpikeSDfactor + '\n']);
+            export_array.push(['# Data flagger above concentration value=' + settings.flaggerAboveConc + '\n']);
+            export_array.push(['# Data flagger below concentration value=' + settings.flaggerBelowConc + '\n']);
+            export_array.push(['# Data flagger user invalidate start =' + settings.flaggerUserInvalidateStart + '\n']);
+            export_array.push(['# Data flagger user invalidate end =' + settings.flaggerUserInvalidateEnd + '\n']);
         }
-        if (yVarIndex >= oStats.nVars) {
-            yIsExternalFlag = true;
-            yStatsArray = oStatsExternal;
-            yVarIndexPush = oStatsExternal.menuItems.indexOf(yVarName); //variable index in the statsExternal array
+
+        
+        isHourly = false; // default
+        if (document.getElementById('scatterchoiceHourly').checked) {
+            isHourly = true;
+        }
+        
+        //xVarIndex = document.getElementById("scatter_xaxisVar").selectedIndex;
+        //yVarIndex = document.getElementById("scatter_yaxisVar").selectedIndex;
+        xVarIndexHourly = document.getElementById("scatter_xaxisVar").selectedIndex;
+        yVarIndexHourly = document.getElementById("scatter_yaxisVar").selectedIndex;
+        xVarIndexNative = document.getElementById("scatterNative_xaxisVar").selectedIndex;
+        yVarIndexNative = document.getElementById("scatterNative_yaxisVar").selectedIndex;
+
+        if (isHourly) {
+            corArray = oStatsHourly;
+            if (xVarIndexHourly >= oStatsHourly.nVars) {
+                xIsExternalFlag = true;
+                xStatsArray = oStatsHourlyExternal;
+                xVarIndexPush = oStatsHourlyExternal.menuItems.indexOf(xVarName); //variable index in the statsExternal array
+            }
+            if (yVarIndexHourly >= oStatsHourly.nVars) {
+                yIsExternalFlag = true;
+                yStatsArray = oStatsHourlyExternal;
+                yVarIndexPush = oStatsHourlyExternal.menuItems.indexOf(yVarName); //variable index in the statsExternal array
+            }
+        } else {
+            corArray = oStatsNative;
+            xStatsArray   = oStatsNative;
+            yStatsArray   = oStatsNative;
+            xVarIndexPush = xVarIndexNative;
+            yVarIndexPush = yVarIndexNative;
         }
         
         // linear regression info
@@ -3719,19 +4125,56 @@ function init_colorbar(x, y, min, max, title, canvas_string, color_table, useExp
         //export_array.push('Y-variable: '            + yStatsArray.varName[yVarIndexPush] + '\n');
         export_array.push('X-variable: '            + xStatsArray.varName[xVarIndexPush] + '\n');
         export_array.push('Y-variable: '            + yStatsArray.varName[yVarIndexPush] + '\n');
-        export_array.push('correlation_coef: '      + oStats.cor + '\n');
-        export_array.push('regression_yintercept: ' + oStats.regression_yint + '\n');
-        export_array.push('regression_slope: '      + oStats.regression_slope + '\n');
-        export_array.push('rms_error: '             + oStats.rmsError + '\n');
+        export_array.push('correlation_coef: '      + corArray.cor + '\n');
+        export_array.push('regression_yintercept: ' + corArray.regression_yint + '\n');
+        export_array.push('regression_slope: '      + corArray.regression_slope + '\n');
+        export_array.push('rms_error: '             + corArray.rmsError + '\n');
         
         // build header for data
         export_array.push('data:' + '\n');
-        export_array.push('Timestamp(UTC),' + xStatsArray.varName[xVarIndexPush] + ',' + yStatsArray.varName[yVarIndexPush] + ',' + 'isValidPoint\n');
+        //export_array.push('Timestamp(UTC),' + xStatsArray.varName[xVarIndexPush] + ',' + yStatsArray.varName[yVarIndexPush] + ',' + 'isValidPoint\n');
+        export_array.push('Timestamp(UTC),' + xStatsArray.varName[xVarIndexPush] + ',' + yStatsArray.varName[yVarIndexPush]);
 
+        if (flagger && (! noExport)) {
+            export_array.push([',' + 'DataFlaggerCodes']);
+        }
+
+         export_array.push('\n');
+        
         // data
-        for (hour=0; hour<oStats.nHours; hour++) {
-            if (oStats.timestamp[hour] != "") {
-                export_array.push(oStats.timestring[hour] + ',' + xStatsArray.hourAvg[xVarIndexPush][hour] + ',' + yStatsArray.hourAvg[yVarIndexPush][hour] + ',' + oStats.validFlag[hour]   + '\n');
+        if (isHourly) {
+            for (hour=0; hour<oStatsHourly.nHours; hour++) {
+                if (oStatsHourly.timestamp[hour] != "") {
+                    export_array.push(oStatsHourly.timestring[hour] + ',' + xStatsArray.hourAvg[xVarIndexPush][hour] + ',' + yStatsArray.hourAvg[yVarIndexPush][hour] + ',' + oStatsHourly.validFlag[hour]   + '\n');
+                }
+            }
+        } else {
+            for (tInd=0; tInd<oUserdata.msec[selected_block].length; tInd++) {
+                thisMsec = oUserdata.msec[selected_block][tInd];
+                if (oStatsNative.timestamp[tInd] != "") {
+                    if ( (!flagger) || (flagger && (!isMsecFlagged(thisMsec))) || (flagger && isMsecFlagged(thisMsec) && (!noExport)) ) {
+                        //export_array.push(oStatsNative.timestring[tInd] + ',' + xStatsArray.data[xVarIndexPush][tInd] + ',' + yStatsArray.data[yVarIndexPush][tInd] + ',' + oStatsNative.validFlag[tInd]   + '\n');
+                        export_array.push(oStatsNative.timestring[tInd] + ',' + xStatsArray.data[xVarIndexPush][tInd] + ',' + yStatsArray.data[yVarIndexPush][tInd]);
+
+                        // write data flagger codes to export array
+                        if (flagger && (! noExport)) {
+                            
+                            codeString = ""; //default passed
+                            dataMsec = oStatsNative.timestamp[tInd];
+                            if (oUserdata.flagged_constant_msec.indexOf(dataMsec) > 0)        { codeString += code_constant }
+                            if (oUserdata.flagged_longMissing_msec.indexOf(dataMsec) > 0)     { codeString += code_missing }
+                            if (oUserdata.flagged_outlierStat_msec.indexOf(dataMsec) > 0)     { codeString += code_outlierStat }
+                            if (oUserdata.flagged_outlierSpike_msec.indexOf(dataMsec) > 0)    { codeString += code_outlierSpike }
+                            if (oUserdata.flagged_aboveConc_msec.indexOf(dataMsec) > 0)       { codeString += code_above }
+                            if (oUserdata.flagged_belowConc_msec.indexOf(dataMsec) > 0)       { codeString += code_below }
+                            if (oUserdata.flagged_userInvalidated_msec.indexOf(dataMsec) > 0) { codeString += code_user }
+                            export_array.push(',' + codeString);
+                            //console.log(oStatsNative.timestring[tInd], codeString);
+                        }
+
+                        export_array.push('\n');
+                    }
+                }
             }
         }
         
@@ -3752,10 +4195,9 @@ function export_scatter_correction() {
     var yVarIndex = document.getElementById("scatter_yaxisVar").selectedIndex;
     var xVarName  = document.getElementById("scatter_xaxisVar").value;
     var yVarName  = document.getElementById("scatter_yaxisVar").value;
-
     
     // figure out if the y-axis variable corresponds to one of the user's variables
-    if (yVarIndex < oStats.nVars) {
+    if (yVarIndex < oStatsHourly.nVars) {
         // the y-axis variable corresponds to a user variable
         yRawVarName = yVarName.substring(7); // remove "Hourly " that was prepended in compute_stats
         //var filename  = yRawVarName + "_corrected.csv";
@@ -3783,8 +4225,41 @@ function process_scatterplot_correction() {
     var xVarName  = document.getElementById("scatter_xaxisVar").value;
     var yVarName  = document.getElementById("scatter_yaxisVar").value.toUpperCase().replace("HOURLY ", "");
 
+    isHourly = false; // default
+    if (document.getElementById('scatterchoiceHourly').checked) {
+        isHourly = true;
+    }
+    
     var export_array = new Array();
 
+    if (isHourly) {
+        // for data flagger
+        flagger  = document.getElementById("excludeFlaggerOption").checked;
+        noExport = document.getElementById("chkFlaggerDoNotExport").checked;
+        code_constant     = 'C';
+        code_missing      = 'M';
+        code_outlierStat  = 'T';
+        code_outlierSpike = 'P';
+        code_above        = 'A';
+        code_below        = 'B';
+        code_user         = 'U';
+        
+        if (flagger && (! noExport) ) {
+//            export_array.push(['# Data flagger codes: constant=' + code_constant + ', missing=' + code_missing + ', outlierStat=' + code_outlierStat + ', outlierSpike=' + code_outlierSpike + ', aboveValue=' + code_above + ', belowValue=' + code_below + ',  userInvalidated=' + code_user + '\n']);
+//            export_array.push(['# Data flagger constant repeat num=' + settings.flaggerConstantRepeatNum + '\n']);
+//            export_array.push(['# Data flagger missing repeat num=' + settings.flaggerMissingRepeatNum + '\n']);
+//            export_array.push(['# Data flagger missing value=' + settings.flaggerMissingValue + '\n']);
+//            export_array.push(['# Data flagger outlier stat sd factor value=' + settings.flaggerOutlierStatSDfactor + '\n']);
+//            export_array.push(['# Data flagger outlier spike time window value=' + settings.flaggerOutlierSpikeTimeWindow + '\n']);
+//            export_array.push(['# Data flagger outlier spike sd factor value=' + settings.flaggerOutlierSpikeSDfactor + '\n']);
+//            export_array.push(['# Data flagger above concentration value=' + settings.flaggerAboveConc + '\n']);
+//            export_array.push(['# Data flagger below concentration value=' + settings.flaggerBelowConc + '\n']);
+//            export_array.push(['# Data flagger user invalidate start =' + settings.flaggerUserInvalidateStart + '\n']);
+//            export_array.push(['# Data flagger user invalidate end =' + settings.flaggerUserInvalidateEnd + '\n']);
+        }
+    }
+
+    
     var origFilename = "";
     if (document.getElementById("btnLocalFile").checked || viperLoaded) {
         origFilename = document.getElementById("user_datafile1").value;
@@ -3797,10 +4272,10 @@ function process_scatterplot_correction() {
     export_array.push("## Correction applied based on:\n");
     export_array.push('##   X-variable: '            + xVarName                           + '\n');
     export_array.push('##   Y-variable: '            + yVarName                           + '\n');
-    export_array.push("##   correlation_coef: "      + oStats.cor                         + '\n');
-    export_array.push('##   regression_yintercept: ' + oStats.regression_yint             + '\n');
-    export_array.push('##   regression_slope: '      + oStats.regression_slope            + '\n');
-    export_array.push('##   rms_error: '             + oStats.rmsError                    + '\n');
+    export_array.push("##   correlation_coef: "      + oStatsHourly.cor                         + '\n');
+    export_array.push('##   regression_yintercept: ' + oStatsHourly.regression_yint             + '\n');
+    export_array.push('##   regression_slope: '      + oStatsHourly.regression_slope            + '\n');
+    export_array.push('##   rms_error: '             + oStatsHourly.rmsError                    + '\n');
     
     header = "";
     for (ind=0; ind<oUserdata.fileLinesA.length; ind++) {
@@ -3824,7 +4299,7 @@ function process_scatterplot_correction() {
             // write corrected data to the export array
             origData = thisLineParse[headerParse.indexOf(yVarName)];
             if (origData != missing_value) {
-                correctedData = (origData - oStats.regression_yint) / oStats.regression_slope;
+                correctedData = (origData - oStatsHourly.regression_yint) / oStatsHourly.regression_slope;
             } else {
                 correctedData = missing_value;
             }
@@ -3849,58 +4324,124 @@ function process_scatterplot_correction() {
     
 }
 
-    function export_cferst() {
+function export_cferst() {    
+    fname = document.getElementById("user_datafile1").value.replace(/^.*\\/, "").split('.');
+    fname = fname[0] + "_GIS.csv";
+    
+    print("exporting " + fname);
+    
+    nvars = oUserdata.varname[selected_block].length; 
+    export_array = new Array();
+    
+    // for data flagger
+    flagger  = document.getElementById("excludeFlaggerOption").checked;
+    noExport = document.getElementById("chkFlaggerDoNotExport").checked;
+    code_constant     = 'C';
+    code_missing      = 'M';
+    code_outlierStat  = 'T';
+    code_outlierSpike = 'P';
+    code_above        = 'A';
+    code_below        = 'B';
+    code_user         = 'U';
+    
+    if (flagger && (! noExport) ) {
+        export_array.push(['# Data flagger codes: constant=' + code_constant + ', missing=' + code_missing + ', outlierStat=' + code_outlierStat + ', outlierSpike=' + code_outlierSpike + ', aboveValue=' + code_above + ', belowValue=' + code_below + ',  userInvalidated=' + code_user + '\n']);
+        export_array.push(['# Data flagger constant repeat num=' + settings.flaggerConstantRepeatNum + '\n']);
+        export_array.push(['# Data flagger missing repeat num=' + settings.flaggerMissingRepeatNum + '\n']);
+        export_array.push(['# Data flagger missing value=' + settings.flaggerMissingValue + '\n']);
+        export_array.push(['# Data flagger outlier stat sd factor value=' + settings.flaggerOutlierStatSDfactor + '\n']);
+        export_array.push(['# Data flagger outlier spike time window value=' + settings.flaggerOutlierSpikeTimeWindow + '\n']);
+        export_array.push(['# Data flagger outlier spike sd factor value=' + settings.flaggerOutlierSpikeSDfactor + '\n']);
+        export_array.push(['# Data flagger above concentration value=' + settings.flaggerAboveConc + '\n']);
+        export_array.push(['# Data flagger below concentration value=' + settings.flaggerBelowConc + '\n']);
+        export_array.push(['# Data flagger user invalidate start =' + settings.flaggerUserInvalidateStart + '\n']);
+        export_array.push(['# Data flagger user invalidate end =' + settings.flaggerUserInvalidateEnd + '\n']);
+    }
 
-      fname = document.getElementById("user_datafile1").value.replace(/^.*\\/, "").split('.');
-      fname = fname[0] + "_GIS.csv";
-
-      print("exporting " + fname);
-
-      nvars = oUserdata.varname[selected_block].length; 
-      export_array = new Array();
-
-      // build header
-      export_array.push(['Date,Time(GMT),Latitude,Longitude,']);
-      for (vInd=0; vInd<nvars; vInd++){
+    
+    // build header
+    export_array.push(['Date,Time(GMT),Latitude,Longitude,']);
+    for (vInd=0; vInd<nvars; vInd++){
         export_array.push(oUserdata.varname[selected_block][vInd]);
         if (vInd < nvars-1) {
-          export_array.push(',');
+            export_array.push(',');
         }
-      }
-      export_array.push('\n');
-
-      // write data
-      var max_eInd = Math.min(oUserdata.lon[selected_block].length, 1000);
-      for (eInd=0; eInd<max_eInd; eInd++) { // loop over all datapoints
+    }
+    if (flagger && (! noExport)) {
+        export_array.push([',' + 'DataFlaggerCodes']);
+    }
+    
+    export_array.push('\n');
+    
+    // write data
+    var max_eInd = Math.min(oUserdata.lon[selected_block].length, 1000);
+    for (eInd=0; eInd<max_eInd; eInd++) { // loop over all datapoints
         this_dateObj = create_dateObjectUTC(oUserdata.timestamp[selected_block][eInd]);
         this_day     = get_date(this_dateObj);
         this_timegmt = get_time(this_dateObj);
-        export_array.push([this_day + ',' + this_timegmt + ',' + oUserdata.lat[selected_block][eInd].toFixed(6) + ',' + oUserdata.lon[selected_block][eInd].toFixed(6) + ',']);
+        thisMsec     = oUserdata.msec[selected_block][eInd];
+        if ( (!flagger) || (flagger && (!isMsecFlagged(thisMsec))) || (flagger && isMsecFlagged(thisMsec) && (!noExport)) ) {
+            export_array.push([this_day + ',' + this_timegmt + ',' + oUserdata.lat[selected_block][eInd].toFixed(6) + ',' + oUserdata.lon[selected_block][eInd].toFixed(6) + ',']);
+        
+            // loop over variables
+            for (vInd=0; vInd<nvars; vInd++){
+                export_array.push(oUserdata.variable[selected_block][vInd][eInd].toFixed(6));
+                if (vInd < nvars-1) {
+                    export_array.push(',');
+                }
+            }
+        
 
-        // loop over variables
-        for (vInd=0; vInd<nvars; vInd++){
-          export_array.push(oUserdata.variable[selected_block][vInd][eInd].toFixed(6));
-          if (vInd < nvars-1) {
-            export_array.push(',');
-          }
+            // write data flagger codes to export array
+            if (flagger && (! noExport)) {
+                
+                codeString = ""; //default passed
+                dataMsec = oUserdata.msec[selected_block][eInd];
+                if (oUserdata.flagged_constant_msec.indexOf(dataMsec) > 0)        { codeString += code_constant }
+                if (oUserdata.flagged_longMissing_msec.indexOf(dataMsec) > 0)     { codeString += code_missing }
+                if (oUserdata.flagged_outlierStat_msec.indexOf(dataMsec) > 0)     { codeString += code_outlierStat }
+                if (oUserdata.flagged_outlierSpike_msec.indexOf(dataMsec) > 0)    { codeString += code_outlierSpike }
+                if (oUserdata.flagged_aboveConc_msec.indexOf(dataMsec) > 0)       { codeString += code_above }
+                if (oUserdata.flagged_belowConc_msec.indexOf(dataMsec) > 0)       { codeString += code_below }
+                if (oUserdata.flagged_userInvalidated_msec.indexOf(dataMsec) > 0) { codeString += code_user }
+                export_array.push(',' + codeString);
+            }	
+        
+            export_array.push('\n');
         }
-        export_array.push('\n');
-      }
-
-      try {
-	  var blob = new Blob(export_array,{type: "text/plain;charset=utf-8"});
-	  saveAs(blob, fname);
-      } catch (e) {
-	  print("File export is not supported by this browser.");
-      }
-
+    }
+    
+    try {
+	var blob = new Blob(export_array,{type: "text/plain;charset=utf-8"});
+	saveAs(blob, fname);
+    } catch (e) {
+	print("File export is not supported by this browser.");
+    }   
 }
 
 function createKmlColorbarImages(canvasIndex) {
     
-    html2canvas(document.getElementById(kml_canvas_array[canvasIndex]), {
-	onrendered: function(canvas) {
-	    myImg = canvas.toDataURL("image/png", [0.0, 1.0]).split(',')[1];
+//    html2canvas(document.getElementById(kml_canvas_array[canvasIndex]), {
+//	onrendered: function(canvas) {
+//	    myImg = canvas.toDataURL("image/png", [0.0, 1.0]).split(',')[1];
+//            kml_colorbar_imgarray[canvasIndex] = myImg;
+//	    if (canvasIndex == kml_canvas_array.length-1) {
+//                // finalize kml
+//                finalizeKML_timer = setInterval(finalizeKML, 1000);
+//                //finalizeKML();
+//                
+//            } else {
+//                // get the next colorbar image
+//                if (canvasIndex < kml_canvas_array.length-1) {
+//                    createKmlColorbarImages(canvasIndex+1);
+//                }
+//            }
+//	}
+//    });
+
+    try {
+        html2canvas(document.getElementById(kml_canvas_array[canvasIndex])).then(canvas => {
+            myImg = canvas.toDataURL("image/png", [0.0, 1.0]).split(',')[1];
             kml_colorbar_imgarray[canvasIndex] = myImg;
 	    if (canvasIndex == kml_canvas_array.length-1) {
                 // finalize kml
@@ -3913,8 +4454,13 @@ function createKmlColorbarImages(canvasIndex) {
                     createKmlColorbarImages(canvasIndex+1);
                 }
             }
-	}
-    });
+        });
+    } catch (e) {
+        console.log(e);
+	alert("Sorry, html2canvas is not\nsupported on this browser");
+    }
+
+    
 }
 
 function createKmlUsericonImages() {
@@ -4605,7 +5151,7 @@ function export_kml(mslVarname, groundlevelVarname, colorbarsize) {
         kml_export_array.push('        <text>\n');
         kml_export_array.push('          <![CDATA[\n');
         kml_export_array.push('            <div style="width:450px;">\n');
-        kml_export_array.push('                <center><h3>$[variableName]</h3></center><table><tr><td>Time:</td><td>$[timestamp]</td><tr><td>Data value:</td><td>$[userDataValue]</td></tr></table>\n');
+        kml_export_array.push('                <center><h3>$[variableName]</h3></center><table><tr><td>Time:</td><td>$[timestamp]</td><tr><td>Data value:</td><td>$[userDataValue]</td></tr><tr><td>$[flaggerString]</td></tr></table>\n');
         kml_export_array.push('            <\div>\n');        
         kml_export_array.push('          ]]>\n');
         kml_export_array.push('        </text>\n');
@@ -4862,7 +5408,7 @@ function export_kml(mslVarname, groundlevelVarname, colorbarsize) {
                 kml_export_array.push('    </Style>\n');
                 kml_export_array.push('<!--End styles for merged data-->\n');
                 kml_export_array.push('<!--........................-->\n');
-
+                
             } else { // for merged sources with no colormap
                 kml_export_array.push('    <Style id="' + styleName + '">\n');
                 kml_export_array.push('      <IconStyle>\n');
@@ -4902,54 +5448,77 @@ function export_kml(mslVarname, groundlevelVarname, colorbarsize) {
         }
     }
 
+    flagger  = document.getElementById("excludeFlaggerOption").checked;
+    noExport = document.getElementById("chkFlaggerDoNotExport").checked;
+    
     // loop over user data
     kml_export_array.push('<!--Begin user data-->\n');
     kml_export_array.push('  <Folder>\n');
     kml_export_array.push('    <name>RETIGO user data</name>\n');
-    var max_eInd = Math.min(oUserdata.lon[selected_block].length, 1000);
+    //var max_eInd = Math.min(oUserdata.lon[selected_block].length, 1000);
+    var max_eInd = oUserdata.lon[selected_block].length;
     for (eInd=0; eInd<max_eInd; eInd++) { // loop over all datapoints
-        this_dateObj = create_dateObjectUTC(oUserdata.timestamp[selected_block][eInd]);
-        this_data    = oUserdata.variable[selected_block][get_selected_varselector_index()][eInd];
-        this_datamin = oUserdata.mymin[0][get_selected_varselector_index()];
-        this_datamax = oUserdata.mymax[0][get_selected_varselector_index()];
-        this_lat     = oUserdata.lat[selected_block][eInd].toFixed(6);
-        this_lon     = oUserdata.lon[selected_block][eInd].toFixed(6);
-        this_varname = oUserdata.varname[selected_block][get_selected_varselector_index()];
-
-        this_altitude = 0.0;
-        if (elevationsIndex_msl >= 0) {
-            this_altitude = oUserdata.variable[selected_block][elevationsIndex_msl][eInd];
-        } else if (elevationsIndex_groundlevel >= 0) {
-            this_altitude = oUserdata.variable[selected_block][elevationsIndex_groundlevel][eInd];
-        }
+        thisMsec = oUserdata.msec[selected_block][eInd];
+        //console.log(eInd, flagger, noExport, isMsecFlagged(thisMsec), (!flagger) || (flagger && (!isMsecFlagged(thisMsec)) && (!noExport)) );
         
-        if (eInd > 0) {
-            timeBegin = oUserdata.timestamp[selected_block][eInd-1];
-        } else {
-            timeBegin = oUserdata.timestamp[selected_block][eInd];
-        }
-        timeEnd   = oUserdata.timestamp[selected_block][eInd];
+        if ( (!flagger) || (flagger && (!isMsecFlagged(thisMsec))) || (flagger && isMsecFlagged(thisMsec) && (!noExport)) ) {
+            this_dateObj = create_dateObjectUTC(oUserdata.timestamp[selected_block][eInd]);
+            this_data    = oUserdata.variable[selected_block][get_selected_varselector_index()][eInd];
+            this_datamin = oUserdata.mymin[0][get_selected_varselector_index()];
+            this_datamax = oUserdata.mymax[0][get_selected_varselector_index()];
+            this_lat     = oUserdata.lat[selected_block][eInd].toFixed(6);
+            this_lon     = oUserdata.lon[selected_block][eInd].toFixed(6);
+            this_varname = oUserdata.varname[selected_block][get_selected_varselector_index()];
 
-        if ( this_lat >= -90.0 && this_lat <= 90.0 && this_lon >= -180.0 && this_lon <= 180.0) {
-            
-            if ( (this_data == fill_value) || this_lat < -90.0 || this_lat > 90.0 || this_lon < -180.0 || this_lon > 180.0) {
-                display_index = "missing";
-                thisZindex = -10; 
-            } else if ( (this_data == missing_value)) {
-                display_index = "missing";
-                thisZindex = -100; 
-            } else {	
-                display_index = Math.round((this_data-this_datamin)/(this_datamax-this_datamin) * (N_colors-1));
-                thisZindex = -10; 
+            thisFlaggerString = "";
+            if (flagger && isMsecFlagged(thisMsec)) {
+                thisFlaggerString += "Flagged for:";
+                if ( (oUserdata.flagged_constant_msec.indexOf(thisMsec)        > 0)) { thisFlaggerString += "<div>  - Constant</div>";      } 
+                if ( (oUserdata.flagged_longMissing_msec.indexOf(thisMsec)     > 0)) { thisFlaggerString += "<div>  - Missing</div>";       }
+                if ( (oUserdata.flagged_outlierStat_msec.indexOf(thisMsec)     > 0)) { thisFlaggerString += "<div>  - Outlier Stat</div>";  }
+                if ( (oUserdata.flagged_outlierSpike_msec.indexOf(thisMsec)    > 0)) { thisFlaggerString += "<div>  - Outlier Spike</div>"; }
+                if ( (oUserdata.flagged_aboveConc_msec.indexOf(thisMsec)       > 0)) { thisFlaggerString += "<div>  - Above Conc.</div>";   }
+                if ( (oUserdata.flagged_belowConc_msec.indexOf(thisMsec)       > 0)) { thisFlaggerString += "<div>  - Below Conc.</div>";   }
+                if ( (oUserdata.flagged_userInvalidated_msec.indexOf(thisMsec) > 0)) { thisFlaggerString += "<div>  - User Invalid.</div>"; }
+                // remove trailing comma
+                //thisFlaggerString = thisFlaggerString.substring(0, thisFlaggerString.length - 1);
             }
-            if (display_index < 0) {
-                display_index = 0;
+            if (thisFlaggerString != "") {
+                console.log(thisFlaggerString);
             }
-            if (display_index > N_colors-1) {
-                display_index = N_colors-1;
+            this_altitude = 0.0;
+            if (elevationsIndex_msl >= 0) {
+                this_altitude = oUserdata.variable[selected_block][elevationsIndex_msl][eInd];
+            } else if (elevationsIndex_groundlevel >= 0) {
+                this_altitude = oUserdata.variable[selected_block][elevationsIndex_groundlevel][eInd];
             }
             
+            if (eInd > 0) {
+                timeBegin = oUserdata.timestamp[selected_block][eInd-1];
+            } else {
+                timeBegin = oUserdata.timestamp[selected_block][eInd];
+            }
+            timeEnd   = oUserdata.timestamp[selected_block][eInd];
             
+            if ( this_lat >= -90.0 && this_lat <= 90.0 && this_lon >= -180.0 && this_lon <= 180.0) {
+                
+                if ( (this_data == fill_value) || this_lat < -90.0 || this_lat > 90.0 || this_lon < -180.0 || this_lon > 180.0) {
+                    display_index = "missing";
+                    thisZindex = -10; 
+                } else if ( (this_data == missing_value)) {
+                    display_index = "missing";
+                    thisZindex = -100; 
+                } else {	
+                    display_index = Math.round((this_data-this_datamin)/(this_datamax-this_datamin) * (N_colors-1));
+                    thisZindex = -10; 
+                }
+                if (display_index < 0) {
+                    display_index = 0;
+                }
+                if (display_index > N_colors-1) {
+                    display_index = N_colors-1;
+                }
+            }
             
             thisConcSymbolSingle = "conc_" + zeroPad(display_index,2);
             //thisConcSymbolUrl    = kmlImageServer + "retigo/stable/images/" + concSymbolDir + "/" + thisConcSymbolSingle+".gif"
@@ -4973,6 +5542,17 @@ function export_kml(mslVarname, groundlevelVarname, colorbarsize) {
             kml_export_array.push('        <Data name="userDataValue">\n');
             kml_export_array.push('          <value>' + this_data + '</value>\n');
             kml_export_array.push('        </Data>\n');
+            if (thisFlaggerString != "") {
+                // data ewas flagged
+                kml_export_array.push('        <Data name="flaggerString">\n');
+                kml_export_array.push('          <value>' + thisFlaggerString + '</value>\n');
+                kml_export_array.push('        </Data>\n');
+            } else {
+                // data was not flagged, but we still need a string to keep the style happy
+                kml_export_array.push('        <Data name="flaggerString">\n');
+                kml_export_array.push('          <value>' + "" + '</value>\n');
+                kml_export_array.push('        </Data>\n');
+            }
             kml_export_array.push('      </ExtendedData>\n'); 
             kml_export_array.push('      <Point>\n');
             if (elevationsIndex_msl >= 0) {
@@ -5184,28 +5764,39 @@ function saveCanvas(canvasID, defaultImageName) {
         // continue
     }
 
-    try {
-	html2canvas(mycanvas, {
-		background :'#FFFFFF',
-		    onrendered: function(canvas) {
-		    var img = canvas.toDataURL()
-			//window.open(img);
-			
-			canvas.toBlob(function(blob) {
-				saveAs(blob, imageName);
-			    });
-		}
-	    });
-    } catch (e) {
-	console.log(e);
-	alert("Sorry, html2canvas is not\nsupported on this browser");
 
-	mycanvas.toBlob(function(blob) {
-		saveAs(blob, imageName);
-	    });
+
+    //try {
+//	html2canvas(mycanvas, {
+//            background:'#FFFFFF',
+//	    onrendered: function(canvas) {
+//		var img = canvas.toDataURL()
+//		//window.open(img);
+//		
+//		canvas.toBlob(function(blob) {
+//		    saveAs(blob, imageName);
+//		});
+//	    }
+//	});
+//    } catch (e) {
+//	console.log(e);
+//	alert("Sorry, html2canvas is not\nsupported on this browser");
+//
+//	mycanvas.toBlob(function(blob) {
+//		saveAs(blob, imageName);
+//	    });
+//    }
+
+    try {
+        html2canvas(mycanvas).then(canvas => {
+            canvas.toBlob(function(blob) {
+                window.saveAs(blob, imageName);
+            });
+        });
+    } catch (e) {
+        console.log(e);
+	alert("Sorry, html2canvas is not\nsupported on this browser");
     }
-    
-    
 }
 
     //
@@ -5338,7 +5929,7 @@ function process_timeblock_button(buttonNum) {
       initGoogleLatLng();
       //setTimeout("computeGoogleLatLng(oUserdata, true)", 100);
       computeGoogleLatLng(oUserdata, true);
-      setTimeout("process_radio()", 150);
+      setTimeout("process_radio('')", 150);
       
       // set time slider to zero position
       setTimeout("$('#time_slider').slider('option', 'value', 0);", 300);
@@ -5405,7 +5996,10 @@ function process_timeblock_button(buttonNum) {
       setTimeout("computeGoogleLatLng(oUserdata, true);", 50);
       
       subset_by_id();
-      
+
+    computeCovarianceElementsNative();
+    statsNative_sliderpos_lookup();
+    
       //console.log(lastpos);
       update_optional(lastpos);
       setTimeout("busyHide('timeseries')", 0);
@@ -5598,6 +6192,41 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
     
     //hideAllLayers(highlightMarker);
     //hideAllLayers(markerLayer);
+
+
+    // flagged indices (msec) from the data flagger
+    //flagged_constant_msec        = [];
+    //flagged_longMissing_msec     = [];
+    //flagged_outlierStat_msec     = [];
+    //flagged_outlierSpike_msec    = [];
+    //flagged_aboveConc_msec       = [];
+    //flagged_belowConc_msec       = [];
+    //flagged_userInvalidated_msec = [];
+    //if (document.getElementById("excludeFlaggerOption").checked) {
+    //    if (oUserdata.flaggedIndices.constant != undefined) {
+    //        flagged_constant_msec        = oUserdata.flaggedIndices.constant.map(d => d[3]);
+    //    }
+    //    if (oUserdata.flaggedIndices.longMissing != undefined) {
+    //        flagged_longMissing_msec     = oUserdata.flaggedIndices.longMissing.map(d => d[3]);
+    //    }
+    //    if (oUserdata.flaggedIndices.outlierStat != undefined) {
+    //        flagged_outlierStat_msec     = oUserdata.flaggedIndices.outlierStat.map(d => d[3]);
+    //    }
+    //    if (oUserdata.flaggedIndices.outlierSpike != undefined) {
+    //        flagged_outlierSpike_msec    = oUserdata.flaggedIndices.outlierSpike.map(d => d[3]);
+    //    }
+    //    if (oUserdata.flaggedIndices.aboveConc != undefined) {
+    //        flagged_aboveConc_msec       = oUserdata.flaggedIndices.aboveConc.map(d => d[3]);
+    //    }
+    //    if (oUserdata.flaggedIndices.belowConc != undefined) {
+    //        flagged_belowConc_msec       = oUserdata.flaggedIndices.belowConc.map(d => d[3]);
+    //    }
+    //    if (oUserdata.flaggedIndices.userInvalidated != undefined) {
+    //        flagged_userInvalidated_msec = oUserdata.flaggedIndices.userInvalidated.map(d => d[3]);
+    //    }
+    //}
+
+
     
     var this_LatLng;
     
@@ -5619,16 +6248,30 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
     for (thisRegion=0; thisRegion<connectingLineMaxRegions; thisRegion++) {
         connectLatLng[thisRegion] = [];
     }
-    
-    
+
+    exclude = document.getElementById("excludeFlaggerOption").checked;
+
     for (varind=0; varind<n_variables; varind++) {
         fastMarker[varind] = new Array();
         markerLayer[varind] = new Array();
         singleMarker[varind] = new Array();
         
         thisRegion = 0;    
-        
+
         for (n = 0; n <= n_points-1; n++) {
+
+            //flaggerPassed = false; // default
+            //if ((flagged_constant_msec.indexOf(oUserdata.msec[selected_block][n]) < 0)          &&
+            //    (flagged_longMissing_msec.indexOf(oUserdata.msec[selected_block][n]) < 0)       &&
+            //    (flagged_outlierStat_msec.indexOf(oUserdata.msec[selected_block][n]) < 0)       &&
+            //    (flagged_outlierSpike_msec.indexOf(oUserdata.msec[selected_block][n]) < 0)      &&
+            //    (flagged_aboveConc_msec.indexOf(oUserdata.msec[selected_block][n]) < 0)         &&
+            //    (flagged_belowConc_msec.indexOf(oUserdata.msec[selected_block][n]) < 0)         &&
+            //    (flagged_userInvalidated_msec.indexOf(oUserdata.msec[selected_block][n]) < 0) ) {
+            //    
+            //    flaggerPassed = true;
+            //}
+            flaggerPassed = !(isMsecFlagged(oUserdata.msec[selected_block][n]));
             
 	    if ( (dataObject.lat[selected_block][n] != missing_value) && (dataObject.lon[selected_block][n] != missing_value) ) {
                 if (! document.getElementById("timeseries_Xaxisoption").checked) {
@@ -5645,7 +6288,8 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
 	        this_LatLng = myLatLngCenter;
 	        latLngMissingFlag = true;
 	    }
-	    if ( ((connectingLine_flag == true) || (recompute_allLatLng == true)) && (varind == 0) ) {
+	    if ( ((connectingLine_flag == true) || (recompute_allLatLng == true)) && (varind == 0)) {
+       
 	        allLatLng.push(this_LatLng);
                 
 	        // array of position used by position marker, connectingLine, etc
@@ -5737,7 +6381,6 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
 	        display_index = 100;
                 thisZindex = zeroPad(display_index,2);
 	        thisSymbolString = ["<div class='"+thisWindSymbol+ "'></div>"]
-                
 	        singleMarker[varind].push(new google.maps.MarkerImage(imageserver + "images/svg_arrows/conc_and_angle_" + concSymbolSet + "/"+thisWindSymbolSingle+".png", new google.maps.Size(44, 44), null, new google.maps.Point(21, 21)));
                 
 	        fastMarkerZIndex = 10;		  
@@ -5745,8 +6388,10 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
                 
                 
             }
-            if ( (dataObject.show1[selected_block][varind][n]) && (dataObject.show2[selected_block][varind][n]) ) {
-                fastMarker[varind].push(myMarker);
+            if ( (dataObject.show1[selected_block][varind][n]) && (dataObject.show2[selected_block][varind][n])) {
+                if ( (! exclude) || (exclude && flaggerPassed)) {
+                    fastMarker[varind].push(myMarker);
+                }
             }       
         }
         
@@ -5777,6 +6422,7 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
                 }
             }
         }
+
         
         markerLayer[varind] = new com.redfin.FastMarkerOverlay(map, fastMarker[varind]);
 	if (varind != get_selected_varselector_index() || !document.getElementById('displaychoiceAll').checked) {
@@ -5785,14 +6431,14 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
 	} else {
 	    markerLayer[varind].setMap(map);
 	    markerLayerSetMapFlag = true;
-	}
+        }
         
         //slider.setMax(oUserdata.lat.length-1);
         $('#time_slider').slider("option", "max", oUserdata.lat[selected_block].length-1);
     }
     
     recompute_allLatLng = false;
-    setTimeout("process_radio();", 1000);
+    setTimeout("process_radio('');", 1000);
     
     //if (flag_resetDistThreshold) {
     //  connectingLineDistThreshold = connectingLineDistThreshold * 1.2;
@@ -6011,7 +6657,8 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
               SurfmetWindDirectionLabelFastMarker = new Array();
               SurfmetWindDirectionLabelLayer      = new Array();
           }
-          
+
+          //console.log(dataObject);
 	  for (thisTime = 0; thisTime<n_times; thisTime++) {
 	      
               if (appendFlagSurfmetTemperature == false) {
@@ -6029,62 +6676,65 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
 
 
 	      for (thisSite = 0; thisSite<n_sites; thisSite++) {
-		  this_LatLng = new google.maps.LatLng(dataObject.lat[n], dataObject.lon[n]);
-		  thisLat = dataObject.lat[n];
-		  thisLon = dataObject.lon[n];
-
-		  //thisTimestamp = dataObject.timestamp[n];
-                  thisTimestamp = convertUTC_to_timezone(create_dateObjectUTC(dataObject.timestamp[n]), 'GMT', "ISO8601-roundToMinute", "null", 0.25);
-                  nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(dataObject.timestamp[n]), 'GMT', "ISO8601-roundToMinute", "null", -0.75);
-
-		  this_data1 = dataObject.variable[n];
-		  display_index = Math.round((this_data1-dataObject.min)/(dataObject.max-dataObject.min) * N_colors);
+                  if (n < dataObject.msec.length) {
+		      this_LatLng = new google.maps.LatLng(dataObject.lat[n], dataObject.lon[n]);
+		      thisLat = dataObject.lat[n];
+		      thisLon = dataObject.lon[n];
+                      
+		      //thisTimestamp = dataObject.timestamp[n];
+                      //console.log(dataObject.timestamp.length, n_sites, thisSite, n, dataObject.timestamp[n]);
+                      thisTimestamp = convertUTC_to_timezone(create_dateObjectUTC(dataObject.timestamp[n]), 'GMT', "ISO8601-roundToMinute", "null", 0.25);
+                      nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(dataObject.timestamp[n]), 'GMT', "ISO8601-roundToMinute", "null", -0.75);
+                      
+		      this_data1 = dataObject.variable[n];
+		      display_index = Math.round((this_data1-dataObject.min)/(dataObject.max-dataObject.min) * N_colors);
+		      
+		      xoffset = thisXoffset;
+		      yoffset = thisYoffset;
+		      thisZindex = 100; 
+		      
+		      thisTitle        = "'" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "\nStation ID: " + dataObject.id[n] + "\nAveraging interval:\n  " + thisTimestamp + " GMT to\n  " + nextTimestamp + " GMT\n" +"'";
+                      
+		      thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickSurfmet(" + thisLat + "," + thisLon + ")\" style=\"margin-top:0px;\"></div>";
+		      thisTextString   = "<div onclick=\"toggleSurfmetLabelsOff()\" style=\"padding-top:2px;background-color:#FFFFFF;height:20px;width:110px;\">&nbsp;&nbsp;" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "</div>";
+		      
+                      
+                      
+		      myMarker = new FastMarkerMJF(0, this_LatLng, thisSymbolString, null, thisZindex, xoffset, yoffset);
+		      //myText   = new FastMarkerMJF('SurfmetText', this_LatLng, thisTextString,   null, thisZindex+zOffset, xoffset+xTextOffset, yoffset-yTextOffset);
 		  
-		  xoffset = thisXoffset;
-		  yoffset = thisYoffset;
-		  thisZindex = 100; 
-		  
-		  thisTitle        = "'" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "\nStation ID: " + dataObject.id[n] + "\nAveraging interval:\n  " + thisTimestamp + " GMT to\n  " + nextTimestamp + " GMT\n" +"'";
-
-		  thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickSurfmet(" + thisLat + "," + thisLon + ")\" style=\"margin-top:0px;\"></div>";
-		  thisTextString   = "<div onclick=\"toggleSurfmetLabelsOff()\" style=\"padding-top:2px;background-color:#FFFFFF;height:20px;width:110px;\">&nbsp;&nbsp;" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "</div>";
-		  
-
-
-		  myMarker = new FastMarkerMJF(0, this_LatLng, thisSymbolString, null, thisZindex, xoffset, yoffset);
-		  //myText   = new FastMarkerMJF('SurfmetText', this_LatLng, thisTextString,   null, thisZindex+zOffset, xoffset+xTextOffset, yoffset-yTextOffset);
-		  
-		  if (dataObject.name == 'surfmet_temperature') {
-		      if (thisTime == 0) {
-                          //SurfmetTemperatureLabelFastMarker[thisTime].push(myText);
-                          SurfmetTemperatureFastMarker.push(myMarker);
-                      }
-                      SurfmetTemperatureTooltip[thisTime].push(thisTitle);
-
+		      if (dataObject.name == 'surfmet_temperature') {
+		          if (thisTime == 0) {
+                              //SurfmetTemperatureLabelFastMarker[thisTime].push(myText);
+                              SurfmetTemperatureFastMarker.push(myMarker);
+                          }
+                          SurfmetTemperatureTooltip[thisTime].push(thisTitle);
+                          
+		      }
+		      if (dataObject.name == 'surfmet_pressure') {
+		          if (thisTime == 0) {
+                              //SurfmetPressureLabelFastMarker[thisTime].push(myText);
+                              SurfmetPressureFastMarker.push(myMarker);
+                          }
+                          SurfmetPressureTooltip[thisTime].push(thisTitle);
+                          
+		      }
+		      if (dataObject.name == 'surfmet_windspeed') {
+                          if (thisTime == 0) {
+                              //SurfmetWindSpeedLabelFastMarker[thisTime].push(myText);
+                              SurfmetWindSpeedFastMarker.push(myMarker);
+                          }
+                          SurfmetWindSpeedTooltip[thisTime].push(thisTitle);
+		      }
+		      if (dataObject.name == 'surfmet_winddirection') {
+                          if (thisTime == 0) {
+                              //SurfmetWindDirectionLabelFastMarker[thisTime].push(myText);
+                              SurfmetWindDirectionFastMarker.push(myMarker);
+                          }
+                          SurfmetWindDirectionTooltip[thisTime].push(thisTitle);
+		      }
 		  }
-		  if (dataObject.name == 'surfmet_pressure') {
-		       if (thisTime == 0) {
-                           //SurfmetPressureLabelFastMarker[thisTime].push(myText);
-                           SurfmetPressureFastMarker.push(myMarker);
-                       }
-                      SurfmetPressureTooltip[thisTime].push(thisTitle);
-
-		  }
-		  if (dataObject.name == 'surfmet_windspeed') {
-                      if (thisTime == 0) {
-                          //SurfmetWindSpeedLabelFastMarker[thisTime].push(myText);
-                          SurfmetWindSpeedFastMarker.push(myMarker);
-                      }
-                      SurfmetWindSpeedTooltip[thisTime].push(thisTitle);
-		  }
-		  if (dataObject.name == 'surfmet_winddirection') {
-                      if (thisTime == 0) {
-                          //SurfmetWindDirectionLabelFastMarker[thisTime].push(myText);
-                          SurfmetWindDirectionFastMarker.push(myMarker);
-                      }
-                      SurfmetWindDirectionTooltip[thisTime].push(thisTitle);
-		  }
-		  
+                  
 		  n = n + 1; 
 	      }
 	      
@@ -6196,63 +6846,64 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
           for (thisTime = 0; thisTime<n_times; thisTime++) {
               n_sites = siteArray[thisTime];
               for (thisSite = 0; thisSite<n_sites; thisSite++) {
-                  
-                  this_LatLng  = new google.maps.LatLng(dataObject.lat[n], dataObject.lon[n]);
-	          thisLat      = dataObject.lat[n];
-	          thisLon      = dataObject.lon[n];
-                  thisSensorID = dataObject.id[n]; 
-                  //console.log(n, dataObject.timestamp[n]);
-	          //thisTimestamp = dataObject.timestamp[n];
-                  thisTimeString = dataObject.timestamp[n].substring(0,13); // only want time up to the hour
-                  thisTimeString += ':00:00-0000';
-                  thisTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601-roundToMinute", "null", 0.0);
-                  nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601-roundToMinute", "null", -1.0);
-                  
-                  this_data1 = dataObject.variable[n];
-                  if ( (this_data1 == fill_value) || thisLat < -90.0 || thisLat > 90.0 || thisLon < -180.0 || thisLon > 180.0) {
-                      display_index = "missing";
-                  } else if (this_data1 == missing_value) {
-                      display_index = "missing";
-                  } else { 
-	              display_index = Math.round((this_data1-dataObject.min)/(dataObject.max-dataObject.min) * N_colors);
+                  if (n < dataObject.msec.length) {
+                      this_LatLng  = new google.maps.LatLng(dataObject.lat[n], dataObject.lon[n]);
+	              thisLat      = dataObject.lat[n];
+	              thisLon      = dataObject.lon[n];
+                      thisSensorID = dataObject.id[n]; 
+                      //console.log(n, dataObject.timestamp[n]);
+	              //thisTimestamp = dataObject.timestamp[n];
+                      thisTimeString = dataObject.timestamp[n].substring(0,13); // only want time up to the hour
+                      thisTimeString += ':00:00-0000';
+                      thisTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601-roundToMinute", "null", 0.0);
+                      nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601-roundToMinute", "null", -1.0);
+                      
+                      this_data1 = dataObject.variable[n];
+                      if ( (this_data1 == fill_value) || thisLat < -90.0 || thisLat > 90.0 || thisLon < -180.0 || thisLon > 180.0) {
+                          display_index = "missing";
+                      } else if (this_data1 == missing_value) {
+                          display_index = "missing";
+                      } else { 
+	                  display_index = Math.round((this_data1-dataObject.min)/(dataObject.max-dataObject.min) * N_colors);
+                      }
+                      if (display_index < 0) {
+                          display_index = 0;
+                      }
+                      if (display_index > N_colors-1) {
+                          display_index = N_colors-1;
+                      }
+                      
+	              xoffset = thisXoffset;
+	              yoffset = thisYoffset;
+	              thisZindex = 100; 
+                      
+                      thisConcSymbol       = "purpleair_square_" + concSymbolSet + "_" + zeroPad(display_index,2);
+                      
+                      
+                      
+                      thisTitle        = "'" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "\nStation ID: " + dataObject.id[n] + "\nAveraging interval:\n  " + thisTimestamp + " GMT to\n  " + nextTimestamp + " GMT\n" +"'";
+                      
+	              thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickPurpleair(" + thisLat + "," + thisLon + "," + thisSensorID + ")\" style=\"margin-top:0px;\"></div>";
+	              thisTextString   = "<div onclick=\"togglePurpleairLabelsOff()\" style=\"padding-top:2px;background-color:#FFFFFF;height:20px;width:110px;\">&nbsp;&nbsp;" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "</div>";
+	              
+	              myMarker = new FastMarkerMJF(0, this_LatLng, thisSymbolString, null, thisZindex, xoffset, yoffset);
+                      
+                      
+                      //if (!siteList.includes(thisSite) && thisTime == 0) {
+                      if (!siteList.includes(thisSite)) {
+                          PurpleairPM25FastMarker.push(myMarker);
+                      }
+                      
+                      if ( (thisTime == lastTime) || n == 0) {
+                          // do nothing
+                      } else {
+                          thisTimeIndex += 1;
+                      }
+                      //PurpleairPM25Tooltip[thisTimeIndex].push(thisTitle);
+                      PurpleairPM25Tooltip[thisTime].push(thisTitle);
+                      
+                      lastTime = thisTime;
                   }
-                  if (display_index < 0) {
-                      display_index = 0;
-                  }
-                  if (display_index > N_colors-1) {
-                      display_index = N_colors-1;
-                  }
-                  
-	          xoffset = thisXoffset;
-	          yoffset = thisYoffset;
-	          thisZindex = 100; 
-
-                  thisConcSymbol       = "purpleair_square_" + concSymbolSet + "_" + zeroPad(display_index,2);
-                  
-                  
-                  
-                  thisTitle        = "'" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "\nStation ID: " + dataObject.id[n] + "\nAveraging interval:\n  " + thisTimestamp + " GMT to\n  " + nextTimestamp + " GMT\n" +"'";
-                  
-	          thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickPurpleair(" + thisLat + "," + thisLon + "," + thisSensorID + ")\" style=\"margin-top:0px;\"></div>";
-	          thisTextString   = "<div onclick=\"togglePurpleairLabelsOff()\" style=\"padding-top:2px;background-color:#FFFFFF;height:20px;width:110px;\">&nbsp;&nbsp;" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "</div>";
-	          
-	          myMarker = new FastMarkerMJF(0, this_LatLng, thisSymbolString, null, thisZindex, xoffset, yoffset);
-                  
-              
-                  //if (!siteList.includes(thisSite) && thisTime == 0) {
-                  if (!siteList.includes(thisSite)) {
-                      PurpleairPM25FastMarker.push(myMarker);
-                  }
-
-                  if ( (thisTime == lastTime) || n == 0) {
-                      // do nothing
-                  } else {
-                      thisTimeIndex += 1;
-                  }
-                  //PurpleairPM25Tooltip[thisTimeIndex].push(thisTitle);
-                  PurpleairPM25Tooltip[thisTime].push(thisTitle);
-                  
-                  lastTime = thisTime;
                   n = n + 1;
               }
           }
@@ -6339,73 +6990,75 @@ function computeGoogleLatLng(dataObject, connectingLine_flag) {
               }
 
               for (thisSite = 0; thisSite<n_sites; thisSite++) {
-                  //console.log(thisTime, thisSite);
-                  this_LatLng  = new google.maps.LatLng(dataObject.lat[n], dataObject.lon[n]);
-	          thisLat      = dataObject.lat[n];
-	          thisLon      = dataObject.lon[n];
-                  thisSensorID = dataObject.id[n]; 
-                  //console.log(n, dataObject.timestamp[n]);
-	          //thisTimestamp = dataObject.timestamp[n];
-                  //thisTimeString = dataObject.timestamp[n].substring(0,13); // only want time up to the hour
-                  //thisTimeString += ':00:00-0000';
-                  thisTimeString = dataObject.timestamp[n];
-                  thisTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601", "null", 0.0);
-                  nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601", "null", -1.0);
-                  
-                  this_data1 = dataObject.variable[n];
-                  if ( (this_data1 == fill_value) || thisLat < -90.0 || thisLat > 90.0 || thisLon < -180.0 || thisLon > 180.0) {
-                      display_index = "missing";
-                  } else if (this_data1 == missing_value) {
-                      display_index = "missing";
-                  } else { 
-	              display_index = Math.round((this_data1-dataObject.min)/(dataObject.max-dataObject.min) * N_colors);
+                  if (n < dataObject.msec.length) {
+                      //console.log(thisTime, thisSite);
+                      this_LatLng  = new google.maps.LatLng(dataObject.lat[n], dataObject.lon[n]);
+	              thisLat      = dataObject.lat[n];
+	              thisLon      = dataObject.lon[n];
+                      thisSensorID = dataObject.id[n]; 
+                      //console.log(n, dataObject.timestamp[n]);
+	              //thisTimestamp = dataObject.timestamp[n];
+                      //thisTimeString = dataObject.timestamp[n].substring(0,13); // only want time up to the hour
+                      //thisTimeString += ':00:00-0000';
+                      thisTimeString = dataObject.timestamp[n];
+                      thisTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601", "null", 0.0);
+                      nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(thisTimeString), 'GMT', "ISO8601", "null", -1.0);
+                      
+                      this_data1 = dataObject.variable[n];
+                      if ( (this_data1 == fill_value) || thisLat < -90.0 || thisLat > 90.0 || thisLon < -180.0 || thisLon > 180.0) {
+                          display_index = "missing";
+                      } else if (this_data1 == missing_value) {
+                          display_index = "missing";
+                      } else { 
+	                  display_index = Math.round((this_data1-dataObject.min)/(dataObject.max-dataObject.min) * N_colors);
+                      }
+                      if (display_index < 0) {
+                          display_index = 0;
+                      }
+                      if (display_index > N_colors-1) {
+                          display_index = N_colors-1;
+                      }
+                      
+	              xoffset = thisXoffset;
+	              yoffset = thisYoffset;
+	              thisZindex = 100; 
+                      
+                      //thisConcSymbol       = "mysensor_balloon_" + concSymbolSet + "_" + zeroPad(display_index,2);
+                      thisConcSymbol       = "mysensor_balloon" + (sensorInd+1) + "_" + concSymbolSet + "_" + zeroPad(display_index,2);
+                      
+                      //console.log(this_data1, thisConcSymbol);
+                      
+                      
+                      thisTitle        = "'" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "\nStation ID: " + dataObject.id[n] + "\nMeasurement time:\n  " + thisTimestamp + " GMT \n " + "'";
+                      
+                      thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickMySensor(" + thisLat + "," + thisLon + "," + thisSensorID + ")\" style=\"margin-top:0px;\"></div>";
+	              //thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " style=\"margin-top:0px;\"></div>";
+	              thisTextString   = "<div onclick=\"toggleMySensorLabelsOff()\" style=\"padding-top:2px;background-color:#FFFFFF;height:20px;width:110px;\">&nbsp;&nbsp;" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "</div>";
+	              
+	              myMarker = new FastMarkerMJF(0, this_LatLng, thisSymbolString, null, thisZindex, xoffset, yoffset);
+                      
+                      
+                      //if (!siteList.includes(thisSite) && thisTime == 0) {
+                      //if (!siteList.includes(thisSite)) {
+                      //    MySensorFastMarker.push(myMarker);
+                      //}
+                      if (thisTime == 0) {
+                          //console.log(sensorInd);
+                          //console.log(allMySensorFastMarkers);
+                          allMySensorFastMarkers[sensorInd].push(myMarker);
+                      }
+                      allMySensorTooltips[sensorInd][thisTime].push(thisTitle);
+                      
+                      
+                      //if ( (thisTime == lastTime) || n == 0) {
+                      //    // do nothing
+                      //} else {
+                      //    thisTimeIndex += 1;
+                      //}
+                      //MySensorTooltip[thisTime].push(thisTitle);
+                      
+                      //lastTime = thisTime;
                   }
-                  if (display_index < 0) {
-                      display_index = 0;
-                  }
-                  if (display_index > N_colors-1) {
-                      display_index = N_colors-1;
-                  }
-                  
-	          xoffset = thisXoffset;
-	          yoffset = thisYoffset;
-	          thisZindex = 100; 
-
-                  //thisConcSymbol       = "mysensor_balloon_" + concSymbolSet + "_" + zeroPad(display_index,2);
-                  thisConcSymbol       = "mysensor_balloon" + (sensorInd+1) + "_" + concSymbolSet + "_" + zeroPad(display_index,2);
-                  
-                  //console.log(this_data1, thisConcSymbol);
-
-                 
-                  thisTitle        = "'" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "\nStation ID: " + dataObject.id[n] + "\nMeasurement time:\n  " + thisTimestamp + " GMT \n " + "'";
-
-                  thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickMySensor(" + thisLat + "," + thisLon + "," + thisSensorID + ")\" style=\"margin-top:0px;\"></div>";
-	          //thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " style=\"margin-top:0px;\"></div>";
-	          thisTextString   = "<div onclick=\"toggleMySensorLabelsOff()\" style=\"padding-top:2px;background-color:#FFFFFF;height:20px;width:110px;\">&nbsp;&nbsp;" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "</div>";
-	          
-	          myMarker = new FastMarkerMJF(0, this_LatLng, thisSymbolString, null, thisZindex, xoffset, yoffset);
-                  
-              
-                  //if (!siteList.includes(thisSite) && thisTime == 0) {
-                  //if (!siteList.includes(thisSite)) {
-                  //    MySensorFastMarker.push(myMarker);
-                  //}
-                  if (thisTime == 0) {
-                      //console.log(sensorInd);
-                      //console.log(allMySensorFastMarkers);
-                      allMySensorFastMarkers[sensorInd].push(myMarker);
-                  }
-                  allMySensorTooltips[sensorInd][thisTime].push(thisTitle);
-
-                  
-                  //if ( (thisTime == lastTime) || n == 0) {
-                  //    // do nothing
-                  //} else {
-                  //    thisTimeIndex += 1;
-                  //}
-                  //MySensorTooltip[thisTime].push(thisTitle);
-                  
-                  //lastTime = thisTime;
                   n = n + 1;
               }
           }
@@ -6611,10 +7264,13 @@ function moveMySensorHighlightMarker(lat, lon) {
     mysensorHighlightMarker.setPosition(thisLatLng);
 }
 
-function pickAQS(lat, lon) {
-    console.log("in pickAQS");
+function pickAQS(lat, lon, id, handle) {
+    //console.log("in pickAQS");
     //console.log(lat);
     //console.log(lon);
+    //console.log('id =', id);
+    //console.log('handle =', handle);
+    
     var bbox_width  = 0.011; //degrees
     var bbox_height = 0.011; //degrees
     var bracket_timerange = oUserdata.timerange;
@@ -6625,6 +7281,20 @@ function pickAQS(lat, lon) {
 	       (lon + (bbox_width/2)).toString() + ',' +
 	       (lat + (bbox_height/2)).toString();
     //console.log(my_bbox);
+
+    if (handle == 'airnow_pm25') {
+        oAirnowPM25.selectedSiteID = id;
+    } else if (handle == 'airnow_pm10') {
+        oAirnowPM10.selectedSiteID = id;
+    } else if (handle == 'airnow_ozone') {
+        oAirnowOzone.selectedSiteID = id;
+    } else if (handle == 'airnow_co') {
+        oAirnowCO.selectedSiteID = id;
+    } else if (handle == 'airnow_no2') {
+        oAirnowNO2.selectedSiteID = id;
+    } else if (handle == 'airnow_so2') {
+        oAirnowSO2.selectedSiteID = id;
+    }
     
     get_airnow_closest('airnow.pm25',  AQSbbox, bracket_timerange, rsigserver, 'map');
     get_airnow_closest('airnow.pm10',  AQSbbox, bracket_timerange, rsigserver, 'map');
@@ -7211,13 +7881,16 @@ function pickMySensor(lat, lon, sensorID) {
 	      for (thisSite = 0; thisSite<n_sites; thisSite++) {
                   //console.log(thisTime, thisSite);
 
-                  if ( n < dataObject.timestamp.length ) {
+                  if ( n < dataObject.timestamp.length) {
                   
 		      this_LatLng = new google.maps.LatLng(dataObject.lat[n], dataObject.lon[n]);
-		      thisLat = dataObject.lat[n];
-		      thisLon = dataObject.lon[n];
+		      thisLat    = dataObject.lat[n];
+		      thisLon    = dataObject.lon[n];
+                      thisID     = dataObject.id[n];
+                      thisHandle = dataObject.handle;
                       
 		      thisTimestamp = dataObject.timestamp[n];
+                      //console.log(n, dataObject.timestamp[n]);
                       nextTimestamp = convertUTC_to_timezone(create_dateObjectUTC(dataObject.timestamp[n]), 'GMT', "ISO8601-roundToMinute", "null", -1);
                       
 		      this_data1 = dataObject.variable[n];
@@ -7285,7 +7958,7 @@ function pickMySensor(lat, lon, sensorID) {
                       
 		      thisTitle        = "'" + thisVarPrefix + this_data1.toFixed(1).toString() + thisUnit + "\nStation ID: " + dataObject.id[n] + "\nAveraging interval:\n  " + thisTimestamp + " GMT to\n  " + nextTimestamp + " GMT\n" +    "'";
                       
-		      thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickAQS(" + thisLat + "," + thisLon + ")\" style=\"margin-top:0px;\"></div>";
+		      thisSymbolString = "<div class=\"" + thisConcSymbol  + "\" " + " title=" + thisTitle + " onclick=\"pickAQS(" + thisLat + "," + thisLon + ",\'" + thisID + "\', \'" + thisHandle + "\')\" style=\"margin-top:0px;\"></div>";
 		      
 		      var thisDataInfoString;
 		      if (this_data1 != missing_value && this_data1 != fill_value) {
@@ -7348,8 +8021,7 @@ function pickMySensor(lat, lon, sensorID) {
                       
 		      n = n + 1; 
 	          }
-              }
-	      
+	      }
 	      //AqsPM25FastMarker[thisTime].setMap(null);
 	      //AqsOzoneFastMarker[thisTime].setMap(null);
               
@@ -7666,7 +8338,7 @@ function mysensor_sliderpos_lookup(sensorObj) {
 
     //console.log(sensorObj);
     
-    if (!sensorObj.msec) {
+    if (!sensorObj.msec || sensorObj.msec.length == 0) {
 	//console.log("msec not defined for mysensor object:");
 	//console.log(oMySensor);
 	return;
@@ -7704,7 +8376,7 @@ function mysensor_sliderpos_lookup(sensorObj) {
         //console.log(slider_ind, delta_msec, closest_time);
         
         if (delta_msec > 3600000) {
-            console.log("closest time out of range: closest_time");
+            console.log("closest time out of range:", closest_time, delta_msec);
         }
         
         sensorObj_nearest_index.n[slider_ind]    = 0;
@@ -7886,6 +8558,19 @@ function hmsFireFastmarker_sliderpos_lookup(oHMS) {
   function activateMapSlider(event) {    
     setTimeout("activateMapSliderHandle();", 500);
   }
+
+
+function activateTSPlotsizeSliderHandle() {
+    // only activate handle if we are still on the same tab after the delay
+    if (document.activeElement.tabIndex == document.getElementById('timeseries_size').tabIndex){
+      $('#timeseries_size .ui-slider-handle').focus();
+    }
+  }
+
+  function activateTSPlotsizeSlider(event) {    
+    setTimeout("activateTSPlotsizeSliderHandle();", 500);
+  }
+
 
   function setHomeKeypress(event) {
     // 13 = enter key
@@ -8421,6 +9106,7 @@ function finalizeAnalysisLine() {
     update_map(0);
     update_displayed_data_value(0, 0);
     $('#map_size').slider('option', 'value', map_height);
+    $('#timeseries_size').slider('option', 'value', timeseries_height);
     setTabIndices();
     //if (oUserdata.varname[selected_block].indexOf('wind_magnitude(m/s)') == -1 || oUserdata.varname[selected_block].indexOf('wind_direction(deg)') == -1 ) {
     //  document.getElementById('windrosePlotOptionButton').disabled = true;
@@ -8437,9 +9123,14 @@ function finalizeAnalysisLine() {
         }
     }
 
-    
-
-
+    // turn off fire perimeters if we don't have a matching year
+    document.getElementById('addFirePerimeters').disabled = true; // default
+    let thisDate = create_dateObjectUTC(oUserdata.timestamp[selected_block][0]);
+    let thisYear = Number(thisDate.getUTCFullYear());
+    if ( (thisYear == today_yyyy) || (thisYear >= 2014 && thisYear <= 2021) ) {
+        document.getElementById('addFirePerimeters').disabled = false; // default
+    }
+          
     // force a window resize to ensure all content is visible
     //window.dispatchEvent(new Event('resize')); // Doesn't work in IE
     var evt = document.createEvent("HTMLEvents");
@@ -8449,7 +9140,7 @@ function finalizeAnalysisLine() {
     map.setCenter(myLatLngCenter);
     map.fitBounds(myLatLngBounds);
     
-    setTimeout("process_radio()", 5000);
+    setTimeout("process_radio('')", 5000);
     
     
 
@@ -8496,10 +9187,9 @@ function finalizeAnalysisLine() {
 
   function update_timeAnnot(pos) {
     var this_dateObjectUTC = create_dateObjectUTC(oUserdata.timestamp[selected_block][pos]);
-    var this_datestringDesiredTimezone = convertUTC_to_timezone(this_dateObjectUTC, selected_timezone, "pretty", "null");
-    //console.log(this_dateObjectUTC);
-    //console.log(this_datestringDesiredTimezone);
-    document.getElementById("timebox").innerHTML = "Time: " + this_datestringDesiredTimezone;
+    var this_datestringDesiredTimezone = convertUTC_to_timezone(this_dateObjectUTC, selected_timezone, "pretty2", "null");
+    //document.getElementById("timebox").innerHTML = "Time: " + this_datestringDesiredTimezone;
+    document.getElementById("timebox").innerHTML = this_datestringDesiredTimezone;
 
   }
 
@@ -8536,7 +9226,7 @@ function arrangeColorbars() {
     yIncrementExpanded  = 47; // pixels
     yIncrementCollapsed = 20; // pixels
 
-    if (document.getElementById("addViirsAodMap").checked || document.getElementById("addTropomiNO2Map").checked) {
+    if (document.getElementById("addViirsAodMap").checked || document.getElementById("addTropomiNO2Map").checked || document.getElementById("addTempoNO2Map").checked) {
         if (satelliteOverlay != null) {
             document.getElementById("colorbar_satellite_canvas").style["bottom"] = thisYpos + "px";
             if (document.getElementById("colorbar_satellite_canvas").dataset.collapsed == "true") {
@@ -8752,8 +9442,16 @@ function arrangeColorbars() {
 
   }
 
+function set_timeseriesSize() {
+    //console.log("in setTimeseriesSize()");
 
-  function set_mapsize() {
+    new_height = timeseries_height; 
+    document.getElementById("timeseries_canvas").style.height = (new_height*0.25).toString() + "px";
+    timeseriesPlotsize_handler(new_height);
+}
+
+function set_mapsize() {
+    //console.log("in set_mapsize");
     calculateCenter();
     map.setCenter(map_center);
  
@@ -8767,6 +9465,7 @@ function arrangeColorbars() {
     third_map_width   = map_width / 3;
     quarter_map_width = map_width / 4;
 
+    //console.log(map_width);
 
     // set canvas heights
     analysisCanvasOffset = 10; // vertical shortening to account for controls
@@ -8786,37 +9485,73 @@ function arrangeColorbars() {
     }
     document.getElementById("map_canvas").style.height        = (topRowHeight).toString() + "px";
     document.getElementById("analysis_canvas").style.height   = (topRowHeight-analysisCanvasOffset).toString() + "px";
-    document.getElementById("timeseries_canvas").style.height = (bottomRowHeight*0.25).toString() + "px";
+    //document.getElementById("timeseries_canvas").style.height = (bottomRowHeight*0.25).toString() + "px";
     document.getElementById("scatter_canvas").style.height    = (topRowHeight-scatterCanvasOffset).toString() + "px";
     document.getElementById("windrose_canvas").style.height   = (topRowHeight-windroseCanvasOffset).toString() + "px";
     document.getElementById("blank_canvas").style.height      = (topRowHeight).toString() + "px";
 
     // set canvas widths using widths calculated above (based on window size)
+    var sliderWidth;
+    var sliderWidthString;
+    var sliderWidthOffset = document.getElementById("table_td1").offsetWidth;
     var mode = get_mapMode();
     if (mode == 'quadruple') {
-      widthString = quarter_map_width.toString() + "px";
+        widthString = quarter_map_width.toString() + "px";
+        sliderWidth=  (quarter_map_width - sliderWidthOffset).toString(); 
     } else if (mode == 'triple') {
       widthString = third_map_width.toString() + "px";
+      sliderWidth =  (third_map_width - sliderWidthOffset).toString(); 
     } else if (mode == 'double') {
         widthString = half_map_width.toString() + "px";
+        sliderWidth =  (half_map_width - sliderWidthOffset).toString(); 
     } else if (mode == 'timeseries_only') {
         widthString = map_width.toString() + "px";
+        sliderWidth =  (map_width - sliderWidthOffset).toString(); 
     } else {
-      widthString = map_width.toString() + "px";
+        widthString = map_width.toString() + "px";
+        sliderWidth =  (map_width - sliderWidthOffset).toString(); 
     }
-      
-    document.getElementById('map_canvas').style.width        = widthString;
-    document.getElementById('analysis_canvas').style.width   = widthString;
+
+    sliderWidth = (map_width - sliderWidthOffset);
+    sliderWidthString = sliderWidth + "px";
+    //console.log(widthString, sliderWidthOffset, sliderWidthString);
+    
+    document.getElementById('map_canvas').style.width         = widthString;
+    document.getElementById('analysis_canvas').style.width    = widthString;
       //document.getElementById('timeseries_canvas').style.width = widthString;
-    document.getElementById('timeseries_canvas').style.width =  map_width.toString() + "px"
+    document.getElementById('timeseries_canvas').style.width  =  map_width.toString() + "px"
     document.getElementById('timeseries_divider').style.width =  map_width.toString() + "px"
-    document.getElementById('scatter_canvas').style.width    = widthString;
-    document.getElementById('windrose_canvas').style.width   = widthString;
-    document.getElementById('blank_canvas').style.width      = widthString;
-    document.getElementById('error_textarea').style.width    = map_width.toString() + "px";;
+    document.getElementById('scatter_canvas').style.width     = widthString;
+    document.getElementById('windrose_canvas').style.width    = widthString;
+    document.getElementById('blank_canvas').style.width       = widthString;
+    document.getElementById('error_textarea').style.width     = map_width.toString() + "px";
+
+    //controlsSize   = document.getElementById("MyDataDiv").offsetWidth;
+    //console.log("c", controlsSize);
+    //document.getElementById('time_slider').style.width =  sliderWidthString;
+    document.getElementById('time_slider').style.width = (map_width - sliderWidthOffset).toString() + "px";
+    //document.getElementById('table_td2').style.width = sliderWidthString;+
+
+    textSize       = document.getElementById("displayed_data_value").offsetWidth; // remember that offsetWidth includes pading
+    oldTextPadding = parseFloat(document.getElementById("displayed_data_value").style.paddingLeft);
+    if (isNaN(oldTextPadding)) {
+        oldTextPadding = 0;
+    }
+    newTextPadding = Math.floor(sliderWidth/2 - (textSize-oldTextPadding)/2);
+    //console.log("pad", newTextPadding, sliderWidth, textSize); 
+    document.getElementById("displayed_data_value").style.paddingLeft = newTextPadding.toString() + "px"
+
+    controlsDivSize     = document.getElementById("MyDataDiv").offsetWidth;
+    buttonDivSize       = document.getElementById("animationButtons").offsetWidth;
+    oldButtonDivPadding = parseFloat(document.getElementById("animationButtons").style.paddingRight);
+    if (isNaN(oldButtonDivPadding)) {
+        oldButtonDivPadding = 0;
+    }
+    newButtonDivPadding = controlsDivSize - buttonDivSize -  oldButtonDivPadding;
+    document.getElementById("animationButtons").style.paddingRight = newButtonDivPadding.toString() + "px"
+
     show_checked_canvases();
     
-
     mapsize_handler(map_height);
 
     this_center = map.getCenter();
@@ -8892,7 +9627,7 @@ function arrangeColorbars() {
 
     var thisIDInd = jQuery.inArray(oUserdata.id[selected_block][pos], checked_ids);
     try {
-        if (thisIDInd >= 0) {
+        if (thisIDInd >= 0 && singleMarker.length > 0 ) {
             if ( (singleMarker[get_selected_varselector_index()][pos].url.indexOf("missing") != -1) ||
                  (singleMarker[get_selected_varselector_index()][pos].url.indexOf("fill")    != -1) ) {
                 // we have missing data. Display the closest non-missing data to avoid "flashing" as the slider is moved.
@@ -8904,10 +9639,13 @@ function arrangeColorbars() {
                 highlightMarker.setIcon(singleMarker[get_selected_varselector_index()][pos]);
                 highlightMarker.setPosition(allLatLng[pos]);
                 nearestpos = pos;
+
             }
         }
     } catch (err) {
         // pretend the data was missing
+        console.log(err);
+        console.log(singleMarker);
         try {
             nearest_pos = get_nearest_singleMarker(pos);
             nearestpos = nearest_pos;
@@ -8916,9 +9654,19 @@ function arrangeColorbars() {
         } catch (err2) {
             // do nothing
         }
-
+        
     }
 
+    // hide or unhide the marker based on dataFlagger results
+    //console.log(nearestpos);
+    //console.log(oUserdata.msec[selected_block][nearestpos],  isMsecFlagged(oUserdata.msec[selected_block][nearestpos]));
+    if (document.getElementById("excludeFlaggerOption").checked && isMsecFlagged(oUserdata.msec[selected_block][nearestpos])) {
+        highlightMarker.setVisible(false);
+    } else {
+        highlightMarker.setVisible(true);
+    }
+
+      
     // hide everything
     hideAllLayers(highlightMarker);
     hideAllLayers(markerLayer);
@@ -9341,7 +10089,8 @@ function arrangeColorbars() {
       data_value_string = "";
     }						  
       
-    document.getElementById("displayed_data_value").innerHTML = "MyData: " + oUserdata.varname[selected_block][varindex] + " = " + data_value_string;
+    //document.getElementById("displayed_data_value").innerHTML = "MyData: " + oUserdata.varname[selected_block][varindex] + " = " + data_value_string;
+    document.getElementById("displayed_data_value").innerHTML = "<b>" + oUserdata.varname[selected_block][varindex] + " = " + data_value_string + "</b>";
   } 
 
   function update_analysisPlotHighlight(highlight_pos) {
@@ -9374,12 +10123,17 @@ function arrangeColorbars() {
   }
 
   function update_scatterPlotHighlight(highlight_pos) {
-      //console.log(highlight_pos, oStats.sliderposlookup[highlight_pos]);
+      //console.log(highlight_pos, oStatsHourly.sliderposlookup[highlight_pos]);
       var highlight_pos;
       
       if (scatterPlot) {
           scatterPlot.unhighlight();
-          scatterPlot.highlight(0, oStats.sliderposlookup[highlight_pos]);
+
+          if (document.getElementById('scatterchoiceHourly').checked) {
+              scatterPlot.highlight(0, oStatsHourly.sliderposlookup[highlight_pos]);
+          } else {
+              scatterPlot.highlight(0, oStatsNative.sliderposlookup[highlight_pos]);
+          }
           //scatterPlot.highlight(1, highlight_pos);
           //scatterPlot.highlight(2, highlight_pos);
           //scatterPlot.highlight(3, highlight_pos);
@@ -9395,7 +10149,7 @@ function arrangeColorbars() {
           timeseriesPlot.unhighlight();
           hourlyOption = document.getElementById("timeseriesHourlyOption").checked;
           if (hourlyOption) {
-              timeseriesPlot.highlight(0, oStats.sliderposlookup[highlight_pos]);
+              timeseriesPlot.highlight(0, oStatsHourly.sliderposlookup[highlight_pos]);
           } else {
               var secondVarIndex = document.getElementById("timeseries_secondVar").selectedIndex;
               if (document.getElementById("timeseries_separateByID").checked == false) {
@@ -9491,6 +10245,19 @@ function arrangeColorbars() {
 	nvars = 0;
     }
 
+
+    // for data flagger
+    flagger  = document.getElementById("excludeFlaggerOption").checked;
+    noExport = document.getElementById("chkFlaggerDoNotExport").checked;
+    code_constant     = 'C';
+    code_missing      = 'M';
+    code_outlierStat  = 'T';
+    code_outlierSpike = 'P';
+    code_above        = 'A';
+    code_below        = 'B';
+    code_user         = 'U';
+
+      
     // initialize export array
     analysisExportArray = [];
 
@@ -9516,6 +10283,19 @@ function arrangeColorbars() {
            analysisExportArray.push(['Analysis_point Latitude, Longitude:\n']);
            analysisExportArray.push([marker_latlng.lat().toFixed(6) + ',' + marker_latlng.lng().toFixed(6)]);
            analysisExportArray.push('\n');
+         }
+          if (flagger && clear_analysisMarker_flag == false && (! noExport) ) {
+             analysisExportArray.push(['Data flagger codes: constant=' + code_constant + ', missing=' + code_missing + ', outlierStat=' + code_outlierStat + ', outlierSpike=' + code_outlierSpike + ', aboveValue=' + code_above + ', belowValue=' + code_below + ',  userInvalidated=' + code_user + '\n']);
+             analysisExportArray.push(['Data flagger constant repeat num=' + settings.flaggerConstantRepeatNum + '\n']);
+             analysisExportArray.push(['Data flagger missing repeat num=' + settings.flaggerMissingRepeatNum + '\n']);
+             analysisExportArray.push(['Data flagger missing value=' + settings.flaggerMissingValue + '\n']);
+             analysisExportArray.push(['Data flagger outlier stat sd factor value=' + settings.flaggerOutlierStatSDfactor + '\n']);
+             analysisExportArray.push(['Data flagger outlier spike time window value=' + settings.flaggerOutlierSpikeTimeWindow + '\n']);
+             analysisExportArray.push(['Data flagger outlier spike sd factor value=' + settings.flaggerOutlierSpikeSDfactor + '\n']);
+             analysisExportArray.push(['Data flagger above concentration value=' + settings.flaggerAboveConc + '\n']);
+             analysisExportArray.push(['Data flagger below concentration value=' + settings.flaggerBelowConc + '\n']);
+             analysisExportArray.push(['Data flagger user invalidate start =' + settings.flaggerUserInvalidateStart + '\n']);
+             analysisExportArray.push(['Data flagger user invalidate end =' + settings.flaggerUserInvalidateEnd + '\n']);
          }
       }
       if (mypath) {
@@ -9545,10 +10325,13 @@ function arrangeColorbars() {
         for (vInd=0; vInd<nvars; vInd++){    
           analysisExportArray.push([',' + oUserdata.varname[selected_block][vInd]]);
         }
+      }
+        if (flagger && (! noExport) && (clear_analysisLine_flag == false || clear_analysisMarker_flag == false)) {
+          analysisExportArray.push([',' + 'DataFlaggerCodes']);
+      }
+      if (clear_analysisLine_flag == false || clear_analysisMarker_flag == false) {
         analysisExportArray.push('\n');
       }
-
-
 
       if (marker_latlng || mypath) {
 	var plotDataMin =  100000000000; // default;
@@ -9626,7 +10409,6 @@ function arrangeColorbars() {
         label2 = "";
         label3 = "";
         label4 = "";
-
 
         for (ind=0; ind<allLatLng.length; ind++) {
 
@@ -9725,7 +10507,8 @@ function arrangeColorbars() {
             }
           }
 
-
+         
+            
           // write data to export array
           if (clear_analysisMarker_flag == false || clear_analysisLine_flag == false) {
             for (vInd=0; vInd<nvars; vInd++){    
@@ -9733,11 +10516,28 @@ function arrangeColorbars() {
             }
           }								    
 
+          // write data flagger codes to export array
+            if (flagger && (! noExport) && (clear_analysisMarker_flag == false || clear_analysisLine_flag == false)) {
+                
+              codeString = ""; //default passed
+              dataMsec = oUserdata.msec[selected_block][ind];
+              if (oUserdata.flagged_constant_msec.indexOf(dataMsec) > 0)        { codeString += code_constant }
+              if (oUserdata.flagged_longMissing_msec.indexOf(dataMsec) > 0)     { codeString += code_missing }
+              if (oUserdata.flagged_outlierStat_msec.indexOf(dataMsec) > 0)     { codeString += code_outlierStat }
+              if (oUserdata.flagged_outlierSpike_msec.indexOf(dataMsec) > 0)    { codeString += code_outlierSpike }
+              if (oUserdata.flagged_aboveConc_msec.indexOf(dataMsec) > 0)       { codeString += code_above }
+              if (oUserdata.flagged_belowConc_msec.indexOf(dataMsec) > 0)       { codeString += code_below }
+              if (oUserdata.flagged_userInvalidated_msec.indexOf(dataMsec) > 0) { codeString += code_user }
+              analysisExportArray.push(',' + codeString);
+          }	
 
           // fold data point into the running boxplot average
           thisBinPoint = parseInt(this_distMeters / binSize);
           thisBinLine  = parseInt(mindist / binSize);
 	  thisData     = parseFloat(oUserdata.variable[selected_block][get_selected_varselector_index()][ind]);
+          if ( (flagger && (isMsecFlagged(oUserdata.msec[selected_block][ind]))) ) {
+              thisData = -9999;
+          }
 	  if (showErrorBars && thisData != -9999 && thisData != -8888) {
             if ( (oUserdata.show1[selected_block][get_selected_varselector_index()][ind]) && 
                  (oUserdata.show2[selected_block][get_selected_varselector_index()][ind]) ) {
@@ -9780,12 +10580,18 @@ function arrangeColorbars() {
           if (showErrorBars == false) { 
             if ( (oUserdata.show1[selected_block][get_selected_varselector_index()][ind]) && 
                  (oUserdata.show2[selected_block][get_selected_varselector_index()][ind]) ) {
-              if (clear_analysisMarker_flag == false) {								    
-                plotData.push([this_distMeters, oUserdata.variable[selected_block][get_selected_varselector_index()][ind], 0]);
+                if (clear_analysisMarker_flag == false) {
+		  if ( (! flagger) || (flagger && (! isMsecFlagged(oUserdata.msec[selected_block][ind])))) {
+                    plotData.push([this_distMeters, oUserdata.variable[selected_block][get_selected_varselector_index()][ind], 0]);
+                  } else {
+                      plotData.push([null,null]);
+                  }
                 if (document.getElementById("analysis_separateByID").checked == true && thisIDInd < maxIDsToShow && thisIDInd >= 0) {
                   for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
                     if (tempInd == thisIDInd) {
-                      sepIdPlotData[tempInd].push([this_distMeters, oUserdata.variable[selected_block][get_selected_varselector_index()][ind]]); 
+                      if ( (! flagger) || (flagger && (! isMsecFlagged(oUserdata.msec[selected_block][ind])))) {
+                        sepIdPlotData[tempInd].push([this_distMeters, oUserdata.variable[selected_block][get_selected_varselector_index()][ind]]);
+                      }
                     } else {
                       sepIdPlotData[tempInd].push([null,null]);
                     }
@@ -9797,8 +10603,12 @@ function arrangeColorbars() {
                   sepIdPlotData[tempInd].push([null,null]);
                 }
               }
-              if (clear_analysisLine_flag == false) { 
-                plotDataLine.push([mindist, oUserdata.variable[selected_block][get_selected_varselector_index()][ind], 0]); 
+              if (clear_analysisLine_flag == false) {
+                if ( (! flagger) || (flagger && (! isMsecFlagged(oUserdata.msec[selected_block][ind])))) {
+                  plotDataLine.push([mindist, oUserdata.variable[selected_block][get_selected_varselector_index()][ind], 0]); 
+                } else {
+                    plotDataLine.push([null,null]);
+                }
                 if (document.getElementById("analysis_separateByID").checked == true && thisIDInd < maxIDsToShow && thisIDInd >= 0) {
                   for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
                     if (tempInd == thisIDInd) {
@@ -9988,6 +10798,12 @@ function update_scatterPlot() {
                 openEmvlDialog("dialog-scatterplot-hourly");
             }
 
+
+            isHourly = false; // default
+            if (document.getElementById('scatterchoiceHourly').checked) {
+                isHourly = true;
+            }
+            //console.log("isHourly=", isHourly);
             
             var canvas_height = parseInt(document.getElementById('scatter_canvas').style.height);
             var canvas_width  = parseInt(document.getElementById('scatter_canvas').style.width);
@@ -10012,23 +10828,35 @@ function update_scatterPlot() {
                 mytransform = function (v) { return v; };
             }
 
-            xVarIndex = document.getElementById("scatter_xaxisVar").selectedIndex;
-            yVarIndex = document.getElementById("scatter_yaxisVar").selectedIndex;
+            xVarIndexHourly = document.getElementById("scatter_xaxisVar").selectedIndex;
+            yVarIndexHourly = document.getElementById("scatter_yaxisVar").selectedIndex;
+            xVarIndexNative = document.getElementById("scatterNative_xaxisVar").selectedIndex;
+            yVarIndexNative = document.getElementById("scatterNative_yaxisVar").selectedIndex;
 
+            
             stats_sliderpos_lookup();
+            statsNative_sliderpos_lookup();
 
-            xVarName = "";
-            yVarName = "";
-            //if (xVarIndex >= oStats.nVars) {  // this must be an external variable (Airnow, etc)
-                xVarName = document.getElementById("scatter_xaxisVar").value;
+            xVarNameHourly = "";
+            yVarNameHourly = "";
+            xVarNameNative = "";
+            yVarNameNative = "";
+            //if (xVarIndex >= oStatsHourly.nVars) {  // this must be an external variable (Airnow, etc)
+                xVarNameHourly = document.getElementById("scatter_xaxisVar").value;
+                xVarNameNative = document.getElementById("scatterNative_xaxisVar").value;
             //}
-            //if (yVarIndex >= oStats.nVars) {  // this must be an external variable (Airnow, etc)
-                yVarName = document.getElementById("scatter_yaxisVar").value;
+            //if (yVarIndex >= oStatsHourly.nVars) {  // this must be an external variable (Airnow, etc)
+                yVarNameHourly = document.getElementById("scatter_yaxisVar").value;
+                yVarNameNative = document.getElementById("scatterNative_yaxisVar").value;
             //}
 
-
-            xTitle = xVarName;
-            yTitle = yVarName;
+            if (isHourly) {
+                xTitle = xVarNameHourly;
+                yTitle = yVarNameHourly;
+            } else {
+                xTitle = xVarNameNative;
+                yTitle = yVarNameNative;
+            }
 
             if (xTitle.indexOf('External Data') == 0) {
                 sensorInd = Number(xTitle.slice(-1)) - 1; // -1 because index is zero based
@@ -10090,104 +10918,149 @@ function update_scatterPlot() {
             end_dateObjectUTC = create_dateObjectUTC(oUserdata.timestamp[selected_block][endInd]);
             end_UTCTime = end_dateObjectUTC.getTime();
 
-            xStatsArray = oStats;      // default
-            yStatsArray = oStats;      // default
-            xVarIndexPush = xVarIndex; // index for the variable in the stats array (e.g. n)
-            yVarIndexPush = yVarIndex; // index for the variable in the stats array (e.g. n)
+            if (isHourly) {
+                xStatsArray   = oStatsHourly;      // default
+                yStatsArray   = oStatsHourly;      // default
+                xVarIndexPush = xVarIndexHourly;   // index for the variable in the stats array (e.g. n)
+                yVarIndexPush = yVarIndexHourly;   // index for the variable in the stats array (e.g. n)
+            } else {
+                xStatsArray   = oStatsNative;      // default
+                yStatsArray   = oStatsNative;      // default
+                xVarIndexPush = xVarIndexNative;   // index for the variable in the stats array (e.g. n)
+                yVarIndexPush = yVarIndexNative;   // index for the variable in the stats array (e.g. n)
+            }
             xIsExternalFlag = false;   // default. Indicates if this is an external variable
             yIsExternalFlag = false;   // default. Indicates if this is an external variable
 
             
-            if (xVarIndex >= oStats.nVars) {
+            if (isHourly && xVarIndexHourly >= oStatsHourly.nVars) {
                 xIsExternalFlag = true;
-                xStatsArray = oStatsExternal;
-                xVarIndexPush = oStatsExternal.menuItems.indexOf(xVarName); //variable index in the statsExternal array
+                xStatsArray = oStatsHourlyExternal;
+                xVarIndexPush = oStatsHourlyExternal.menuItems.indexOf(xVarName); //variable index in the statsExternal array
             }
-            if (yVarIndex >= oStats.nVars) {
+            if (isHourly && yVarIndexHourly >= oStatsHourly.nVars) {
                 yIsExternalFlag = true;
-                yStatsArray = oStatsExternal;
-                yVarIndexPush = oStatsExternal.menuItems.indexOf(yVarName); //variable index in the statsExternal array
+                yStatsArray = oStatsHourlyExternal;
+                yVarIndexPush = oStatsHourlyExternal.menuItems.indexOf(yVarName); //variable index in the statsExternal array
             }
             //console.log("plotting");
             //console.log(xStatsArray);
             //console.log("xVarName=", xVarName, "xVarIndexPush=", xVarIndexPush);
             //console.log(yStatsArray);
             //console.log("yVarName=", yVarName, "yVarIndexPush=", yVarIndexPush);
-            
-            for (ind=0; ind<oStats.nHours; ind++) {                
-                proceed = false;
-                if (oStats.timestamp[ind] > start_UTCTime && oStats.timestamp[ind] < end_UTCTime) {
-                    proceed = true;
-                }
-                
-                if (proceed) {
-                    // handle separate by ID option
-                    //if (document.getElementById("scatter_separateByID").checked == true) {
-                    //    var thisIDInd = jQuery.inArray(oUserdata.id[selected_block][ind], checked_ids);
-                    //    //if (thisIDInd == -1) {
-                    //    //    print("Data point was not found in the first " + maxIDsToShow + " checked IDs: " + checked_ids);
-                    //    //}
-                    //    if ( thisIDInd >= 0) {
-                    //        if (thisIDInd == 0) {label0 = oUserdata.id[selected_block][ind];}
-                    //        if (thisIDInd == 1) {label1 = oUserdata.id[selected_block][ind];}
-                    //        if (thisIDInd == 2) {label2 = oUserdata.id[selected_block][ind];}
-                    //        if (thisIDInd == 3) {label3 = oUserdata.id[selected_block][ind];}
-                    //        if (thisIDInd == 4) {label4 = oUserdata.id[selected_block][ind];}      
-                    //   }
-                    //}
-                    
-                    
-                    //if ( (oUserdata.show1[selected_block][get_selected_varselector_index()][ind]) &&
-                    //     (oUserdata.show2[selected_block][get_selected_varselector_index()][ind]) ) {
 
+            if (isHourly) {
+                for (ind=0; ind<oStatsHourly.nHours; ind++) {                
+                    proceed = false;
+                    if (oStatsHourly.timestamp[ind] > start_UTCTime && oStatsHourly.timestamp[ind] < end_UTCTime) {
+                        proceed = true;
+                    }
                     
-                    
-                    //if (xExternalVar == "" && yExternalVar == "") {
-                    if (1) {
+                    if (proceed) {
+                        // handle separate by ID option
+                        //if (document.getElementById("scatter_separateByID").checked == true) {
+                        //    var thisIDInd = jQuery.inArray(oUserdata.id[selected_block][ind], checked_ids);
+                        //    //if (thisIDInd == -1) {
+                        //    //    print("Data point was not found in the first " + maxIDsToShow + " checked IDs: " + checked_ids);
+                        //    //}
+                        //    if ( thisIDInd >= 0) {
+                        //        if (thisIDInd == 0) {label0 = oUserdata.id[selected_block][ind];}
+                        //        if (thisIDInd == 1) {label1 = oUserdata.id[selected_block][ind];}
+                        //        if (thisIDInd == 2) {label2 = oUserdata.id[selected_block][ind];}
+                        //        if (thisIDInd == 3) {label3 = oUserdata.id[selected_block][ind];}
+                        //        if (thisIDInd == 4) {label4 = oUserdata.id[selected_block][ind];}      
+                        //   }
+                        //}
                         
-                        //plotData.push([oStats.hourAvg[xVarIndex][ind], oStats.hourAvg[yVarIndex][ind]]);
-                        xPush = xStatsArray.hourAvg[xVarIndexPush][ind];
-                        yPush = yStatsArray.hourAvg[yVarIndexPush][ind];
-                        plotData_xmin = Math.min(...xStatsArray.hourAvg[xVarIndexPush]);
-                        plotData_xmax = Math.max(...xStatsArray.hourAvg[xVarIndexPush]);
-                        //plotData_ymin = Math.min(...yStatsArray.hourAvg[xVarIndexPush]);
-                        //plotData_ymax = Math.max(...yStatsArray.hourAvg[xVarIndexPush]);
-                        plotData_ymin = Math.min(...yStatsArray.hourAvg[yVarIndexPush]);
-                        plotData_ymax = Math.max(...yStatsArray.hourAvg[yVarIndexPush]);
-                        if (xStatsArray.validFlag[ind] && yStatsArray.validFlag[ind]) {
-                            plotData.push([xPush, yPush]);
-                            //if (xPush != missing_value && xPush < plotData_xmin) {plotData_xmin = xPush;}
-                            //if (xPush != missing_value && xPush > plotData_xmax) {plotData_xmax = xPush;}
-                            //if (yPush != missing_value && yPush < plotData_ymin) {plotData_ymin = yPush;}
-                            //if (yPush != missing_value && yPush > plotData_ymax) {plotData_ymax = yPush;}
-                            plotDataInvalid.push([null, null]);
+                        
+                        //if ( (oUserdata.show1[selected_block][get_selected_varselector_index()][ind]) &&
+                        //     (oUserdata.show2[selected_block][get_selected_varselector_index()][ind]) ) {
+                        
+                        
+                        
+                        //if (xExternalVar == "" && yExternalVar == "") {
+                        if (1) {
+                            
+                            //plotData.push([oStatsHourly.hourAvg[xVarIndex][ind], oStatsHourly.hourAvg[yVarIndex][ind]]);
+                            xPush = xStatsArray.hourAvg[xVarIndexPush][ind];
+                            yPush = yStatsArray.hourAvg[yVarIndexPush][ind];
+                            plotData_xmin = Math.min(...xStatsArray.hourAvg[xVarIndexPush]);
+                            plotData_xmax = Math.max(...xStatsArray.hourAvg[xVarIndexPush]);
+                            //plotData_ymin = Math.min(...yStatsArray.hourAvg[xVarIndexPush]);
+                            //plotData_ymax = Math.max(...yStatsArray.hourAvg[xVarIndexPush]);
+                            plotData_ymin = Math.min(...yStatsArray.hourAvg[yVarIndexPush]);
+                            plotData_ymax = Math.max(...yStatsArray.hourAvg[yVarIndexPush]);
+                            if (xStatsArray.validFlag[ind] && yStatsArray.validFlag[ind]) {
+                                plotData.push([xPush, yPush]);
+                                //if (xPush != missing_value && xPush < plotData_xmin) {plotData_xmin = xPush;}
+                                //if (xPush != missing_value && xPush > plotData_xmax) {plotData_xmax = xPush;}
+                                //if (yPush != missing_value && yPush < plotData_ymin) {plotData_ymin = yPush;}
+                                //if (yPush != missing_value && yPush > plotData_ymax) {plotData_ymax = yPush;}
+                                plotDataInvalid.push([null, null]);
+                            } else {
+                                plotData.push([null, null]);
+                                plotDataInvalid.push([xPush, yPush]);
+                            }
+                            
+                            //if (document.getElementById("scatter_separateByID").checked == true && thisIDInd < maxIDsToShow && thisIDInd >= 0) {
+                            //    
+                            //    for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
+                            //        if (tempInd == thisIDInd) {
+                            //            //sepIdPlotData[tempInd].push([oUserdata.variable[selected_block][xVarIndex][ind], oUserdata.variable[selected_block][yVarIndex][ind]]);
+                            //            sepIdPlotData[tempInd].push([oStatsHourly.hourAvg[xVarIndex][ind], oStatsHourly.hourAvg[yVarIndex][ind]]);
+                            //            
+                            //        } else {
+                            //            sepIdPlotData[tempInd].push([null,null]);
+                            //        }
+                            //    }
+                            //}    
+                        } else {
+                            plotData.push([null, null]);
+                            //for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
+                            //    sepIdPlotData[tempInd].push([null,null]);
+                            //}
+                        }
+                        
+                    } else {
+                        plotData.push([null, null]);
+                        plotDataInvalid.push([null, null]);
+                    }
+                }
+
+            // native
+            } else {
+                for (tInd=0; tInd<oStatsNative.nTimes; tInd++) {
+                    exclude = document.getElementById("excludeFlaggerOption").checked;
+
+                    proceed = false;
+                    if (oStatsNative.timestamp[tInd] > start_UTCTime && oStatsNative.timestamp[tInd] < end_UTCTime) {
+                        proceed = true;
+                    }
+                    
+                    if (proceed) {
+                        xPush = xStatsArray.data[xVarIndexPush][tInd];
+                        yPush = yStatsArray.data[yVarIndexPush][tInd];
+                        plotData_xmin = Math.min(...xStatsArray.data[xVarIndexPush]);
+                        plotData_xmax = Math.max(...xStatsArray.data[xVarIndexPush]);
+                        plotData_ymin = Math.min(...yStatsArray.data[yVarIndexPush]);
+                        plotData_ymax = Math.max(...yStatsArray.data[yVarIndexPush]);
+                        if (xStatsArray.validFlag[tInd] && yStatsArray.validFlag[tInd]) {
+                            if ( (! exclude) || (exclude && (! isMsecFlagged(oUserdata.msec[selected_block][tInd])))) {
+                                plotData.push([xPush, yPush]);
+                                //if (xPush != missing_value && xPush < plotData_xmin) {plotData_xmin = xPush;}
+                                //if (xPush != missing_value && xPush > plotData_xmax) {plotData_xmax = xPush;}
+                                //if (yPush != missing_value && yPush < plotData_ymin) {plotData_ymin = yPush;}
+                                //if (yPush != missing_value && yPush > plotData_ymax) {plotData_ymax = yPush;}
+                                plotDataInvalid.push([null, null]);
+                            } else {
+                                plotData.push([null, null]);
+                                plotDataInvalid.push([null, null]);
+                            }
                         } else {
                             plotData.push([null, null]);
                             plotDataInvalid.push([xPush, yPush]);
                         }
-                        
-                        //if (document.getElementById("scatter_separateByID").checked == true && thisIDInd < maxIDsToShow && thisIDInd >= 0) {
-                        //    
-                        //    for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
-                        //        if (tempInd == thisIDInd) {
-                        //            //sepIdPlotData[tempInd].push([oUserdata.variable[selected_block][xVarIndex][ind], oUserdata.variable[selected_block][yVarIndex][ind]]);
-                        //            sepIdPlotData[tempInd].push([oStats.hourAvg[xVarIndex][ind], oStats.hourAvg[yVarIndex][ind]]);
-                        //            
-                        //        } else {
-                        //            sepIdPlotData[tempInd].push([null,null]);
-                        //        }
-                        //    }
-                        //}    
-                    } else {
-                        plotData.push([null, null]);
-                        //for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
-                        //    sepIdPlotData[tempInd].push([null,null]);
-                        //}
                     }
-                
-                } else {
-                    plotData.push([null, null]);
-                    plotDataInvalid.push([null, null]);
                 }
             }
 
@@ -10249,8 +11122,13 @@ function update_scatterPlot() {
                     this_ymax = plotData_ymax;
                 }
             } else {
-                this_ymin = oUserdata.mymin[0][yVarIndex]
-                this_ymax = oUserdata.mymax[0][yVarIndex]
+                if (isHourly) {
+                    this_ymin = oUserdata.mymin[0][yVarIndexHourly]
+                    this_ymax = oUserdata.mymax[0][yVarIndexHourly]
+                } else {
+                    this_ymin = oUserdata.mymin[0][yVarIndexNative]
+                    this_ymax = oUserdata.mymax[0][yVarIndexNative]
+                }
             }
             if (xIsExternalFlag) {
                 //console.log(xVarName);
@@ -10307,8 +11185,13 @@ function update_scatterPlot() {
                     this_xmax = plotData_xmax;
                 }
             } else {
-                this_xmin = oUserdata.mymin[0][xVarIndex]
-                this_xmax = oUserdata.mymax[0][xVarIndex]
+                if (isHourly) {
+                    this_xmin = oUserdata.mymin[0][xVarIndexHourly]
+                    this_xmax = oUserdata.mymax[0][xVarIndexHourly]
+                } else {
+                    this_xmin = oUserdata.mymin[0][xVarIndexNative]
+                    this_xmax = oUserdata.mymax[0][xVarIndexNative]
+                }
             }
 
             //console.log("x min/max:", xVarName, this_xmin, this_xmax);
@@ -10324,29 +11207,36 @@ function update_scatterPlot() {
             //console.log("yVarIndex = ", yVarIndex);
             //diffsum = 0.0;
             //diff2sum = 0.0;
-            //for (iii=0; iii<oStats.diff.length; iii++) {
-            //    diffsum += oStats.diff[yVarIndex][iii];
-            //    diff2sum += oStats.diffSquare[yVarIndex][iii];
+            //for (iii=0; iii<oStatsHourly.diff.length; iii++) {
+            //    diffsum += oStatsHourly.diff[yVarIndex][iii];
+            //    diff2sum += oStatsHourly.diffSquare[yVarIndex][iii];
             //}
-            
             
             // create regression line
             correlationData = [];
             //if (xExternalVar == "" && yExternalVar == "") {
             if (1) {
                 //correlation = computeUserCorrelation(xVarIndex, yVarIndex, xExternalVar, yExternalVar);
-                correlation = computeUserCorrelation(xVarIndexPush, yVarIndexPush, xVarName, yVarName, xIsExternalFlag, yIsExternalFlag);
-                cor         = correlation[0];
-                slope       = correlation[1];
-                yIntercept  = correlation[2];
 
+                if (isHourly) {
+                    correlation = computeUserCorrelation(xVarIndexPush, yVarIndexPush, xVarNameHourly, yVarNameHourly, xIsExternalFlag, yIsExternalFlag);
+                    cor         = correlation[0];
+                    slope       = correlation[1];
+                    yIntercept  = correlation[2];
+                } else {
+                    computeCovarianceElementsNative();
+                    correlation = computeUserCorrelationNative(xVarIndexPush, yVarIndexPush, xVarNameNative, yVarNameNative);
+                    cor         = correlation[0];
+                    slope       = correlation[1];
+                    yIntercept  = correlation[2];
+                }
 
-                //console.log("cor=", oStats.cor);
-                //console.log("slope=", oStats.regression_slope);
-                //console.log("yint=", oStats.regression_yint);
-                //console.log("sdevX=", oStats.sdevX);
-                //console.log("sdevY=", oStats.sdevY);
-                //console.log("cov=", oStats.cov);
+                //console.log("cor=", oStatsHourly.cor);
+                //console.log("slope=", oStatsHourly.regression_slope);
+                //console.log("yint=", oStatsHourly.regression_yint);
+                //console.log("sdevX=", oStatsHourly.sdevX);
+                //console.log("sdevY=", oStatsHourly.sdevY);
+                //console.log("cov=", oStatsHourly.cov);
                 
                 //if (document.getElementById('scatter_logoption').checked) {
                 if (settings.plotLogAxisFlag == true) {
@@ -10361,7 +11251,8 @@ function update_scatterPlot() {
                     }
                 } else {
                     // linear plot, just need endpoints
-                    correlationData = [ [0, yIntercept], [this_xmax, yIntercept + this_xmax*slope] ];
+                    //correlationData = [ [0, yIntercept], [this_xmax, yIntercept + this_xmax*slope] ];
+                    correlationData = [ [this_xmin, yIntercept + this_xmin*slope], [this_xmax, yIntercept + this_xmax*slope] ];
                 }
             }
             
@@ -10381,9 +11272,13 @@ function update_scatterPlot() {
             if (settings.plotPrimaryStyle.indexOf("Points") >= 0) {
                 primaryShowPoints = true;
             }
-            
-            document.getElementById("scatterplotTitle").innerHTML = yVarName + " vs. " + xVarName;
 
+            if (isHourly) {
+                document.getElementById("scatterplotTitle").innerHTML = yVarNameHourly + " vs. " + xVarNameHourly;
+            } else {
+                document.getElementById("scatterplotTitle").innerHTML = yVarNameNative + " vs. " + xVarNameNative;
+            }
+            
             scatterPlotOptions = { xaxis:{min:this_xmin, max:this_xmax, mode: "null", axisLabel:xTitle, minTickSize: [1], color:"black",transform:mytransform},
 				   //yaxis:{min:this_ymin, max:this_ymax, axisLabel:oUserdata.varname[selected_block][get_selected_varselector_index()], color:"black", position:"left",transform:mytransform},
 				   yaxis:{min:this_ymin, max:this_ymax, axisLabel:yTitle, color:"black", position:"left", transform:mytransform},
@@ -10393,7 +11288,15 @@ function update_scatterPlot() {
             //if (document.getElementById("scatter_separateByID").checked == false) {
             if (1) {
                 mylabel = "";
-                regressionLabel = "r = " + oStats.cor.toFixed(4).toString() + "<br>" + "y-int = " + oStats.regression_yint.toFixed(4).toString() + "<br>" + "slope = " + oStats.regression_slope.toFixed(4).toString() + "<br>" + "rmsError = " + oStats.rmsError.toFixed(4).toString();
+
+                if (isHourly) {
+                    regressionLabel = "r = " + oStatsHourly.cor.toFixed(4).toString() + "<br>" + "y-int = " + oStatsHourly.regression_yint.toFixed(4).toString() + "<br>" + "slope = " + oStatsHourly.regression_slope.toFixed(4).toString() + "<br>" + "rmsError = " + oStatsHourly.rmsError.toFixed(4).toString();
+
+                } else {
+                    regressionLabel = "r = " + oStatsNative.cor.toFixed(4).toString() + "<br>" + "y-int = " + oStatsNative.regression_yint.toFixed(4).toString() + "<br>" + "slope = " + oStatsNative.regression_slope.toFixed(4).toString() + "<br>" + "rmsError = " + oStatsNative.rmsError.toFixed(4).toString();
+                }
+
+                    
 	        scatterPlot = $.plot(sCanvas, 
 				     [{highlightColor:"black", label:mylabel, data:plotData, color:colorData, lines:{show:primaryShowLines}, points:{show:primaryShowPoints, symbol:"circle", fill:fillStyle, fillColor:colorData}, colors:plotDataColors, colorByDataFlag:settings.plotDataColorsFlag},
                                       {highlightColor:"black", label:mylabel, data:plotDataInvalid, color:"rgb(100,100,100)", lines:{show:primaryShowLines}, points:{show:primaryShowPoints, symbol:"cross", fill:fillStyle, fillColor:"rgb(100,100,100)"}, colors:"rgb(100,100,100)", colorByDataFlag:settings.plotDataColorsFlag},
@@ -10403,24 +11306,24 @@ function update_scatterPlot() {
                                      ],
 				     scatterPlotOptions);
 
-                $("#scatter_canvas2").unbind("plotclick").one("plotclick", function (event, pos, item) {
-                    //alert("You clicked at " + pos.x + ", " + pos.y);
-                    // axis coordinates for other axes, if present, are in pos.x2, pos.x3, ...
-                    // if you need global screen coordinates, they are pos.pageX, pos.pageY
-
-                    if (item) {
-                        //highlight(item.series, item.datapoint);
-                        //console.log("before", oStats.validFlag[item.dataIndex], item.dataIndex);
-                        oStats.validFlag[item.dataIndex] = !(oStats.validFlag[item.dataIndex]);
-                        //oStats.validFlag[item.dataIndex] = false;
-                        //console.log("after", oStats.validFlag[item.dataIndex], item.dataIndex);
-                    } else {
-                        //console.log("no item found");
-                    }
-                    
-                    setTimeout("update_scatterPlot();",0);
-
-                });
+//                $("#scatter_canvas2").unbind("plotclick").one("plotclick", function (event, pos, item) {
+//                    //alert("You clicked at " + pos.x + ", " + pos.y);
+//                    // axis coordinates for other axes, if present, are in pos.x2, pos.x3, ...
+//                    // if you need global screen coordinates, they are pos.pageX, pos.pageY
+//
+//                    if (item) {
+//                        //highlight(item.series, item.datapoint);
+//                        //console.log("before", oStatsHourly.validFlag[item.dataIndex], item.dataIndex);
+//                        oStatsHourly.validFlag[item.dataIndex] = !(oStatsHourly.validFlag[item.dataIndex]);
+//                        //oStatsHourly.validFlag[item.dataIndex] = false;
+//                        //console.log("after", oStatsHourly.validFlag[item.dataIndex], item.dataIndex);
+//                    } else {
+//                        //console.log("no item found");
+//                    }
+//                    
+//                    setTimeout("update_scatterPlot();",0);
+//
+//                });
                 
 
 	    } else {
@@ -10485,10 +11388,133 @@ function update_scatterPlot() {
       return return_val;
   }
 
+
+function showDataFlaggerInfo() {
+     openEmvlDialog("dialog-dataFlagger");
+}
+
+
+
+function processFlaggerCheckboxes() {
+
+    runFlagger();
+    updatePlots();
+
+}
+
+
+function isMsecFlagged(myMsec) {
+    if ( (oUserdata.flagged_constant_msec.indexOf(myMsec) < 0)       &&
+         (oUserdata.flagged_longMissing_msec.indexOf(myMsec) < 0)    &&
+         (oUserdata.flagged_outlierStat_msec.indexOf(myMsec) < 0)    &&
+         (oUserdata.flagged_outlierSpike_msec.indexOf(myMsec) < 0)   &&
+         (oUserdata.flagged_aboveConc_msec.indexOf(myMsec) < 0)      &&
+         (oUserdata.flagged_belowConc_msec.indexOf(myMsec) < 0)      &&
+         (oUserdata.flagged_userInvalidated_msec.indexOf(myMsec) < 0) ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+      
+function runFlagger() {
+    
+    //oUserdata.flagger = {nSites    : 1,
+    //                     nTimes    : plotData.length,
+    //                     id        : new Array(plotData.length).fill(1),
+    //                     variable  : plotData.map(row => row[1]),
+    //                     msec      : plotData.map(row => row[0]),
+    //                     timestamp : plotDataTimestamp
+    //                    }
+
+
+    // checkboxen
+    doConstantNum            = document.getElementById("chkConstantNum").checked;
+    doMissingNum             = document.getElementById("chkMissingNum").checked;
+    doOutlierStatSDfactor    = document.getElementById("chkOutlierStatSDfactor").checked;
+    //doOutlierSpikeTimeWindow = document.getElementById("chkOutlierSpikeTimeWindow").checked;
+    doOutlierSpikeSDfactor   = document.getElementById("chkOutlierSpikeSDfactor").checked;
+    doAboveConcentration     = document.getElementById("chkAboveConcentration").checked;
+    doBelowConcentration     = document.getElementById("chkBelowConcentration").checked;
+    doUserInvalidate         = document.getElementById("chkUserInvalidate").checked;
+    
+    if (document.getElementById('runFlaggerOption').checked == true) {
+        document.getElementById('flaggerLegendDiv').style.visibility = 'visible';
+        thisData      = oUserdata.variable[selected_block][get_selected_varselector_index()];
+        thisMsec      = oUserdata.msec[selected_block];
+        thisTimestamp = oUserdata.timestamp[selected_block];
+        
+        oUserdata.flagger = {nSites    : 1,
+                             nTimes    : thisData.length,
+                             id        : new Array(thisData.length).fill(1),
+                             variable  : thisData,
+                             msec      : thisMsec,
+                             timestamp : thisTimestamp
+                            }
+        
+        oUserdata.flaggedIndices = dataFlagger(oUserdata.flagger,          
+                                               1,                          
+                                               doConstantNum,              
+                                               doMissingNum,               
+                                               doOutlierStatSDfactor,      
+                                               //doOutlierSpikeTimeWindow,   
+                                               doOutlierSpikeSDfactor,     
+                                               doAboveConcentration,       
+                                               doBelowConcentration,
+                                               doUserInvalidate)
+
+        if (oUserdata.flaggedIndices.constant != undefined) {
+            oUserdata.flagged_constant_msec        = oUserdata.flaggedIndices.constant.map(d => d[3]);
+        }
+        if (oUserdata.flaggedIndices.longMissing != undefined) {
+            oUserdata.flagged_longMissing_msec     = oUserdata.flaggedIndices.longMissing.map(d => d[3]);
+        }
+        if (oUserdata.flaggedIndices.outlierStat != undefined) {
+            oUserdata.flagged_outlierStat_msec     = oUserdata.flaggedIndices.outlierStat.map(d => d[3]);
+        }
+        if (oUserdata.flaggedIndices.outlierSpike != undefined) {
+            oUserdata.flagged_outlierSpike_msec    = oUserdata.flaggedIndices.outlierSpike.map(d => d[3]);
+        }
+        if (oUserdata.flaggedIndices.aboveConc != undefined) {
+            oUserdata.flagged_aboveConc_msec       = oUserdata.flaggedIndices.aboveConc.map(d => d[3]);
+        }
+        if (oUserdata.flaggedIndices.belowConc != undefined) {
+            oUserdata.flagged_belowConc_msec       = oUserdata.flaggedIndices.belowConc.map(d => d[3]); 
+        }
+        if (oUserdata.flaggedIndices.userInvalidated != undefined) {
+            oUserdata.flagged_userInvalidated_msec = oUserdata.flaggedIndices.userInvalidated.map(d => d[3]);
+        }
+        
+    } else {
+        document.getElementById('flaggerLegendDiv').style.visibility = 'hidden';
+        oUserdata.flagger = "";
+        oUserdata.flaggedIndices = "";
+        oUserdata.flagged_constant_msec        = []; 
+        oUserdata.flagged_longMissing_msec     = []; 
+        oUserdata.flagged_outlierStat_msec     = []; 
+        oUserdata.flagged_outlierSpike_msec    = []; 
+        oUserdata.flagged_aboveConc_msec       = []; 
+        oUserdata.flagged_belowConc_msec       = []; 
+        oUserdata.flagged_userInvalidated_msec = []; 
+    }
+}
+
+
+function updatePlots() {
+    setTimeout("computeGoogleLatLng(oUserdata, false);", 100);
+    update_timeseriesPlot();
+    update_analysisPlot();
+    update_scatterPlot();
+    update_windrosePlot();
+}
+
 function update_timeseriesPlot() {
     if ( document.getElementById('timeseriesPlotOptionButton').checked == true ) {
         try {
-            
+
+            //if (document.getElementById('runFlaggerOption').checked == true) {
+                runFlagger();
+            //}
             
             var plotDataAQS;
             var labelAqsPm25 = "";
@@ -10504,6 +11530,7 @@ function update_timeseriesPlot() {
             var yMaxSurfmet;
             
             var plotDataPurpleair;
+
             var labelPurpleairPM25 = "";
             var labelPurpleair = "";
             var yMinPurpleair;
@@ -10570,6 +11597,7 @@ function update_timeseriesPlot() {
 	            //print("No matching AQS PM10 variable found. Variable must be PM2.5(ug/m3).");
 	        }
             }           
+            
             
             var plotDataAqsOzone = [];
             var plotDataAqsOzone = new Array();
@@ -10835,10 +11863,11 @@ function update_timeseriesPlot() {
 	        }
             }
             
-            var plotData       = [];
-            var plotData       = new Array();
-            var plotDataColors = [];          // needed if coloring by data value
-            var plotDataColors = new Array(); // needed if coloring by data value
+            var plotData          = [];
+            var plotData          = new Array();
+            var plotDataColors    = [];          // needed if coloring by data value
+            var plotDataColors    = new Array(); // needed if coloring by data value
+            var plotDataTimestamp = [];          // needed by dataFlagger
 
             var plotDataMin = 100000000000; // default;
             var myXmin      =  100000000000000; // default;
@@ -10852,6 +11881,38 @@ function update_timeseriesPlot() {
             var this_dateObjectUTC = 0;
             var this_UTCTime; // in milliseconds since Jan 1, 1970
             var this_Time; // corrected to selected timezone
+
+            // flagged indices (msec) from the data flagger
+            //flagged_constant_msec        = [];
+            //flagged_longMissing_msec     = [];
+            //flagged_outlierStat_msec     = [];
+            //flagged_outlierSpike_msec    = [];
+            //flagged_aboveConc_msec       = [];
+            //flagged_belowConc_msec       = [];
+            //flagged_userInvalidated_msec = [];
+            //if (document.getElementById("excludeFlaggerOption").checked) {
+            //    if (oUserdata.flaggedIndices.constant != undefined) {
+            //        flagged_constant_msec        = oUserdata.flaggedIndices.constant.map(d => d[3]);
+            //    }
+            //    if (oUserdata.flaggedIndices.longMissing != undefined) {
+            //        flagged_longMissing_msec     = oUserdata.flaggedIndices.longMissing.map(d => d[3]);
+            //    }
+            //    if (oUserdata.flaggedIndices.outlierStat != undefined) {
+            //        flagged_outlierStat_msec     = oUserdata.flaggedIndices.outlierStat.map(d => d[3]);
+            //    }
+            //    if (oUserdata.flaggedIndices.outlierSpike != undefined) {
+            //        flagged_outlierSpike_msec    = oUserdata.flaggedIndices.outlierSpike.map(d => d[3]);
+            //    }
+            //    if (oUserdata.flaggedIndices.aboveConc != undefined) {
+            //        flagged_aboveConc_msec       = oUserdata.flaggedIndices.aboveConc.map(d => d[3]);
+            //    }
+            //    if (oUserdata.flaggedIndices.belowConc != undefined) {
+            //        flagged_belowConc_msec       = oUserdata.flaggedIndices.belowConc.map(d => d[3]); 
+            //    }
+            //    if (oUserdata.flaggedIndices.userInvalidated != undefined) {
+            //        flagged_userInvalidated_msec = oUserdata.flaggedIndices.userInvalidated.map(d => d[3]);
+            //    }
+            //}
             
             var secondVarIndex;
             if (plotFlagAqsOzone || plotFlagAqsPm25 || plotFlagAqsPm10 || plotFlagAqsCO || plotFlagAqsNO2 || plotFlagAqsSO2) {
@@ -10924,7 +11985,7 @@ function update_timeseriesPlot() {
             end_UTCTime = end_dateObjectUTC.getTime();
             timeseriesPlotMsecEnd = end_UTCTime;  // for use in other functions (e.g. computeGoogleLatLng)
             yVarIndex = get_selected_varselector_index();
-            yStatsArray = oStats;      // default
+            yStatsArray = oStatsHourly;      // default
             yVarIndexPush = yVarIndex; // index for the variable in the stats array (e.g. n)
             yIsExternalFlag = false;   // default. Indicates if this is an external variable
 
@@ -10932,14 +11993,14 @@ function update_timeseriesPlot() {
             if (hourlyOption) {
                 // for plotting hourly averaged data
                 yAxisLabel = 'Hourly ' + yAxisLabel;
-                for (ind=0; ind<oStats.nHours; ind++) {                
+                for (ind=0; ind<oStatsHourly.nHours; ind++) {                
                     proceed = false;
-                    if (oStats.timestamp[ind] > start_UTCTime && oStats.timestamp[ind] < end_UTCTime && !(oStats.timestamp[ind] === null) ) {
+                    if (oStatsHourly.timestamp[ind] > start_UTCTime && oStatsHourly.timestamp[ind] < end_UTCTime && !(oStatsHourly.timestamp[ind] === null) ) {
                         proceed = true;
                     }
                     
                     if (proceed) {
-                        this_Time = oStats.timestamp[ind];
+                        this_Time = oStatsHourly.timestamp[ind];
                         if (this_Time < myXmin) { myXmin = this_Time; }
                         if (this_Time > myXmax) { myXmax = this_Time; }
                         yPush = yStatsArray.hourAvg[yVarIndexPush][ind];
@@ -10982,7 +12043,23 @@ function update_timeseriesPlot() {
                         
                         if ( (oUserdata.show1[selected_block][get_selected_varselector_index()][ind]) &&
                              (oUserdata.show2[selected_block][get_selected_varselector_index()][ind]) ) {
-                            plotData.push([this_Time, oUserdata.variable[selected_block][get_selected_varselector_index()][ind]]); 
+
+                            //if ( (flagged_constant_msec.indexOf(oUserdata.msec[selected_block][ind]) < 0)       &&
+                            //     (flagged_longMissing_msec.indexOf(oUserdata.msec[selected_block][ind]) < 0)    &&
+                            //     (flagged_outlierStat_msec.indexOf(oUserdata.msec[selected_block][ind]) < 0)    &&
+                            //     (flagged_outlierSpike_msec.indexOf(oUserdata.msec[selected_block][ind]) < 0)   &&
+                            //     (flagged_aboveConc_msec.indexOf(oUserdata.msec[selected_block][ind]) < 0)      &&
+                            //     (flagged_belowConc_msec.indexOf(oUserdata.msec[selected_block][ind]) < 0)      &&
+                            //     (flagged_userInvalidated_msec.indexOf(oUserdata.msec[selected_block][ind]) < 0) ) {
+                            exclude = document.getElementById("excludeFlaggerOption").checked;
+                            if ( (! exclude) || (exclude && (! isMsecFlagged(oUserdata.msec[selected_block][ind])))) {
+                                plotData.push([this_Time, oUserdata.variable[selected_block][get_selected_varselector_index()][ind]]);
+                                plotDataTimestamp.push(this_dateObjectUTC.toISOString());
+                            } else {
+                                plotData.push([this_Time, null]);
+                                plotDataTimestamp.push(this_dateObjectUTC.toISOString());
+                            }
+                            
                             if (document.getElementById("timeseries_separateByID").checked == true && thisIDInd < maxIDsToShow && thisIDInd >= 0) {
                                 for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
                                     if (tempInd == thisIDInd) {
@@ -11007,6 +12084,7 @@ function update_timeseriesPlot() {
                         } else {
                             plotData.push([null, null]);
                             plotData2.push([null, null]);
+                            plotDataTimestamp.push(null);
                             for (tempInd=0; tempInd<maxIDsToShow; tempInd++) {
                                 sepIdPlotData[tempInd].push([null,null]);
                             }
@@ -11018,9 +12096,11 @@ function update_timeseriesPlot() {
                     } else {
                         plotData.push([null, null]);
                         plotData2.push([null, null]);
+                        plotDataTimestamp.push(null);
                     }
                 }
             }
+ 
             
             // plot all data on the timeseries plot
             var myYmin = Math.max(0, plotDataMin);
@@ -11058,6 +12138,215 @@ function update_timeseriesPlot() {
                 mytransform = function (v) { return v; };
             }
             
+
+
+
+            // process dataflagger
+            markings = [];
+            sampleRateMsec = 3600 * 1000 / 100;
+            let myYrange = myYmax - myYmin;
+            //console.log(myYmin, myYmax, myYrange);
+            
+            if (document.getElementById('runFlaggerOption').checked && oUserdata.flaggedIndices !== undefined && oUserdata.flaggedIndices != "") {
+                // pass one - gray bars
+                for (i=0; i<oUserdata.flaggedIndices.constant.length; i++) {
+                    myFlaggedMsec      = oUserdata.flaggedIndices.constant[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    //markings.push({xaxis: {from: myFlaggedMsec - (sampleRateMsec/2), to: myFlaggedMsec + (sampleRateMsec/2)}, color:flagger_colorGray} );
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo}, color:flagger_colorGray} );
+                }
+                
+                for (i=0; i<oUserdata.flaggedIndices.longMissing.length; i++) {
+                    myFlaggedMsec      = oUserdata.flaggedIndices.longMissing[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsec}, color:flagger_colorGray} );
+                }
+                
+                for (i=0; i<oUserdata.flaggedIndices.outlierStat.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.outlierStat[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo}, color:flagger_colorGray} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.outlierSpike.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.outlierSpike[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo}, color:flagger_colorGray} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.aboveConc.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.aboveConc[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo}, color:flagger_colorGray} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.belowConc.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.belowConc[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo}, color:flagger_colorGray} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.userInvalidated.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.userInvalidated[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo}, color:flagger_colorGray} );
+                }
+                
+                // pass two - colored bars
+                for (i=0; i<oUserdata.flaggedIndices.constant.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.constant[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo},
+                                   yaxis: {from: myYmin, to: myYmin + myYrange/7},
+                                   color:flagger_colorConstant} );
+                }
+                
+                for (i=0; i<oUserdata.flaggedIndices.longMissing.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.longMissing[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo},
+                                   yaxis: {from: myYmin + myYrange/7, to: myYmin + 2*myYrange/7},
+                                   color:flagger_colorLongMissing} );              }
+                
+                for (i=0; i<oUserdata.flaggedIndices.outlierStat.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.outlierStat[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo},
+                                   yaxis: {from: myYmin + 2*myYrange/7, to: myYmin + 3*myYrange/7},
+                                   color:flagger_colorOutlierStat} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.outlierSpike.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.outlierSpike[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo},
+                                   yaxis: {from: myYmin + 3*myYrange/7, to: myYmin + 4*myYrange/7},
+                                   color:flagger_colorOutlierSpike} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.aboveConc.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.aboveConc[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo},
+                                   yaxis: {from: myYmin + 4*myYrange/7, to: myYmin + 5*myYrange/7},
+                                   color:flagger_colorAboveConc} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.belowConc.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.belowConc[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo},
+                                   yaxis: {from: myYmin + 5*myYrange/7, to: myYmin + 6*myYrange/7},
+                                   color:flagger_colorBelowConc} );
+                }
+                for (i=0; i<oUserdata.flaggedIndices.userInvalidated.length; i++) {
+                    myFlaggedMsec = oUserdata.flaggedIndices.userInvalidated[i][3];
+                    myFlaggedMsecIndex = oUserdata.msec[selected_block].indexOf(myFlaggedMsec);
+                    myFlaggedMsecIndexFrom  = myFlaggedMsecIndex - 1;
+                    myFlaggedMsecIndexTo    = myFlaggedMsecIndex + 1;
+                    if (myFlaggedMsecIndexFrom < 0) {myFlaggedMsecIndexFrom = 0;} 
+                    if (myFlaggedMsecIndexTo   > myFlaggedMsec.length-1) {myFlaggedMsecIndexFrom = myFlaggedMsec.length-1;}
+                    myFlaggedMsecFrom = oUserdata.msec[selected_block][myFlaggedMsecIndexFrom];
+                    myFlaggedMsecTo   = oUserdata.msec[selected_block][myFlaggedMsecIndexTo];
+                    markings.push({xaxis: {from: myFlaggedMsecFrom, to: myFlaggedMsecTo},
+                                   yaxis: {from: myYmin + 6*myYrange/7, to: myYmax},
+                                   color:flagger_colorInvalidated} );
+                }
+                
+            }
+
+            if (document.getElementById('runFlaggerOption').checked) {
+                //YD added this part to add a horizontal line at user-defined Y value
+                let flagger_allTimestamps = [];
+                for (i=0; i<plotData.length;i++){
+                    flagger_allTimestamps.push(plotData[i][0]);
+                }
+                
+                markings.push({xaxis: {from: myXmin, to: myXmax},
+                               yaxis: {from: (flagParams.aboveConc) - 0.01*myYrange, to:(flagParams.aboveConc)},
+                               color:flagger_colorAboveConc} ); 
+                
+                let belowThres =  flagParams.belowConc;
+                if (belowThres>0){
+                    markings.push({xaxis: {from: myXmin, to: myXmax},
+                                   yaxis: {from: (flagParams.belowConc) - 0.01*myYrange, to:(flagParams.belowConc)},
+                                   color:flagger_colorBelowConc} ); 
+                    
+                } 
+                //YD edit end
+            }
+
             
             var tCanvas = $("#timeseries_canvas2");
             min_dateObjectUTC = create_dateObjectUTC(oUserdata.timestamp[selected_block][0]);
@@ -11068,6 +12357,7 @@ function update_timeseriesPlot() {
             } else {
 	        max_dateObjectUTC = min_dateObjectUTC;
             }
+            //console.log(allLatLng.length,  min_dateObjectUTC,  max_dateObjectUTC);
             max_UTCTime = max_dateObjectUTC.getTime();
             max_Time = Number(convertUTC_to_timezone(max_dateObjectUTC, selected_timezone, "milliseconds", "null"));
             
@@ -11108,7 +12398,7 @@ function update_timeseriesPlot() {
             if (secondVarIndex == 0) {
 	        timeseriesPlotOptions = { xaxis:{min:myXmin, max:myXmax, mode: "time", timezone:selected_timezone, axisLabel:"Time ("+selected_timezone+")", minTickSize: [1, "second"], color:"black"},
 				          yaxis:{min:myYmin, max:myYmax, axisLabel:yAxisLabel, color:"black", position:"left",transform:mytransform},
-				          selection: {mode:"x"}
+				          selection:{mode:"x"}, grid:{show:true, markings:markings, backgroundColor:"#FFFFFF"}
 	                                };
 	        // one variable, NOT separating by ID
 	        if (document.getElementById("timeseries_separateByID").checked == false) {
@@ -11362,7 +12652,42 @@ function colorLookup(dataValue, min, max) {
 	  ctx.fillText(tickString, tickX+5, tickY+5);
 	}
 
+          
+          // flagged indices (msec) from the data flagger
+          //flagged_constant_msec        = [];
+          //flagged_longMissing_msec     = [];
+          //flagged_outlierStat_msec     = [];
+          //flagged_outlierSpike_msec    = [];
+          //flagged_aboveConc_msec       = [];
+          //flagged_belowConc_msec       = [];
+          //flagged_userInvalidated_msec = [];
+          //if (document.getElementById("excludeFlaggerOption").checked) {
+          //    if (oUserdata.flaggedIndices.constant != undefined) {
+          //        flagged_constant_msec        = oUserdata.flaggedIndices.constant.map(d => d[3]);
+          //    }
+          //    if (oUserdata.flaggedIndices.longMissing != undefined) {
+          //        flagged_longMissing_msec     = oUserdata.flaggedIndices.longMissing.map(d => d[3]);
+          //    }
+          //    if (oUserdata.flaggedIndices.outlierStat != undefined) {
+          //        flagged_outlierStat_msec     = oUserdata.flaggedIndices.outlierStat.map(d => d[3]);
+          //    }
+          //    if (oUserdata.flaggedIndices.outlierSpike != undefined) {
+          //        flagged_outlierSpike_msec    = oUserdata.flaggedIndices.outlierSpike.map(d => d[3]);
+          //    }
+          //    if (oUserdata.flaggedIndices.aboveConc != undefined) {
+          //        flagged_aboveConc_msec       = oUserdata.flaggedIndices.aboveConc.map(d => d[3]);
+          //    }
+          //    if (oUserdata.flaggedIndices.belowConc != undefined) {
+          //        flagged_belowConc_msec       = oUserdata.flaggedIndices.belowConc.map(d => d[3]);
+          //    }
+          //    if (oUserdata.flaggedIndices.userInvalidated != undefined) {
+          //        flagged_userInvalidated_msec = oUserdata.flaggedIndices.userInvalidated.map(d => d[3]);
+          //    }
+          //}
+          //console.log("yo", flagged_aboveConc_msec);
 
+
+          
 	var varind = get_selected_varselector_index();
 
 	var wind_magnitude_index = get_var_index_by_name('wind_magnitude');
@@ -11371,20 +12696,38 @@ function colorLookup(dataValue, min, max) {
 	var this_min  = oUserdata.mymin[0][varind];
         var this_max  = oUserdata.mymax[0][varind];
 
+          exclude = document.getElementById("excludeFlaggerOption").checked;
+
 	//var sortArray = oUserdata.variable[selected_block][varind].sort(function(a, b){return a-b});
 
-	// creat sortable structure
-	var unsortedArray = [];
-	windroseSortIndex = new Array(oUserdata.variable[selected_block][varind].length);
-	for (thisPoint=0; thisPoint<oUserdata.variable[selected_block][varind].length; thisPoint++) {
-	  unsortedArray[thisPoint] = {data:oUserdata.variable[selected_block][varind][thisPoint],
+	  // creat sortable structure
+	  var unsortedArray = [];
+	  windroseSortIndex = new Array(oUserdata.variable[selected_block][varind].length);
+	  for (thisPoint=0; thisPoint<oUserdata.variable[selected_block][varind].length; thisPoint++) {
+
+              //if ( (flagged_constant_msec.indexOf(oUserdata.msec[selected_block][thisPoint]) < 0)       &&
+              //     (flagged_longMissing_msec.indexOf(oUserdata.msec[selected_block][thisPoint]) < 0)    &&
+              //     (flagged_outlierStat_msec.indexOf(oUserdata.msec[selected_block][thisPoint]) < 0)    &&
+              //     (flagged_outlierSpike_msec.indexOf(oUserdata.msec[selected_block][thisPoint]) < 0)   &&
+              //     (flagged_aboveConc_msec.indexOf(oUserdata.msec[selected_block][thisPoint]) < 0)      &&
+              //     (flagged_belowConc_msec.indexOf(oUserdata.msec[selected_block][thisPoint]) < 0)      &&
+              //     (flagged_userInvalidated_msec.indexOf(oUserdata.msec[selected_block][thisPoint]) < 0) ) {
+              if ( (! exclude) || ( exclude && (! isMsecFlagged(oUserdata.msec[selected_block][thisPoint])))) {
+                  //unsortedArray[thisPoint] = {data:oUserdata.variable[selected_block][varind][thisPoint],
+	          //                            show1:oUserdata.show1[selected_block][varind][thisPoint],
+                  //                            show2:oUserdata.show2[selected_block][varind][thisPoint],
+                  //                            r:oUserdata.variable[selected_block][wind_magnitude_index][thisPoint],
+	          //                            phi:oUserdata.variable[selected_block][wind_direction_index][thisPoint],
+                  //                            timePoint:thisPoint};
+                  unsortedArray.push({data:oUserdata.variable[selected_block][varind][thisPoint],
 	                              show1:oUserdata.show1[selected_block][varind][thisPoint],
                                       show2:oUserdata.show2[selected_block][varind][thisPoint],
                                       r:oUserdata.variable[selected_block][wind_magnitude_index][thisPoint],
 	                              phi:oUserdata.variable[selected_block][wind_direction_index][thisPoint],
-                                      timePoint:thisPoint};
-	}
-
+                                      timePoint:thisPoint});
+	      }
+          }
+        
 	var sortArray = unsortedArray.sort(function(a, b){return a.data-b.data});
 	for (sortInd=0; sortInd<sortArray.length; sortInd++) {
 
@@ -11536,7 +12879,7 @@ function colorLookup(dataValue, min, max) {
       updateOptionalFlag = flag;
   }
 
-function slider_handler(pos, slider) {
+  function slider_handler(pos, slider) {
     
       update_timeAnnot(pos);
       update_map(pos);
@@ -11550,10 +12893,21 @@ function slider_handler(pos, slider) {
       lastpos = pos;
   }
 
+
+
+function timeseriesPlotsize_handler(new_height) {
+    timeseries_height = new_height;
+    document.getElementById('timeseries_canvas').style.height = (new_height).toString() + "px";
+    update_timeseriesPlot();
+
+
+}
+
   function mapsize_handler(new_height) {
       // handles events from myslider
       // (implictitly called when window is resized)
       //debug('mapsize_handler()');
+      //console.log("in mapsize_handler", map_width);
       
       map_height = new_height;
       
@@ -11576,7 +12930,7 @@ function slider_handler(pos, slider) {
       
       document.getElementById('map_canvas').style.height        = (topRowHeight).toString() + "px";
       document.getElementById('analysis_canvas').style.height   = (topRowHeight-analysisCanvasOffset).toString() + "px";
-      document.getElementById('timeseries_canvas').style.height = (bottomRowHeight).toString() + "px";
+      //document.getElementById('timeseries_canvas').style.height = (bottomRowHeight).toString() + "px";
       document.getElementById('scatter_canvas').style.height    = (topRowHeight-scatterCanvasOffset).toString() + "px";
       document.getElementById("windrose_canvas").style.height   = (topRowHeight-windroseCanvasOffset).toString() + "px";
       document.getElementById('blank_canvas').style.height      = (topRowHeight).toString() + "px";
@@ -11631,7 +12985,7 @@ function slider_handler(pos, slider) {
       google.maps.event.trigger(map, 'center_changed');
       map.setCenter(map_center);	  
       update_analysisPlot();
-      update_timeseriesPlot();
+      //update_timeseriesPlot();
       update_scatterPlot();
       update_windrosePlot();
       if (oUserdata.mymin[0]) {
@@ -11649,6 +13003,11 @@ function slider_handler(pos, slider) {
       // reset tropomi NO2 colorbar if it is loaded
       if (tropomiNO2ColorTable.length > 0) {
           init_colorbar(cbStartX, cbStartY, tropomiNO2MinVal, tropomiNO2MaxVal, 'TROPOMI NO2 (#/cm2)', 'colorbar_satellite_canvas', tropomiNO2ColorTable,1);
+      }
+
+      // reset tempo NO2 colorbar if it is loaded
+      if (tempoNO2ColorTable.length > 0) {
+          init_colorbar(cbStartX, cbStartY, tempoNO2MinVal, tempoNO2MaxVal, 'TEMPO NO2 (#/cm2)', 'colorbar_satellite_canvas', tempoNO2ColorTable,1);
       }
 
       // updates for other colorbars
@@ -11867,8 +13226,8 @@ function validate_merge_minmax(evt) {
         // use global min/max (keyed from "avergage" block)
         //oUserdata.mymin[selected_block][get_selected_varselector_index()] = document.getElementById("my_min").value; 
         //oUserdata.mymax[selected_block][get_selected_varselector_index()] = document.getElementById("my_max").value;
-        oUserdata.mymin[0][get_selected_varselector_index()] = document.getElementById("my_min").value; 
-        oUserdata.mymax[0][get_selected_varselector_index()] = document.getElementById("my_max").value;
+          oUserdata.mymin[0][get_selected_varselector_index()] = parseFloat(document.getElementById("my_min").value); 
+          oUserdata.mymax[0][get_selected_varselector_index()] = parseFloat(document.getElementById("my_max").value);
 
         // delete old markers
         markerind = markerLayer.length;
@@ -11885,8 +13244,8 @@ function validate_merge_minmax(evt) {
       } else {
           if (!isNaN(thismin) && !isNaN(thismax)) {
               alert("Max must not be less than min");
-              document.getElementById("my_min").value = oUserdata.mymin[0][get_selected_varselector_index()];
-              document.getElementById("my_max").value = oUserdata.mymax[0][get_selected_varselector_index()];
+              document.getElementById("my_min").value = parseFloat(oUserdata.mymin[0][get_selected_varselector_index()]);
+              document.getElementById("my_max").value = parseFloat(oUserdata.mymax[0][get_selected_varselector_index()]);
           }
       }
     } else {
@@ -11938,6 +13297,8 @@ function validatePAkey() {
 	    url: rsigserver + arg_string,
 	    dataType: "text",
 	    success: function(data, textStatus, jqXHR) {
+                //console.log("AHA", data, data.length, data==1);
+                
                 if (data == 1) {
                     // key was valid
 	            document.getElementById('addPurpleairLocations').disabled = false;
@@ -12083,8 +13444,7 @@ function validatePAkey() {
 
 
 
-
-  function process_radio(){
+  function process_radio(callingObj){
       //console.log("in process_radio()");
     // use global min/max (keyed from "avergage" block)
     //document.getElementById("my_min").value = oUserdata.mymin[selected_block][get_selected_varselector_index()];
@@ -12115,7 +13475,7 @@ function validatePAkey() {
 	}
     }
 
-    //console.log(get_selected_varselector_index());
+      //console.log(get_selected_varselector_index());
     update_map(lastpos);
     update_displayed_data_value(get_selected_varselector_index(), lastpos);
     update_analysisPlot();
@@ -12123,6 +13483,13 @@ function validatePAkey() {
     update_scatterPlot();
     update_timeAnnot(lastpos);
     update_windrosePlot();
+    set_mapsize(); 
+
+    if (document.getElementById('runFlaggerOption').checked == true && callingObj != "") {
+        // callingObj with be != "" is process_radio was initiated by user action
+        setTimeout("computeGoogleLatLng(oUserdata, false);", 100);
+    }
+      
   }
 
 
@@ -12232,6 +13599,9 @@ function process_timestyle() {
     initGoogleLatLng();
     setTimeout("computeGoogleLatLng(oUserdata, true);", 50);
 
+    computeCovarianceElementsNative();
+    statsNative_sliderpos_lookup();
+    
     subset_by_id();
 
     update_optional(lastpos);
@@ -12377,6 +13747,7 @@ function sendFeedbackPhp() {
     document.getElementById('var_selector').style.backgroundColor = "#00FFFF";
     document.getElementById('wazup').style.backgroundColor = "#003333";
     document.getElementById('map_size').style.backgroundColor = "#008888";
+    document.getElementById('timeseries_size').style.backgroundColor = "#008888";
     document.getElementById('windrose_canvas').style.backgroundColor = "#BB8888";
 
   }
@@ -12421,8 +13792,10 @@ function setTabIndices() {
   document.getElementById('displaychoiceSingle').tabIndex        = 14;
   $('#map_size').attr('tabindex', '15');                        // 15
   $('#map_size .ui-slider-handle').attr('tabindex', '16');      // 16
-  document.getElementById('idSelectAll').tabIndex                = 17;
-  document.getElementById('idSelectNone').tabIndex               = 18;
+  $('#map_size').attr('tabindex', '17');                        // 17
+  $('#map_size .ui-slider-handle').attr('tabindex', '18');      // 18    
+  document.getElementById('idSelectAll').tabIndex                = 19;
+  document.getElementById('idSelectNone').tabIndex               = 20;
 
   // ID radio buttons  
   tabindStart = 19;

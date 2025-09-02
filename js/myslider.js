@@ -49,6 +49,20 @@ $(function() {
             mapsize_handler(ui.value)
 	},
     });
+
+
+    $('#timeseries_size').slider({
+        range: false,
+	min: 100,
+        max: 1000,
+        step: 10,
+        slide: function(event, ui) {
+            timeseriesPlotsize_handler(ui.value)
+	},
+	change: function(event, ui) {
+            timeseriesPlotsize_handler(ui.value)
+	},
+    });
     
     
 });

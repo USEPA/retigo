@@ -114,7 +114,7 @@ function wizStart() {
     //document.getElementById("wizMessageDiv").focus();
     document.getElementById("wizMessageDiv").scrollIntoView();
 
-    let msg = 'Follow these instructions to check and/or repair your data file. If the process is successful, you can export a file that can be viewed in RETIGO.<br>To get started click the "Check Header length"  button.';
+    let msg = 'Follow the instructions found in this box to check and/or repair your data file. If the process is successful, you can export a file that can be viewed in RETIGO.<br>To get started click the "Check Header length"  button. This check will make sure your file contains at least five columns, which should include timestamp, latitude, longitude, id, and at least one data column.';
     postMessage("", 'clear');
     postMessage(msg, 'append');
 }
@@ -260,7 +260,7 @@ function checkHeaderLengthAction(status) {
         document.getElementById("wizHeaderLengthCheck").src = imageserver + "images/green_checkmark_small.png";
         document.getElementById("btnCheckHeaderLength").setAttribute('disabled', 'true');
         document.getElementById("btnCheckColumns").removeAttribute('disabled');
-        let msg = "<br>The header length test passed. Now click 'Check Column names' to analyze the header for required columns.";
+        let msg = "<br>The header length test passed. Now click 'Check Column names' to analyze the header for required columns. This check will make sure the column headers use the required RETIGO naming convention.";
         postMessage("", 'clear'); 
         postMessage(msg, 'append'); 
 
@@ -292,6 +292,8 @@ function checkColumnsAction(status, msg='') { // msg is optional
         postMessage("", 'clear');
         postMessage(msg, 'append'); 
         openEmvlDialog("wiz-dialog-columnNames");
+        //postMessage("", 'clear');
+        //postMessage("Run the column names check again", 'append');
     }
 }
 
@@ -300,10 +302,11 @@ function checkTimestampAction(status) {
         document.getElementById("wizTimestampFormatCheck").src = imageserver + "images/green_checkmark_small.png";
         document.getElementById("btnCheckTimestamp").setAttribute('disabled', 'true');
         document.getElementById("btnCheckRows").removeAttribute('disabled');
-        let msg = "<br>Ok. Click 'Check Data rows' to analyze your file row by row to look for anomalies.";
+        let msg = "<br>Ok.";
         if (wizDataObj.timeFormat != "iso8601") {
-            msg += "<br>Your timestamps will automatically be converted from " + wizDataObj.timeFormat.toUpperCase() + " format.";
+            msg += "<br>Your timestamps will automatically be converted from " + wizDataObj.timeFormat.toUpperCase() + " format in the next step.";
         }
+        msg += "<br>Click 'Check Data rows' to analyze your file row by row to look for anomalies.";
         postMessage("", 'clear');
         postMessage(msg, 'append'); 
     } else {
@@ -348,14 +351,14 @@ function wizProcessCheckButton(myID) {
         wizIdentifyColumns(wizDataObj);
 
         let problemFlag = false;
-        let msg = "<br>These required column(s) were not found:&nbsp;&nbsp;";
+        let msg = "<br>These required column(s) were not initially found, but with your help will be renamed:&nbsp;&nbsp;";
         for (i=0; i<wizDataObj.requiredColumns.length; i++) {
             if ( (wizDataObj.requiredColumns[i].position < 0) || (wizDataObj.requiredColumns[i].position >= wizDataObj.colNames.length) ) {
                 problemFlag = true;
                 //postMessage("", 'clear');
                 //enableColumnClicks(true);
                 //let msg = "<br>" + wizDataObj.requiredColumns[i].name + " was not found in header.<br> Please click on the column that contains this field.";
-                msg += wizDataObj.requiredColumns[i].name + "&nbsp&nbsp";
+                msg += wizDataObj.requiredColumns[i].name + ",&nbsp&nbsp";
                 //postMessage(msg, 'append'); 
             } else {
                 // set the column numbers to what was detected 
@@ -371,9 +374,18 @@ function wizProcessCheckButton(myID) {
             }
         }
 
+        // Remove trailing comma if there is one
+        // The / at the beginning and end of the regular expression
+        // The , matches the comma
+        // The \s means whitespace characters (space, tab, etc) and the * means 0 or more
+        // The $ at the end signifies the end of the string
+        msg = msg.replace(/,\&nbsp\&nbsp\s*$/, "");
+
+        
         if (problemFlag) {
             // There was a problem with the column name. Get user clarification
             checkColumnsAction('ask', msg=msg);
+            
         } else {
             checkColumnsAction('passed');
         }
@@ -445,7 +457,7 @@ function wizCheckDataRows(dWizObj) {
                 dWizObj.dataArrayFlag[i] = false;
             }
             if (!isValidId) {
-                //console.log("ID invalid in row " + i + ": " + thisId);
+                console.log("ID invalid in row " + i + ": " + thisId);
                 dWizObj.dataArrayFlag[i] = false;
             }
             
@@ -480,7 +492,6 @@ function wizCheckDataRows(dWizObj) {
 
 
 function wizCheckTimestampFormat(dWizObj) {
-
     postMessage("", 'clear');
     let msg = "<br>Checking first timestamp: ";
     postMessage(msg, 'append'); 
@@ -492,6 +503,7 @@ function wizCheckTimestampFormat(dWizObj) {
 
         if (isValidTimestamp) {
             checkTimestampAction('passed');
+            wizUpdateTableCells(dWizObj);
         } else {
             checkTimestampAction('failed');           
         }
@@ -689,6 +701,15 @@ function wizIdentifyColumns(dwizObj) {
 
     for (colInd=0; colInd<dwizObj.nCols; colInd++) {
         thisColName = dwizObj.colNames[colInd].toUpperCase();        //console.log(thisColName);
+
+        // check for empty column name
+        if (thisColName === "") {
+            console.log("found empty column name");
+            dwizObj.colNamesFixed[colInd] = "unknown";
+            document.getElementById("wizTableHeader" + colInd.toString()).innerHTML = "unknown";
+        }
+        
+
         
         for (requiredColInd=0; requiredColInd<dwizObj.requiredColumns.length; requiredColInd++) {
             myRequiredColName = dwizObj.requiredColumns[requiredColInd].name;
@@ -794,8 +815,8 @@ function wizExportFile(dWizObj) {
     headerString = headerString.replace(/.$/, '\n'); // replace trailing comma with newline
     exportArray.push(headerString);
 
-    console.log(colOrder);
-    console.log(headerString);
+    //console.log(colOrder);
+    //console.log(headerString);
     
     for (i=0; i<dWizObj.dataArray.length; i++) {
         if (dWizObj.dataArrayFlag[i] == true && dWizObj.dataArray[i] !== undefined && dWizObj.dataArray[i].length == dWizObj.nCols) {
@@ -894,7 +915,7 @@ function wizFinalizeColumnSelections(status) {
         let userColumnId        = document.getElementById("userColumnId").value;
         
         let colValues = [userColumnTimestamp, userColumnLatitude, userColumnLongitude, userColumnId];
-        console.log(colValues, colValues.length, unique(colValues).length, colValues.indexOf(""));
+        //console.log(colValues, colValues.length, unique(colValues).length, colValues.indexOf(""));
         
         if ( (colValues.length != unique(colValues).length) || (colValues.indexOf("") != -1) ) {
             postMessage("<br>Your column specifications are invalid because two or more column numbers are the same. Please try again.", 'append');
@@ -946,7 +967,7 @@ function wizFinalizeColumnSelections(status) {
                 } else {
                     allGood = false;
                     wizDataObj.requiredColumns.find(x => x.name === 'ID(-)').position = userColumnId;
-                    postMessage("<br>Creating an ID column", 'append');
+                    postMessage("<br>Creating an ID column. Check the column names again to be sure the columns are correct.", 'append');
                     createColumnId(wizDataObj);
                     tableAddColumn(wizDataObj, 'ID(-)');
                     wizUpdateTableCells(wizDataObj);
@@ -961,10 +982,7 @@ function wizFinalizeColumnSelections(status) {
         }
 
     }
-
-
-    
-    console.log(userColumnTimestamp, userColumnLatitude, userColumnLongitude, userColumnId);
+    //console.log(userColumnTimestamp, userColumnLatitude, userColumnLongitude, userColumnId);
 }
 
 
@@ -1065,7 +1083,7 @@ function isValidData(value) {
 
 function isValidString(s) {
     
-    if ( typeof s === 'string' || s instanceof String ) {
+    if ( (typeof s === 'string' || s instanceof String) && s.length>0 ) {
         return true;
     } else {
         return false;
@@ -1105,9 +1123,13 @@ function check_date(MM, DD, YYYY) {
 
 
 function wizConvertTimestamp(timestampRaw, formatString) {
+    
+    //let timezone_name       = ["GMT", "EST", "CST", "MST", "PST", "EDT", "CDT", "MDT", "PDT"]; 
+    //let timezone_houroffset = [   0,    -5,    -6,    -7,    -8,    -4,    -5,    -6,    -7];
 
-    let timezone_name       = ["GMT", "EST", "CST", "MST", "PST", "EDT", "CDT", "MDT", "PDT"]; 
-    let timezone_houroffset = [   0,    -5,    -6,    -7,    -8,    -4,    -5,    -6,    -7];
+    // added atlantic, which includes puerto rico (AST/ADT), alaskan (AKST/AKDT), and hawaii/allutian (HST/HDT) 
+    let timezone_name       = ["GMT", "AST", "EST", "CST", "MST", "PST", "AKST", "HST", "ADT", "EDT", "CDT", "MDT", "PDT", "AKDT", "HDT"]; 
+    let timezone_houroffset = [   0,    -4,    -5,    -6,    -7,    -8,     -9,   -10,    -3,    -4,    -5,    -6,    -7,     -8,    -9];
     
     let my_timezone = document.getElementById("wiz-dialog-timeConvert-timezone").value.toUpperCase();
 

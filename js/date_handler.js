@@ -185,7 +185,7 @@ function convertUTC_to_timezone(dateObjectUTC, desired_timezone, output_type, mi
 
   switch (output_type) {
   case "pretty":  
-    // strip of the GMT timezone and put in decimal secons plus the correct timezone
+    // strip off the GMT timezone and put in decimal seconds plus the correct timezone
     //var datestring = datestring_bogus_timezone.replace(' GMT', this_timezone);
 
     var zulu_year  = d.getUTCFullYear().toString();    
@@ -201,6 +201,28 @@ function convertUTC_to_timezone(dateObjectUTC, desired_timezone, output_type, mi
     var datestring = dayname[d.getUTCDay()] + ', ' 
       + zulu_day + ' ' 
       + monthname[d.getUTCMonth()] + ' ' 
+      + zulu_year + ' ' 
+      + zulu_hh + ':' 
+      + zulu_mm + ':' 
+      + zulu_ss + '.' + zulu_ms + ' ' + this_timezone;
+
+    break;
+    case "pretty2":  
+    // strip off the GMT timezone and put in decimal seconds plus the correct timezone
+    //var datestring = datestring_bogus_timezone.replace(' GMT', this_timezone);
+
+    var zulu_year  = d.getUTCFullYear().toString();    
+    var zulu_month = zeroPad(d.getUTCMonth()+1,2).toString();   
+    var zulu_day   = zeroPad(d.getUTCDate(), 2).toString();     
+    var zulu_hh    = zeroPad(d.getUTCHours(), 2).toString();  
+    var zulu_mm    = zeroPad(d.getUTCMinutes(), 2).toString();
+    var zulu_ss    = zeroPad(d.getUTCSeconds(), 2).toString();
+    var z_ms       = d.getUTCMilliseconds();
+    // we want to represent seconds to two decimal places, so we will drop the ones place
+    z_ms = Math.floor(z_ms/10.0); // use floor so that 999 becomes 99 instead of 100
+    zulu_ms = zeroPad(z_ms, 2).toString();
+    var datestring = (d.getUTCMonth()+1) + '/' 
+      + zulu_day + '/' 
       + zulu_year + ' ' 
       + zulu_hh + ':' 
       + zulu_mm + ':' 

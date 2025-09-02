@@ -1215,16 +1215,28 @@ function process_userfile(oFR, filename, missing_value, fill_value, blocktype, i
         if (blocktype == 0) {
             this_option_timeseries      = document.createElement("option");
             //this_option_scatter   = document.createElement("option");
-            this_option_scatter_xaxis   = document.createElement("option");
-            this_option_scatter_yaxis   = document.createElement("option");
+
+            // axis variables for hourly option
+            this_option_scatter_xaxis_hourly   = document.createElement("option");
+            this_option_scatter_yaxis_hourly   = document.createElement("option");
 	    this_option_timeseries.text = button_label;
 	    //this_option_scatter.text    = button_label;
-	    this_option_scatter_xaxis.text    = "Hourly " + button_label;
-	    this_option_scatter_yaxis.text    = "Hourly " + button_label;
+	    this_option_scatter_xaxis_hourly.text    = "Hourly " + button_label;
+	    this_option_scatter_yaxis_hourly.text    = "Hourly " + button_label;
             document.getElementById("timeseries_secondVar").add(this_option_timeseries);
             //document.getElementById("scatter_secondVar").add(this_option_scatter);
-            document.getElementById("scatter_xaxisVar").add(this_option_scatter_xaxis);
-            document.getElementById("scatter_yaxisVar").add(this_option_scatter_yaxis);
+
+            // axis variables for hourly option
+            document.getElementById("scatter_xaxisVar").add(this_option_scatter_xaxis_hourly);
+            document.getElementById("scatter_yaxisVar").add(this_option_scatter_yaxis_hourly);
+
+            // axis variables for native option
+            this_option_scatter_xaxis_native   = document.createElement("option");
+            this_option_scatter_yaxis_native   = document.createElement("option");
+            this_option_scatter_xaxis_native.text = button_label;
+	    this_option_scatter_yaxis_native.text = button_label;
+            document.getElementById("scatterNative_xaxisVar").add(this_option_scatter_xaxis_native);
+            document.getElementById("scatterNative_yaxisVar").add(this_option_scatter_yaxis_native);
         }
         //}
         

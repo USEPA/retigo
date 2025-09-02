@@ -3,6 +3,7 @@ var satelliteShowWarningFlag              = true; // default
 var scatterplotCorrectionShowWarningFlag  = true; // default
 var scatterplotHourlyPopupFlag            = true; // default
 var mergeFilestreamsPopupFlag             = true; // default
+var dataFlaggerPopupFlag                  = true; // default
 var dialogResponse                        = false; // default. true=ok, false=cancel
 var scatterplotHourlyDialogOpen           = false;
 
@@ -30,7 +31,10 @@ function openEmvlDialog(dialogID) {
     } else if (dialogID == "wiz-dialog-timeConvert" && $("#wiz-dialog-timeConvert").css("display") == 'none') {
         openWizDialogTimeConvert();
         $(".ui-dialog").css("z-index", 40000);
-    }   
+    } else if (dialogID == "dialog-dataFlagger" && $("#dialog-dataFlagger").css("display") == 'none') {
+        openDataFlaggerDialog();
+        $(".ui-dialog").css("z-index", 40000);
+    }     
 
     return dialogResponse;
 }
@@ -40,6 +44,39 @@ function openEmvlDialog(dialogID) {
 
 // Specific dialogs go below 
 
+
+
+// DATA FLAGGER //////////////////////////////////
+function openDataFlaggerDialog() {
+    
+    // NOTE: corresponding HTML entity must be defined in retigo_1.html
+    
+    // Define the Dialog and its properties.
+    $("#dialog-dataFlagger").dialog({
+        resizable: true,
+        modal: true,
+        autoOpen: false,
+        title: "RETIGO Information",
+        height: 600,
+        width: 600,
+	create: function (e, ui) {
+            var pane = $(this).dialog("widget").find(".ui-dialog-buttonpane")
+        },
+        buttons: {
+            "Ok": function () {
+                $(this).dialog('destroy');
+            }
+        }
+    });
+    
+    if (!$("#dialog-dataFlagger").dialog("isOpen")) {
+        $("#dialog-dataFlagger").dialog("open");
+    }
+}
+$(document).on("change", ".dialog-dataFlagger input", function () {
+    dataFlaggerPopupFlag = !(this.checked);       
+})
+// End of DATA FLAGGER ///////////////////////////
 
 
 // SCATTERPLOT HOURLY //////////////////////////////////

@@ -24,48 +24,104 @@
 // 2023-06-29 updated (Matt)
 //             - Added support for setting flagParams via the GUI.
 //             - Replaced Date() arithmetic with direct comparisons using dataObj.mSec, resulting in performance gains.
-//
+// 2023-07-18~31: updated (Yadong Xu)
+//             - Added three more tests - testAboveConc, testBelowConc, userInvalidate
+//             - Added four flagParams, including flagParams.aboveConc, flagParams.belowConc, 
+//               flagParams,invalidateStartTime, flagParams.invalidateEndTime
+// 2023-08-01~05: updated (Yadong Xu)
+//             - Added logic flow to display an error message if "userInvalidateStartTime" or 
+//               "userInvalidateEndTime" is out of time range or in a wrong format
+// 2023-08-29~30: updated (Yadong Xu)
+//             - fixed a bug when there are missing data right at "userInvalidateStartTime" or "userInvalidateEndTime"
+//             - added sub-function checkTimeWithinRange
+// 2023-09-26 : cleaned up code and moved console.log() to debug mode
 
 //////////////////////////////////////////////////////////////////////
 // Define useful parameters here
 // 
 //////////////////////////////////////////////////////////////////////
 var flagParams = {}; // namespace for hardcoded parameters
-flagParams.constantRepeatNum = 8;     // number of repeated values to check for in the constant test
-flagParams.missingRepeatNum  = 8;     // number of consecutive missing values to check for in the longMissing test
-flagParams.missingValue      = -9999; // define what is a missing value
-flagParams.timesSDNum        = 4;     // number of times the standard deviation when define a statistical outlier 'outlierStat'
-flagParams.hoursNumTW        = 12;    // number of hours to calculate the standard deviation when define 'outlierSpike'
-flagParams.timesSDNumTW      = 3;     //number of times the standard deviation within the time window when define 'outlierSpike'
+if (document.URL.endsWith("dataFlaggerTester.html")) {
+    flagParams.constantRepeatNum = 8;     // number of repeated values to check for in the constant test
+    flagParams.missingRepeatNum  = 8;     // number of consecutive missing values to check for in the longMissing test
+    flagParams.missingValue      = -9999; // define what is a missing value
+    flagParams.timesSDNum        = 4;     // number of times the standard deviation when define a statistical outlier 'outlierStat'
+    flagParams.hoursNumTW        = 12;    // number of hours to calculate the standard deviation when define 'outlierSpike'
+    flagParams.timesSDNumTW      = 6;     //number of times the standard deviation within the time window when define 'outlierSpike'
+    //flagParams.aboveConc         = 75; // threshold concentration value when define 'testAboveConc'
+    flagParams.aboveConc         = 4000; // threshold concentration value when define 'testAboveConc'
+    //flagParams.belowConc         = 0;  // threshold concentration value when define 'testBelowConc'
+    flagParams.belowConc         = 2000;  // threshold concentration value when define 'testBelowConc'
+    flagParams.invalidateStartTime = "";     //start time when define 'userInvalidated', in this format 2022-01-03T01:00:00-0000
+    flagParams.invalidateEndTime = "";       //end time when define 'userInvalidated',in this format 2022-01-03T10:00:00-0000
+} else {
+    
+}
 
 var flaggedIndices = {}; // namespace for flagged data.
 flaggedIndices.constant      = new Array();
 flaggedIndices.longMissing   = new Array();
 flaggedIndices.outlierStat   = new Array();
 flaggedIndices.outlierSpike  = new Array();
+flaggedIndices.aboveConc     = new Array();
+flaggedIndices.belowConc     = new Array();
+flaggedIndices.userInvalidated = new Array();
 
-var debugFlag = false;
+flagger_colorGray          = "#CCCCCC";
+flagger_colorConstant      = "#FF0000";
+flagger_colorLongMissing   = "#00FF00";
+flagger_colorOutlierStat   = "#0000FF";
+flagger_colorOutlierSpike  = "#FFFF00";
+flagger_colorAboveConc     = "#FFA500";
+flagger_colorBelowConc     = "#800080";
+flagger_colorInvalidated   = "#253f52";
+
+var debugFlag_dataflagger = false;
 
 $(document).ready(function(){
     
-    // initialize GUI parameter values
-    // NOTE: This is in a try-catch block because RETIGO may not have these HTML elements
-    try {
+    // Initialize GUI parameter values if we are using the tester. If this is called by Retigo
+    // the GUI initialization happens in retigo_main.js
+    if (document.URL.endsWith("dataFlaggerTester.html")) {
         document.getElementById("constantNum").value            = flagParams.constantRepeatNum;
         document.getElementById("missingNum").value             = flagParams.missingRepeatNum;
         document.getElementById("outlierStatSDfactor").value    = flagParams.timesSDNum;
         document.getElementById("outlierSpikeTimeWindow").value = flagParams.hoursNumTW;
         document.getElementById("outlierSpikeSDfactor").value   = flagParams.timesSDNumTW;
-    } catch (e) {
-
+        document.getElementById("aboveConcentration").value     = flagParams.aboveConc;
+        document.getElementById("belowConcentration").value     = flagParams.belowConc;
+        document.getElementById("invalidateStart").value        = flagParams.invalidateStartTime;
+        document.getElementById("invalidateEnd").value          = flagParams.invalidateEndTime;
     }
-
 });
+
+function dataFlaggerInitParams() {
+    // called by Retigo
+    flagParams.constantRepeatNum   = settings.flaggerConstantRepeatNum;
+    flagParams.missingRepeatNum    = settings.flaggerMissingRepeatNum;
+    flagParams.missingValue        = settings.flaggerMissingValue;
+    flagParams.timesSDNum          = settings.flaggerOutlierStatSDfactor;
+    flagParams.hoursNumTW          = settings.flaggerOutlierSpikeTimeWindow;
+    flagParams.timesSDNumTW        = settings.flaggerOutlierSpikeSDfactor;
+    flagParams.aboveConc           = settings.flaggerAboveConc;
+    flagParams.belowConc           = settings.flaggerBelowConc;
+    flagParams.invalidateStartTime = settings.flaggerUserInvalidateStart;
+    flagParams.invalidateEndTime   = settings.flaggerUserInvalidateEnd;
+}
 
 ////////////////////////////////////////
 // Main routine for flagging bad data
 ////////////////////////////////////////
-function dataFlagger(inputObj, sensorID) {
+function dataFlagger(inputObj,                   
+                     sensorID,                   
+                     doConstantNum,              
+                     doMissingNum,               
+                     doOutlierStatSDfactor,      
+                     doOutlierSpikeTimeWindow,   
+                     //doOutlierSpikeSDfactor,
+                     doAboveConcentration,       
+                     doBelowConcentration,
+                     doUserInvalidate) {
     // perform a series of tests on the input data object,
     // and return arrays of indicies that +denote flagged data.
 
@@ -73,15 +129,28 @@ function dataFlagger(inputObj, sensorID) {
     flaggedIndices.constant      = [];
     flaggedIndices.longMissing   = [];
     flaggedIndices.outlierStat   = [];
-    flaggedIndices.outlierSpike = [];
+    flaggedIndices.outlierSpike  = [];
+    flaggedIndices.aboveConc     = [];
+    flaggedIndices.belowConc     = [];
+    flaggedIndices.userInvalidated = [];
     
     // call test routines here
-    testConstant(inputObj, sensorID);
-    testLongMissing(inputObj,sensorID);
-    testOutlierStat(inputObj, sensorID);
-    testOutlierSpike(inputObj, sensorID);    
-    //testDrift(inputObj, sensorID);
-
+    if (doConstantNum)            { testConstant(inputObj,     sensorID); }
+    if (doMissingNum)             { testLongMissing(inputObj,  sensorID); }
+    if (doOutlierStatSDfactor)    { testOutlierStat(inputObj,  sensorID); }
+    if (doOutlierSpikeTimeWindow) { testOutlierSpike(inputObj, sensorID); }
+    if (doAboveConcentration)     { testAboveConc(inputObj,    sensorID); }
+    if (doBelowConcentration)     { testBelowConc(inputObj,    sensorID); }
+    
+    //console.log('check if start time string is empty:',flagParams.invalidateStartTime === "")
+    if (doUserInvalidate) {
+        if (flagParams.invalidateStartTime !== "" && flagParams.invalidateEndTime !== "" ){
+            userInvalidate(inputObj, sensorID); 
+        } else if (flagParams.invalidateStartTime == "" && flagParams.invalidateEndTime == "") {
+            document.getElementById("flaggerErrorMessage").style.display = 'none';
+        }
+    }
+    
     return flaggedIndices;
 }
 // End of main routine
@@ -97,7 +166,7 @@ function testConstant(dataObj, sensorID) {
     
     let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
 
-    if (debugFlag) {
+    if (debugFlag_dataflagger) {
         console.log("isArrayRegular = ", isSiteArrayRegular);
     }
     
@@ -120,7 +189,7 @@ function testConstant(dataObj, sensorID) {
             let thisID       = dataObj.id[globalIndex];
             if (thisID == sensorID) {
                 let thisData      = dataObj.variable[globalIndex];
-                if (debugFlag) {
+                if (debugFlag_dataflagger) {
                     console.log(sensorID, thisData);
                 }
 
@@ -128,7 +197,6 @@ function testConstant(dataObj, sensorID) {
                 // also save the globalIndex for the data inside the data buffer, will be used for flagging
                 dataBuffer.push(thisData);
                 dataBufferIndex.push(globalIndex);
-               // console.log('check the dataBuffer:',dataBuffer)
                 
                 // apply the test
                 if (dataBuffer.length == flagParams.constantRepeatNum && allEqual(dataBuffer) && thisData != flagParams.missingValue) {
@@ -139,7 +207,7 @@ function testConstant(dataObj, sensorID) {
                         (flaggedIndices.constant).push([ts, site, dataBufferIndex[point], thisMsec, thisTimestamp]); 
                     }
                     
-                    if (debugFlag) {
+                    if (debugFlag_dataflagger) {
                     console.log('the dataBuffer for testConstant:',dataBuffer);
                     console.log('the dataBufferIndex for testConstant:',dataBufferIndex);
                     console.log(flaggedIndices.constant)  
@@ -154,7 +222,7 @@ function testConstant(dataObj, sensorID) {
             globalIndex += 1;
         }
     }
-     console.log(sensorID,flaggedIndices.constant);
+    //console.log(sensorID,flaggedIndices.constant);
 }
 
 
@@ -166,7 +234,7 @@ function testLongMissing(dataObj, sensorID) {
     
     let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
 
-    if (debugFlag) {
+    if (debugFlag_dataflagger) {
         console.log("isArrayRegular = ", isSiteArrayRegular);
     }
     
@@ -183,13 +251,12 @@ function testLongMissing(dataObj, sensorID) {
         } else {
             nSites = dataObj.nSites[ts];
         }
-        //console.log('nSites:', nSites);
 
         for (site=0; site<nSites; site++) {
             let thisID       = dataObj.id[globalIndex];
             if (thisID == sensorID) {
                 let thisData      = dataObj.variable[globalIndex];
-                if (debugFlag) {
+                if (debugFlag_dataflagger) {
                     console.log(sensorID, thisData);
                 }
 
@@ -205,13 +272,12 @@ function testLongMissing(dataObj, sensorID) {
                     let thisTimestamp = dataObj.timestamp[dataBufferIndex[point]];
                     (flaggedIndices.longMissing).push([ts, site, dataBufferIndex[point], thisMsec, thisTimestamp]);
                     }
-                    if (debugFlag) {
+                    if (debugFlag_dataflagger) {
                     console.log('the dataBuffer for testLongMissing:',dataBuffer); 
                     console.log('the dataBufferIndex for testLongMissing:',dataBufferIndex);   
                     console.log(flaggedIndices.longMissing);  
                     }
                 }
-                
                 
                 if (dataBuffer.length == flagParams.missingRepeatNum) {
                     dataBuffer.shift();
@@ -221,7 +287,7 @@ function testLongMissing(dataObj, sensorID) {
             globalIndex += 1;
         }
     }
-       console.log(sensorID,flaggedIndices.longMissing );
+    //console.log(sensorID,flaggedIndices.longMissing );
 }
 
 function testOutlierStat(dataObj, sensorID) {
@@ -231,7 +297,7 @@ function testOutlierStat(dataObj, sensorID) {
     
     let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
 
-    if (debugFlag) {
+    if (debugFlag_dataflagger) {
         console.log("isArrayRegular = ", isSiteArrayRegular);
     }
     
@@ -245,9 +311,7 @@ function testOutlierStat(dataObj, sensorID) {
     let sensorAve = getAve(dataOnSensor);
     let sensorVar = getVar(dataOnSensor);
     let sensorSD = Math.sqrt(sensorVar);
-    console.log('variance on this sensor:', sensorSD);
-    console.log('all data on this sensor:', dataOnSensor);
-    if (sensorID=='290990019') {
+    if (debugFlag_dataflagger) {
         console.log('all data on this sensor:', dataOnSensor);
         console.log('average on this sensor:', sensorAve);
         console.log('variance on this sensor:', sensorVar);
@@ -261,13 +325,12 @@ function testOutlierStat(dataObj, sensorID) {
         } else {
             nSites = dataObj.nSites[ts];
         }
-        //console.log('nSites:', nSites);
 
         for (site=0; site<nSites; site++) {
             let thisID       = dataObj.id[globalIndex];
             if (thisID == sensorID) {
                 let thisData      = dataObj.variable[globalIndex];
-                if (debugFlag) {
+                if (debugFlag_dataflagger) {
                     console.log(sensorID, thisData);
                 }
 
@@ -276,11 +339,11 @@ function testOutlierStat(dataObj, sensorID) {
                 distanceFromSD = distance / sensorSD;
                 
                 // apply the test
-                if (distanceFromSD >= flagParams.timesSDNum && thisData != flagParams.missingValue) {
+                if (distanceFromSD > flagParams.timesSDNum && thisData != flagParams.missingValue) {
                     let thisMsec      = dataObj.msec[globalIndex];
                     let thisTimestamp = dataObj.timestamp[globalIndex];
                     (flaggedIndices.outlierStat).push([ts, site, globalIndex, thisMsec, thisTimestamp]);
-                    if (debugFlag) {
+                    if (debugFlag_dataflagger) {
                     console.log(thisTimestamp,thisData,flaggedIndices.outlierStat) 
                     } 
                 }
@@ -293,12 +356,12 @@ function testOutlierStat(dataObj, sensorID) {
 
 function testOutlierSpike(dataObj, sensorID) {
     // For a given timestep, current reading is an outlier if 
-    // it is more than N times of standard deviations (calculated from the previous time window) from the previous data
-    // and also it is more than N times of standard deviations (calculated from the following time window) from the following data
+    // it is more than N times of standard deviations (calculated from the defined time window centered at the current reading) from the previous data
+    // and also it is more than N times of standard deviations (calculated from the defined time window centered at the current reading) from the following data
     
     let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
 
-    if (debugFlag) {
+    if (debugFlag_dataflagger) {
         console.log("isArrayRegular = ", isSiteArrayRegular);
     }
 
@@ -318,20 +381,18 @@ function testOutlierSpike(dataObj, sensorID) {
             } else {
             nSites = dataObj.nSites[ts];
             }
-            //console.log('nSites:', nSites);
 
             for (site=0; site<nSites; site++) {
                 let thisID        = dataObj.id[globalIndex];
                 let thisTimestamp = dataObj.timestamp[globalIndex];
-                let thisMsec      = dataObj.msec[globalIndex];
                 
                 if (thisID == sensorID && thisTimestamp==centerTimestamp) {
                     let thisData      = dataObj.variable[globalIndex];
                     let thisMsec      = dataObj.msec[globalIndex];
-                    if (debugFlag) {
-                    console.log("now the globalIndex is:",globalIndex);
-                    console.log("Timestamp now:",thisTimestamp);
-                    console.log(sensorID, thisData);
+                    if (debugFlag_dataflagger) {
+                        console.log("now the globalIndex is:",globalIndex);
+                        console.log("Timestamp now:",thisTimestamp);
+                        console.log(sensorID, thisData);
                     }
                     // get the data points array on the left side of the time window
                     let howManyOnRight = Math.trunc(flagParams.hoursNumTW/2);
@@ -359,19 +420,22 @@ function testOutlierSpike(dataObj, sensorID) {
                     let thisChangeRight = Math.abs(nextData-thisData);
                     let thisTimesSDTWRight = thisChangeRight/Math.sqrt(thisVarTotal);
                     let spikeDirection = (thisData>previousData)== (thisData>nextData)
-                    if (spikeDirection && thisVarTotal>0 && thisTimesSDTWLeft >=flagParams.timesSDNumTW && thisData !=flagParams.missingValue && thisTimesSDTWRight >=flagParams.timesSDNumTW) {
+                    if (spikeDirection && thisVarTotal>0 && thisTimesSDTWLeft > flagParams.timesSDNumTW && thisData !=flagParams.missingValue && thisTimesSDTWRight > flagParams.timesSDNumTW) {
                         (flaggedIndices.outlierSpike).push([ts, site, globalIndex, thisMsec, thisTimestamp]);
-                        console.log('data points on the left:',dataOnSensorInTWLeft);
-                        console.log('data points on the right:',dataOnSensorInTWRight);
-                        console.log('data points in the total time window:',dataOnSensorInTWTotal);
-                        console.log('variance for the total time window:', thisVarTotal);
-                        console.log('previous data vlaue is:',previousData);
-                        console.log('next data value is:',nextData);
-                        console.log('data change on left:',thisChangeLeft);
-                        console.log('data change on right:',thisChangeRight);
-                        console.log(thisTimestamp,thisData,flaggedIndices.outlierSpike);  
+
+                       if (debugFlag_dataflagger) {
+                           console.log('data points on the left:',dataOnSensorInTWLeft);
+                           console.log('data points on the right:',dataOnSensorInTWRight);
+                           console.log('data points in the total time window:',dataOnSensorInTWTotal);
+                           console.log('variance for the total time window:', thisVarTotal);
+                           console.log('previous data vlaue is:',previousData);
+                           console.log('next data value is:',nextData);
+                           console.log('data change on left:',thisChangeLeft);
+                           console.log('data change on right:',thisChangeRight);
+                           console.log(thisTimestamp,thisData,flaggedIndices.outlierSpike);  
+                       } // if (debugFlag_dataflagger) loop end
+
                     }
-                    
                 } // if (thisID==sensorID...) loop end
                 globalIndex += 1;  
             }  // for (site=0;...) loop end
@@ -379,6 +443,177 @@ function testOutlierSpike(dataObj, sensorID) {
     }  // for (centerStep=1;...) loop end
 
 }  //testOutlierSpike function end
+
+function testAboveConc(dataObj, sensorID) {
+    // test if the current reading is above a user-defined threshold concentration  
+    // if yes, flag the data points
+    
+    let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
+
+    if (debugFlag_dataflagger) {
+        console.log("isArrayRegular = ", isSiteArrayRegular);
+    }
+    
+    // compare the current reading to the sensor average
+    let nTimesteps = dataObj.nTimes;
+    let nSites;
+    let globalIndex = 0;
+
+    for (ts=0; ts<nTimesteps; ts++) {
+
+        if ( isSiteArrayRegular ) {
+            nSites =  dataObj.nSites;
+        } else {
+            nSites = dataObj.nSites[ts];
+        }
+
+        for (site=0; site<nSites; site++) {
+            let thisID       = dataObj.id[globalIndex];
+            if (thisID == sensorID) {
+                let thisData      = dataObj.variable[globalIndex];
+                
+                if (debugFlag_dataflagger) {
+                    console.log("inside testAboveConc now:",flagParams.aboveConc);
+                    console.log(sensorID, thisData);
+                }
+                
+                // apply the test
+                if (thisData > flagParams.aboveConc && thisData != flagParams.missingValue) {
+                    let thisMsec      = dataObj.msec[globalIndex];
+                    let thisTimestamp = dataObj.timestamp[globalIndex];
+                    (flaggedIndices.aboveConc).push([ts, site, globalIndex, thisMsec, thisTimestamp]);
+                    if (debugFlag_dataflagger) {
+                    console.log("inside the testAboveConc if loop now:",thisData);
+                    console.log(thisTimestamp,thisData,flaggedIndices.aboveConc) 
+                    } 
+                }
+            }
+            globalIndex += 1;
+        }
+    }
+}
+
+function testBelowConc(dataObj, sensorID) {
+    // test if the current reading is below a user-defined threshold concentration  
+    // if yes, flag the data points
+    
+    let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
+
+    if (debugFlag_dataflagger) {
+        console.log("isArrayRegular = ", isSiteArrayRegular);
+    }
+    
+    // compare the current reading to the sensor average
+    let nTimesteps = dataObj.nTimes;
+    let nSites;
+    let globalIndex = 0;
+
+    for (ts=0; ts<nTimesteps; ts++) {
+
+        if ( isSiteArrayRegular ) {
+            nSites =  dataObj.nSites;
+        } else {
+            nSites = dataObj.nSites[ts];
+        }
+
+        for (site=0; site<nSites; site++) {
+            let thisID       = dataObj.id[globalIndex];
+            if (thisID == sensorID) {
+                let thisData      = dataObj.variable[globalIndex];
+                
+                if (debugFlag_dataflagger) {
+                    console.log("inside testBelowConc now:",flagParams.belowConc);
+                    console.log(sensorID, thisData);
+                }
+                
+                // apply the test
+                if (thisData < flagParams.belowConc && thisData != flagParams.missingValue) {               
+                    let thisMsec      = dataObj.msec[globalIndex];
+                    let thisTimestamp = dataObj.timestamp[globalIndex];
+                    (flaggedIndices.belowConc).push([ts, site, globalIndex, thisMsec, thisTimestamp]);
+                    if (debugFlag_dataflagger) {
+                    console.log("inside the testBelowConc if loop now:",thisData);
+                    console.log(thisTimestamp,thisData,flaggedIndices.belowConc) 
+                    } 
+                }
+            }
+            globalIndex += 1;
+        }
+    }
+}
+
+function userInvalidate(dataObj, sensorID) {
+    // For a given timestep, if it is within the time window defined by  
+    // userInvalidate Start time and userInvalidate End time 
+    // then it is flagged
+    
+    let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
+
+    if (debugFlag_dataflagger) {
+        console.log("isArrayRegular = ", isSiteArrayRegular);
+    }
+    
+    // compare the current reading to the sensor average
+    let nTimesteps = dataObj.nTimes;
+    let nSites;
+    let globalIndex = 0;
+    let errorMessage = document.getElementById("flaggerErrorMessage");
+    flaggerErrorMessage.innerText = "*The entered time is outside of the time range for the sensorID or in a wrong format. Please check.*";
+    let timestampsOnSensor = getTimestampsOnSensor (dataObj,sensorID);
+    let startTime = new Date(flagParams.invalidateStartTime);
+    let goodStartTime = checkTimeWithinRange(flagParams.invalidateStartTime,timestampsOnSensor);
+    let goodEndTime = checkTimeWithinRange(flagParams.invalidateEndTime,timestampsOnSensor);
+
+    console.log("aha", flagParams.invalidateStartTime, flagParams.invalidateEndTime);
+    
+    if(goodStartTime && goodEndTime){
+        flaggerErrorMessage.style.display = 'none';
+    }else{
+        flaggerErrorMessage.style.display = 'block';
+        return;
+    }
+    if (debugFlag_dataflagger){
+        console.log("check if it is a goodStartTime:",goodStartTime);
+        console.log("check if it is a goodEndTime:",goodEndTime);
+        console.log("text input for startTime is:",flagParams.invalidateStartTime);
+        console.log("processed date for startTime is:",startTime);
+    }
+    let endTime = new Date(flagParams.invalidateEndTime);
+    for (ts=0; ts<nTimesteps; ts++) {
+
+        if ( isSiteArrayRegular ) {
+            nSites =  dataObj.nSites;
+        } else {
+            nSites = dataObj.nSites[ts];
+        }
+
+        for (site=0; site<nSites; site++) {
+            let thisID       = dataObj.id[globalIndex];
+            if (thisID == sensorID) {
+                let thisTimestamp = dataObj.timestamp[globalIndex];
+                let thisTime      = new Date(thisTimestamp)
+                let diffFromStart = thisTime - startTime;
+                let diffFromEnd = thisTime - endTime;         
+                if (debugFlag_dataflagger) {
+                    console.log("time difference from start:",diffFromStart);
+                    console.log("time difference from end:",diffFromEnd);
+                    console.log("this time is:",thisTime);
+                    console.log(sensorID, thisTimestamp);
+                }
+                
+                // apply the test
+                if (diffFromStart>= 0 && diffFromEnd <= 0) {
+                    let thisMsec = dataObj.msec[globalIndex];
+                    (flaggedIndices.userInvalidated).push([ts, site, globalIndex, thisMsec, thisTimestamp]);
+                    if (debugFlag_dataflagger) {
+                    console.log(thisTimestamp,thisData,flaggedIndices.userInvalidated) 
+                    } 
+                }
+            }
+            globalIndex += 1;
+        }
+    }
+}
 
 
 function getDataOnSensor(dataObj, sensorID) {
@@ -399,16 +634,12 @@ function getDataOnSensor(dataObj, sensorID) {
         } else {
             nSites = dataObj.nSites[ts];
         }
-       // console.log('nSites:', nSites);
 
         for (site=0; site<nSites; site++) {
             let thisID       = dataObj.id[globalIndex];
             if (thisID == sensorID) {
                 let thisData      = dataObj.variable[globalIndex];
-                if (debugFlag) {
-                    console.log(sensorID, thisData);
-                }
-                // sum up all data on sensor for this sensorID
+                // gather all data on sensor for this sensorID
                    
                 if (thisData != flagParams.missingValue){
                     dataOnSensor.push(thisData) 
@@ -417,7 +648,7 @@ function getDataOnSensor(dataObj, sensorID) {
             globalIndex += 1;
         }
     }
-    if (debugFlag) {
+    if (debugFlag_dataflagger) {
       console.log("finishing up getDataOnSensor function:",sensorID, dataOnSensor);
     }
        return dataOnSensor;
@@ -447,10 +678,10 @@ function getTimestampsOnSensor(dataObj, sensorID) {
             if (thisID == sensorID) {
                 let thisData      = dataObj.variable[globalIndex];
                 let thisTimestamp = dataObj.timestamp[globalIndex];
-                if (debugFlag) {
+                if (debugFlag_dataflagger) {
                     console.log("inside getTimestampsOnSensor function:",sensorID, thisData, thisTimestamp);
                 }
-                // sum up all data on sensor for this sensorID
+                // gather all data on sensor for this sensorID
                    
                 if (thisData != flagParams.missingValue){
                     timestampsOnSensor.push(thisTimestamp) 
@@ -459,7 +690,7 @@ function getTimestampsOnSensor(dataObj, sensorID) {
             globalIndex += 1;
         }
     }
-    if (debugFlag) {
+    if (debugFlag_dataflagger) {
       console.log("finishing up getTimestampsOnSensor function:",sensorID, timestampsOnSensor);
     }
        return timestampsOnSensor;
@@ -484,7 +715,6 @@ function getDataOnSensorBeforeTimeStamp(dataObj, sensorID,specificTimeStampMsec,
         } else {
             nSites = dataObj.nSites[ts];
         }
-        //console.log('nSites:', nSites);
 
         for (site=0; site<nSites; site++) {
             let thisID       = dataObj.id[Index];
@@ -494,7 +724,7 @@ function getDataOnSensorBeforeTimeStamp(dataObj, sensorID,specificTimeStampMsec,
             let differenceInHours = getDiffHours(nowMsec,specificTimeStampMsec);
             if (thisID == sensorID && differenceInHours<=howManyHours && differenceInHours>0) {
                 let thisData      = dataObj.variable[Index];
-                if (debugFlag) {
+                if (debugFlag_dataflagger) {
                     console.log(sensorID, thisData,nowTimestamp);
                     console.log("differences from the center timestamp:",differenceInHours)
                 }
@@ -516,11 +746,7 @@ function getDataOnSensorAfterTimeStamp(dataObj, sensorID,specificTimeStamp,howMa
     // also remove those missing data points
     
     let isSiteArrayRegular = ! Array.isArray(dataObj.nSites);
-
-    if (debugFlag) {
-       // console.log("isArrayRegular = ", isSiteArrayRegular);
-    }
-    
+  
     // buffer to store the previous N values
     let dataOnSensorAfterTimeStamp = new Array();
     let nTimesteps = dataObj.nTimes;
@@ -533,7 +759,6 @@ function getDataOnSensorAfterTimeStamp(dataObj, sensorID,specificTimeStamp,howMa
         } else {
             nSites = dataObj.nSites[ts];
         }
-       // console.log('nSites:', nSites);
 
         for (site=0; site<nSites; site++) {
             let thisID       = dataObj.id[Index];
@@ -541,7 +766,7 @@ function getDataOnSensorAfterTimeStamp(dataObj, sensorID,specificTimeStamp,howMa
             // only keep the data points on the right side and within the time window
             if (thisID == sensorID && nowTimestamp>specificTimeStamp && dataOnSensorAfterTimeStamp.length<howManyHours) {
                 let thisData      = dataObj.variable[Index];
-                if (debugFlag) {
+                if (debugFlag_dataflagger) {
                     console.log(sensorID, thisData);
                 }
                    
@@ -553,13 +778,13 @@ function getDataOnSensorAfterTimeStamp(dataObj, sensorID,specificTimeStamp,howMa
             Index += 1;
         }
     }
-       //console.log(sensorID, dataOnSensorAfterTimeStamp);
        return dataOnSensorAfterTimeStamp;
 }
 
 
-function parameterChanged(thisID) {
+function flaggerParameterChanged(item) {
 
+    let thisID   = item.id;
     let newValue = Number(document.getElementById(thisID).value);
 
     if (thisID == "constantNum") {
@@ -572,11 +797,25 @@ function parameterChanged(thisID) {
         flagParams.hoursNumTW = newValue;
     } else if (thisID == "outlierSpikeSDfactor") {
         flagParams.timesSDNumTW = newValue;
+    } else if (thisID == "aboveConcentration"){
+        flagParams.aboveConc = newValue;
+    } else if (thisID == "belowConcentration"){
+        flagParams.belowConc = newValue;
+    } else if (thisID == "invalidateStart"){
+        let newText = document.getElementById(thisID).value;
+        flagParams.invalidateStartTime = newText;
+    } else if (thisID == "invalidateEnd"){
+        let newText = document.getElementById(thisID).value;
+        flagParams.invalidateEndTime = newText;
     } else {
         alert("parameterChanged() handler not implemented for " + thisID);
     }
 
-    console.log(flagParams);
+    //console.log(flagParams);
+    if (! document.URL.endsWith("dataFlaggerTester.html")) {
+        updatePlots();
+        updateSettings(item);
+    }
 }
 
 
@@ -617,10 +856,29 @@ const getVar = (arr) =>{
 
 // sub-function to calculate the differences in hours between two timestamps
 const getDiffHours = (timestampMsec1,timestampMsec2) =>{
-    //const dt1 = new Date(timestamp1)
-    //const dt2 = new Date(timestamp2)
-    //const difference = dt2-dt1;
     const difference = timestampMsec2 - timestampMsec1;
     const hoursDiff = Math.floor(difference/1000/60/60);
     return hoursDiff;
 }
+
+// sub-function to check if a timestamp string is within the range of all the timestamps on a sensor
+
+const checkTimeWithinRange = (specifictimestamp,timestampsOnSensor) =>{
+    const includeTime = timestampsOnSensor.includes(specifictimestamp);
+    if (includeTime){
+    return true;
+    }else{
+         const sortedTimestamps = timestampsOnSensor.sort();
+         //console.log("check the sorted timestamps:", sortedTimestamps);
+         const thistime = new Date(specifictimestamp)
+         const firsttime = new Date(sortedTimestamps[0])
+         const lasttime = new Date(sortedTimestamps[sortedTimestamps.length-1])
+         if (thistime >= firsttime && thistime <= lasttime){
+          return true;
+         }else{
+          return false;
+         }
+    } 
+    
+}
+

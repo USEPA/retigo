@@ -1,6 +1,6 @@
 function get_Airnow(variable, bbox, timerange, urlString, purpose, moveAqsFunc) {
 
-    // if data is older than 365 days, use AQS instead of airnow
+    //if data is older than 365 days, use AQS instead of airnow
     try {
         msecThreshold = 365 * 24 * 3600 * 1000;
         now = new Date();
@@ -181,7 +181,9 @@ function get_airnow_closest(var_string, bbox, timerange, urlString, purpose) {
         contentType: 'text/plain',
         success: function(data, textStatus, jqXHR){
             if (data) {
-	        debug(data);	
+	        debug(data);
+                //console.log(data, var_string);
+                
 	        build_airnow_dataobject(data, var_string, closestFlag);
                 scatterplotMenuDisabledFlag = true; // default
                 if (data) {
